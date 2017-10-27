@@ -1,0 +1,19 @@
+{% block title %} Mon compte {% endblock %}
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+
+        <div class="col-sm-3 col-sm-offset-3">
+            <div class="gris-claire-vp linkaccueil">
+                <span class="number">2</span>
+                <a href="{{route('info-publier')}}" >Observations en attente</a>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="gris-claire-vp linkaccueil">
+                <a href="" >Mes observations</a>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}

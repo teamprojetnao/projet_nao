@@ -1,0 +1,10 @@
+mon_compte:
+    resource: "@MonCompteBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+nao:
+    resource: "@NaoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
