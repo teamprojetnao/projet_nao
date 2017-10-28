@@ -1,19 +1,20 @@
 <?php
 
-namespace NaoBundle\Controller;
+namespace AppBundle\Controller\Auth;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class HomeController extends Controller
+class LoginController extends Controller
 {
     /**
-     * @Route("/",name="homepage")
+     * @Route("/login",name="login")
      */
     public function indexAction()
     {
-        return $this->render('NaoBundle:Default:index.html.twig');
+        return $this->render(':Auth:login.html.twig');
 
     }
+
 
 }

@@ -3,8 +3,8 @@ mon_compte:
     type:     annotation
     prefix:   /
 
-nao:
-    resource: "@NaoBundle/Controller/"
+app:
+    resource: "@AppBundle/Controller/"
     type:     annotation
     prefix:   /
 
