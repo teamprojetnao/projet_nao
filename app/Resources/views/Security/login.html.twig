@@ -18,7 +18,7 @@
                 <input type="text" id="username" placeholder="username" name="_username" value="{{ last_username }}">
                 <input type="password" placeholder="password" name="_password"/>
                 <input type="submit" value="connexion">
-                <p class="message">Pas encore inscrit? <a href="#">Créer un compte</a></p>
+                <p class="message">Pas encore inscrit? <a href="{{ path('register') }}">Créer un compte</a></p>
             </form>
         </div>
     </div>
