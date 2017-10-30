@@ -7,14 +7,18 @@
 {% endblock %}
 
 {% block body %}
+
 <div class="container-fluid">
     <div class="login-page">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.message }}</div>
+        {% endif %}
         <div class="form">
-            <form class="login-form">
-                <input type="text" placeholder="username"/>
-                <input type="password" placeholder="password"/>
-                <button>Se connectez</button>
-                <p class="message">Pas enconre inscrit? <a href="#">Créer un compte</a></p>
+            <form class="login-form" action="{{ path('login_check') }}" method="post">
+                <input type="text" id="username" placeholder="username" name="_username" value="{{ last_username }}">
+                <input type="password" placeholder="password" name="_password"/>
+                <input type="submit" value="connexion">
+                <p class="message">Pas encore inscrit? <a href="#">Créer un compte</a></p>
             </form>
         </div>
     </div>
