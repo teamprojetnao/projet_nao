@@ -5,7 +5,7 @@
 <div class="row my-4">
     <div class="col-lg-4" style="background: #CCCCCC">
         <img src="http://placehold.it/60x60" class="img-responsive img-thumbnail" style="margin:10px 2px"><br>
-       <center><a class="btn btn-primary" href="#" style="margin-top: 30%">ENTRER UNE OBSERVATIONS</a></center>
+       <center><a class="btn btn-primary" href="#" style="margin-top: 30%">ENTRER UNE OBSERVATION</a></center>
     </div>
     <!-- /.col-md-4 -->
     <div class="col-lg-8" style="background: #CCCCCC">
@@ -14,17 +14,22 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Enter une observation
+                            <a class="nav-link" href="{{ path('observationpage') }}">Entrer une observation
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Cartes des espèces</a>
+                            <a class="nav-link" href="{{ path('searchpage') }}">Cartes des espèces</a>
                         </li>
-
+                        {% if app.user==null %}
                         <li class="nav-item">
                             <a class="btn btn-outline-dark" href="{{ path('login') }}"> Se connecter</a>
                         </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a href="#"><i class="fa fa-user fa-2x"></i></a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
