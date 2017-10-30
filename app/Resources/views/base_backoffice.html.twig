@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %} {% endblock %} - NAO</title>
+    {% block stylesheets %}
+        <link href="{{ asset('css/backoffice/bootstrap.min.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('css/backoffice/backoffice.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('css/backoffice/animate.min.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('css/backoffice/pe-icon-7-stroke.css') }}" rel="stylesheet"/>
+
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+<div class="wrapper">
+    {% include "layout_back/sidebar.html.twig" %}
+    <div class="main-panel">
+        {% include "layout_back/nav.html.twig" %}
+            <div class="content">
+                {% block body %}
+                {% endblock %}
+
+            </div>
+        {% include "layout_back/footer.html.twig" %}
+    </div>
+</div>
+
+    {% block javascripts %}
+        {# Core JS Files  #}
+        <script src="{{ asset('js/backoffice/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/backoffice/bootstrap.min.js') }}"></script>
+
+    {% endblock %}
+</body>
+</html>

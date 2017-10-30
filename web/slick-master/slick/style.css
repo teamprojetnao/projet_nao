@@ -1,0 +1,50 @@
+@font-face
+{
+    font-family: 'slick';
+    font-weight: normal;
+    font-style: normal;
+
+    src: url('fonts/slick.eot');
+    src: url('fonts/slick.eot?#iefix') format('embedded-opentype'), url('fonts/slick.woff') format('woff'), url('fonts/slick.ttf') format('truetype'), url('fonts/slick.svg#slick') format('svg');
+}
+html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .slider {
+        width: 90%;
+        padding-left: 10px;
+        margin: 50px 50px auto;
+    }
+
+    .slick-slide {
+      margin: 0px 0px;
+    }
+
+    .slick-slide img {
+        width: 65%;
+    }
+    .slick-next::before, .slick-prev::before {
+      color: #696D6E;
+      font-size: 10px;
+      line-height: 1;
+      opacity: 0.75;
+    }
+    .slick-prev::before {
+      content: "\f053";
+    }
+    .slick-next::before, [dir="rtl"] .slick-prev::before {
+      content: "\f054";
+    }
+    .slick-dots li button::before, .slick-next::before, .slick-prev::before {
+  font-family: FontAwesome;
+}
+    
+    /**/
+
+   
