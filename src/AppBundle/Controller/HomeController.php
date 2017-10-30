@@ -17,6 +17,12 @@ class HomeController extends Controller
 
     }
 
-
+    /**
+     * @Route("/card",name="searchpage")
+     */
+    public function cardAction()
+    {
+        return $this->render(':Home:card.html.twig');
+    }
 
 }
