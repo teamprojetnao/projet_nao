@@ -12,11 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class MonCompteController extends Controller
 {
     /**
-     * @Route("/admin")
+     * @Route("/admin", name="admin_home")
      */
     public function adminAction()
     {
-        return new Response('<html><body>Admin page!</body></html>');
+        return $this->render(':Admin:index.html.twig');
     }
 
     /**
