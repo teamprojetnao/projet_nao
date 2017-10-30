@@ -8,7 +8,7 @@
 
 {% block body %}
 <div class="container">
-    <form class="form-horizontal" role="form" method="POST" action="/register">
+    <form class="form-horizontal" role="form" method="POST" action="{{ path('inscription') }}">
         <div class="row">
             <div class="col-md-9">
                 <h2>Inscrivez-vous et envoyez-nous vos observations.</h2>
@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                        <select>
+                        <select name="user_type">
                             <option value="particulier"> Particulier</option>
                             <option value="particulier"> Naturaliste</option>
                         </select>

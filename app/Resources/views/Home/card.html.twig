@@ -1,1 +1,73 @@
-ici on trouvera une recherche permettant d'afficher les espèces sur une carte
+{% block title %} Acceuil {% endblock %}
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+<style type="text/css">
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+</style>
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+
+
+<section id="notreprojet">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+
+                <div id="map"></div>
+            </div>
+            <div class="col-sm-4">
+                <form role="search" name="searchform" method="get">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" placeholder="Type oiseaux" name="s" class="form-control left-rounded">
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-inverse right-rounded">Rechercher</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('slick-master/slick/slick.min.js') }}" type="text/javascript" charset="utf-8"></script>
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    function initMap() {
+        var coordonnes = {lat: -25.363, lng: 131.044};
+        var coordonnes2 = {lat: 48.866667, lng: 2.333333};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: coordonnes
+        });
+        var marker = new google.maps.Marker({
+            position: coordonnes,
+            map: map
+        });
+        var marker2 = new google.maps.Marker({
+            position: coordonnes2,
+            map: map
+        });
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ container.parameter('api_map_key') }}&callback=initMap"></script>
+        {% endblock %}

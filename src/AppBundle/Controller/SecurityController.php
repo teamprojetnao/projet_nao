@@ -9,9 +9,12 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends Controller
 {
@@ -21,7 +24,7 @@ class SecurityController extends Controller
     public function loginAction(Request $request)
     {
 
-    // Si le visiteur est déjà identifié, on le redirige vers l'accueil
+        // Si le visiteur est déjà identifié, on le redirige vers l'accueil
         /*   if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
                return $this->redirectToRoute('homepage');
            }*/
@@ -32,15 +35,15 @@ class SecurityController extends Controller
         }
 
 
-    // Le service authentication_utils permet de récupérer le nom d'utilisateur
-    // et l'erreur dans le cas où le formulaire a déjà été soumis mais était invalide
-    // (mauvais mot de passe par exemple)
-    $authenticationUtils = $this->get('security.authentication_utils');
+        // Le service authentication_utils permet de récupérer le nom d'utilisateur
+        // et l'erreur dans le cas où le formulaire a déjà été soumis mais était invalide
+        // (mauvais mot de passe par exemple)
+        $authenticationUtils = $this->get('security.authentication_utils');
 
-    return $this->render(':Security:login.html.twig', array(
-        'last_username' => $authenticationUtils->getLastUsername(),
-        'error'         => $authenticationUtils->getLastAuthenticationError(),
-    ));
+        return $this->render(':Security:login.html.twig', array(
+            'last_username' => $authenticationUtils->getLastUsername(),
+            'error' => $authenticationUtils->getLastAuthenticationError(),
+        ));
     }
 
     /**
@@ -49,6 +52,35 @@ class SecurityController extends Controller
     public function registerAction()
     {
         return $this->render(':Security:register.html.twig');
+
+    }
+
+    /**
+     * @Route("/inscription",name="inscription")
+     * @Method("POST")
+     */
+    public function connexionAction(Request $request)
+    {
+
+        $doctrinemanager = $this->getDoctrine()->getManager();
+        $data = $request->request->all();
+
+        $user = new User();
+        $user->setNom($data['name']);
+        $user->setEmail($data['email']);
+        $plainPassword = $data['password'];
+        $passwordEncoder = $this->get('security.password_encoder');
+
+        $encoded = $passwordEncoder->encodePassword($user, $plainPassword);
+        $user->setPassword($encoded);
+        $doctrinemanager->persist($user);
+        $doctrinemanager->flush();
+
+        $request->getSession()
+            ->getFlashBag()
+            ->add('success', 'Votre compte a été bien crée');
+        return $this->redirectToRoute('homepage');
+
 
     }
 }
