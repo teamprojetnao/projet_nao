@@ -21,7 +21,7 @@ class MonCompteController extends Controller
 
     /**
      * @Route("/observation", name="observationpage")
-     * @Security("has_role('ROLE_NATURALIST')")
+     * @Security("has_role('ROLE_USER')")
      */
     public function  observationAction(){
 

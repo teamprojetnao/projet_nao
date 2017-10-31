@@ -61,14 +61,14 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(name="salt", type="string", length=255)
+     * @ORM\Column(name="salt", type="string", length=255, nullable=true)
      */
     private $salt;
 
     /**
-     * @ORM\Column(name="roles", type="array")
+     * @ORM\Column(name="roles", type="string")
      */
-    private $roles = array();
+    private $roles ;
 
     /**
      * @var string
@@ -90,6 +90,13 @@ class User implements UserInterface
      * @ORM\Column(name="cgu", type="boolean")
      */
     private $cgu;
+
+    public function __construct()
+    {
+        $this->roles = 'ROLE_USER';
+
+
+    }
 
     /**
      * Get id
