@@ -7,20 +7,31 @@
 {% endblock %}
 
 {% block body %}
+<div class="container">
+<div class="row">
+    <div class="col-sm-6">
+        <h2>Connexion</h2>
+        <hr>
 
-<div class="container-fluid">
-    <div class="login-page">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.message }}</div>
-        {% endif %}
         <div class="form">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.message }}</div>
+            {% endif %}
+
             <form class="login-form" action="{{ path('login_check') }}" method="post">
                 <input type="text" id="username" placeholder="username" name="_username" value="{{ last_username }}">
                 <input type="password" placeholder="password" name="_password"/>
                 <input type="submit" value="connexion">
-                <p class="message">Pas encore inscrit? <a href="{{ path('register') }}">Créer un compte</a></p>
+                <p class="message">Mot de passe oublié? <a href="{{ path('register') }}">Faire une demande de nouveau mot de passe</a></p>
             </form>
         </div>
     </div>
+
+<div class="col-sm-6">
+        <h2>Inscription</h2>
+        <hr>
+         <form action=""></form>
+
+         </div>
 </div>
 {% endblock %}

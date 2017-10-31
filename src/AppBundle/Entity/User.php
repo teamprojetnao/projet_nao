@@ -43,7 +43,26 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=255)
+     */
+    private $status;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="birthdate", type="date")
+     */
+    private $birthdate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cgu", type="boolean")
+     */
+    private $cgu;
 
     /**
      * Get id
@@ -181,5 +200,77 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return User
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set birthdate
+     *
+     * @param \DateTime $birthdate
+     *
+     * @return User
+     */
+    public function setBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+
+        return $this;
+    }
+
+    /**
+     * Get birthdate
+     *
+     * @return \DateTime
+     */
+    public function getBirthdate()
+    {
+        return $this->birthdate;
+    }
+
+    /**
+     * Set cgu
+     *
+     * @param boolean $cgu
+     *
+     * @return User
+     */
+    public function setCgu($cgu)
+    {
+        $this->cgu = $cgu;
+
+        return $this;
+    }
+
+    /**
+     * Get cgu
+     *
+     * @return boolean
+     */
+    public function getCgu()
+    {
+        return $this->cgu;
     }
 }
