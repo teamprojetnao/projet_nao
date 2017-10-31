@@ -36,10 +36,20 @@ class User implements UserInterface
      */
     private $prenom;
 
+
+
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, unique=true  )
+     * @ORM\Column(name="pseudo", type="string", length=255)
+     */
+
+    private $pseudo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
      */
     private $email;
 
@@ -49,6 +59,16 @@ class User implements UserInterface
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
+
+    /**
+     * @ORM\Column(name="salt", type="string", length=255)
+     */
+    private $salt;
+
+    /**
+     * @ORM\Column(name="roles", type="array")
+     */
+    private $roles = array();
 
     /**
      * @var string
@@ -279,5 +299,29 @@ class User implements UserInterface
     public function getCgu()
     {
         return $this->cgu;
+    }
+
+    /**
+     * Set prenom
+     *
+     * @param string $prenom
+     *
+     * @return User
+     */
+    public function setPrenom($prenom)
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    /**
+     * Get prenom
+     *
+     * @return string
+     */
+    public function getPrenom()
+    {
+        return $this->prenom;
     }
 }
