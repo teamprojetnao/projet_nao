@@ -32,6 +32,13 @@ class User implements UserInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="prenom", type="string", length=255)
+     */
+    private $prenom;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="email", type="string", length=255, unique=true  )
      */
     private $email;
@@ -272,5 +279,29 @@ class User implements UserInterface
     public function getCgu()
     {
         return $this->cgu;
+    }
+
+    /**
+     * Set prenom
+     *
+     * @param string $prenom
+     *
+     * @return User
+     */
+    public function setPrenom($prenom)
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    /**
+     * Get prenom
+     *
+     * @return string
+     */
+    public function getPrenom()
+    {
+        return $this->prenom;
     }
 }
