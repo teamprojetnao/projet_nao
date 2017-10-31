@@ -36,10 +36,20 @@ class User implements UserInterface
      */
     private $prenom;
 
+
+
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, unique=true  )
+     * @ORM\Column(name="pseudo", type="string", length=255)
+     */
+
+    private $pseudo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
      */
     private $email;
 
@@ -49,6 +59,16 @@ class User implements UserInterface
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
+
+    /**
+     * @ORM\Column(name="salt", type="string", length=255)
+     */
+    private $salt;
+
+    /**
+     * @ORM\Column(name="roles", type="array")
+     */
+    private $roles = array();
 
     /**
      * @var string
@@ -303,5 +323,57 @@ class User implements UserInterface
     public function getPrenom()
     {
         return $this->prenom;
+    }
+
+    /**
+     * Set pseudo
+     *
+     * @param string $pseudo
+     *
+     * @return User
+     */
+    public function setPseudo($pseudo)
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * Get pseudo
+     *
+     * @return string
+     */
+    public function getPseudo()
+    {
+        return $this->pseudo;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     *
+     * @return User
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     *
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 }
