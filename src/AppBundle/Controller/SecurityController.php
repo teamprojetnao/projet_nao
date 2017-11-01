@@ -9,13 +9,16 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\New_password;
 use AppBundle\Entity\User;
+use AppBundle\Form\New_passwordType;
 use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Swift_Message;
 
 class SecurityController extends Controller
 {
@@ -31,19 +34,19 @@ class SecurityController extends Controller
            }*/
 
         if ($this->get('security.authorization_checker')
-                ->isGranted('ROLE_ADMIN') === true) {
+                ->isGranted('ROLE_ADMIN') === true
+        ) {
             return $this->redirectToRoute('admin_home');
         }
 
-        $user=new User;
-        $form   = $this->get('form.factory')->create(UserType::class, $user);
+        $user = new User;
+        $form = $this->get('form.factory')->create(UserType::class, $user);
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
             return $this->redirectToRoute('homepage');
         }
-
 
 
         // Le service authentication_utils permet de récupérer le nom d'utilisateur
@@ -53,7 +56,7 @@ class SecurityController extends Controller
 
         return $this->render(':Security:login.html.twig', array(
             'last_username' => $authenticationUtils->getLastUsername(),
-            'error' => $authenticationUtils->getLastAuthenticationError(),'form'=> $form->createView(),
+            'error' => $authenticationUtils->getLastAuthenticationError(), 'form' => $form->createView(),
         ));
     }
 
@@ -96,10 +99,35 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/logout",name="logout")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/password",name="password_page")
      */
-    public function logoutAction()
+    public function passwordAction(Request $request, \Swift_Mailer $mailer=null)
     {
-        return $this->redirectToRoute('homepage');
+        $new_password = new New_password();
+        $form = $this->createForm(New_passwordType::class, $new_password);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message = (new Swift_Message('Votre demande de nouveau mot de passe'))
+                ->setFrom($this->getParameter('mailer_user'))
+                ->setTo($new_password->getEmail())
+                ->setBody(
+                    $this->renderView(
+
+                        'Emails/new_password.html.twig'
+
+                    ),
+                    'text/html'
+                );
+
+            $mailer->send($message);
+
+
+            return $this->render(':Home:index.html.twig');
+        }
+        return $this->render(':Security:new_password.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 }

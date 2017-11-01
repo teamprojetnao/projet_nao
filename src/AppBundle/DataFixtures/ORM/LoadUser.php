@@ -20,7 +20,7 @@ class LoadUser implements FixtureInterface
         $admin->setPrenom('Anne');
         $admin->setEmail('admin@gmail.com');
         $admin->setNom('D');
-        $admin->setPseudo('Anne');
+        $admin->setPseudo('Admin');
         $admin->setPassword('admin');
         $admin->setBirthdate(new \DateTime('1976-12-04'));
         $admin->setRoles(array('ROLE_ADMIN'));
@@ -32,7 +32,7 @@ class LoadUser implements FixtureInterface
         $naturalist->setPrenom('Anne');
         $naturalist->setEmail('naturalist@gmail.com');
         $naturalist->setNom('D');
-        $naturalist->setPseudo('Anne');
+        $naturalist->setPseudo('Naturalist');
         $naturalist->setPassword('naturalist');
         $naturalist->setBirthdate(new \DateTime('1976-12-04'));
         $naturalist->setRoles(array('ROLE_NATURALIST'));
@@ -44,7 +44,7 @@ class LoadUser implements FixtureInterface
         $user->setPrenom('Anne');
         $user->setEmail('user@gmail.com');
         $user->setNom('D');
-        $user->setPseudo('Anne');
+        $user->setPseudo('User');
         $user->setPassword('user');
         $user->setBirthdate(new \DateTime('1976-12-04'));
         $user->setRoles(array('ROLE_USER'));

@@ -13,6 +13,7 @@ class MonCompteController extends Controller
 {
     /**
      * @Route("/admin", name="admin_home")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function adminAction()
     {
