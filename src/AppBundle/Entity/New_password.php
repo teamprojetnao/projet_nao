@@ -4,12 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * New_password
- *
- * @ORM\Table(name="new_password")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\New_passwordRepository")
- */
+
 class New_password
 {
     /**
