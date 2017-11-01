@@ -66,9 +66,9 @@ class User implements UserInterface
     private $salt;
 
     /**
-     * @ORM\Column(name="roles", type="string")
+     * @ORM\Column(name="roles", type="array")
      */
-    private $roles ;
+    private $roles=array() ;
 
     /**
      * @var string
@@ -78,9 +78,8 @@ class User implements UserInterface
     private $status;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="birthdate", type="date")
+     * @var \DateTime
+     * @ORM\Column(name="birthdate", type="datetime")
      */
     private $birthdate;
 
