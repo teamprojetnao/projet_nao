@@ -10,8 +10,10 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\New_password;
+use AppBundle\Entity\Password_registration;
 use AppBundle\Entity\User;
 use AppBundle\Form\New_passwordType;
+use AppBundle\Form\Password_registrationType;
 use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -40,7 +42,7 @@ class SecurityController extends Controller
         }
 
         $user = new User;
-        $form = $this->get('form.factory')->create(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user);
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $plainPassword=$user->getPassword();
             $encoded = $this->get('security.password_encoder')->encodePassword($user, $plainPassword);
@@ -63,14 +65,7 @@ class SecurityController extends Controller
         ));
     }
 
-    /**
-     * @Route("/register",name="register")
-     */
-    public function registerAction()
-    {
-        return $this->render(':Security:register.html.twig');
 
-    }
 
     /**
      * @Route("/inscription",name="inscription")
@@ -140,5 +135,23 @@ class SecurityController extends Controller
     public function new_password_confirmationAction()
     {
         return $this->render(':Security:new_password_confirmation.html.twig');
+    }
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/register",name="passwordregistration_page")
+     */
+    public function password_registrationAction(Request $request )
+    {
+        $password_registration= new Password_registration();
+        $form = $this->createForm(Password_registrationType::class, $password_registration);
+        $form->handleRequest($request);
+
+       /* if ($form->isSubmitted() && $form->isValid()) {
+
+        }*/
+
+        return $this->render(':Security:password_registration.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 }
