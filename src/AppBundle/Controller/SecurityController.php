@@ -42,6 +42,9 @@ class SecurityController extends Controller
         $user = new User;
         $form = $this->get('form.factory')->create(UserType::class, $user);
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $plainPassword=$user->getPassword();
+            $encoded = $this->get('security.password_encoder')->encodePassword($user, $plainPassword);
+            $user->setPassword($encoded);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -102,7 +105,7 @@ class SecurityController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/password",name="password_page")
      */
-    public function passwordAction(Request $request, \Swift_Mailer $mailer=null)
+    public function passwordAction(Request $request)
     {
         $new_password = new New_password();
         $form = $this->createForm(New_passwordType::class, $new_password);
@@ -121,13 +124,21 @@ class SecurityController extends Controller
                     'text/html'
                 );
 
-            $mailer->send($message);
+            $this->get('mailer')->send($message);
 
 
-            return $this->render(':Home:index.html.twig');
+            return $this->redirectToRoute( 'new_password_confirmation_page');
         }
         return $this->render(':Security:new_password.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/new_password_confirmation",name="new_password_confirmation_page")
+     */
+    public function new_password_confirmationAction()
+    {
+        return $this->render(':Security:new_password_confirmation.html.twig');
     }
 }
