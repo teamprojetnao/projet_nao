@@ -49,6 +49,7 @@ class New_password
     }
 
     /**
+     *
      * Get email
      *
      * @return string

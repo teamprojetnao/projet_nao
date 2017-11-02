@@ -44,7 +44,7 @@ class SecurityController extends Controller
         $user = new User;
         $form = $this->createForm(UserType::class, $user);
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $plainPassword=$user->getPassword();
+            $plainPassword = $user->getPassword();
             $encoded = $this->get('security.password_encoder')->encodePassword($user, $plainPassword);
             $user->setPassword($encoded);
             $em = $this->getDoctrine()->getManager();
@@ -64,7 +64,6 @@ class SecurityController extends Controller
             'error' => $authenticationUtils->getLastAuthenticationError(), 'form' => $form->createView(),
         ));
     }
-
 
 
     /**
@@ -122,12 +121,13 @@ class SecurityController extends Controller
             $this->get('mailer')->send($message);
 
 
-            return $this->redirectToRoute( 'new_password_confirmation_page');
+            return $this->redirectToRoute('new_password_confirmation_page');
         }
         return $this->render(':Security:new_password.html.twig', array(
             'form' => $form->createView(),
         ));
     }
+
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/new_password_confirmation",name="new_password_confirmation_page")
@@ -136,22 +136,44 @@ class SecurityController extends Controller
     {
         return $this->render(':Security:new_password_confirmation.html.twig');
     }
+
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/register",name="passwordregistration_page")
      */
-    public function password_registrationAction(Request $request )
+    public function password_registrationAction(Request $request)
     {
-        $password_registration= new Password_registration();
+        $password_registration = new Password_registration();
         $form = $this->createForm(Password_registrationType::class, $password_registration);
         $form->handleRequest($request);
 
-       /* if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('AppBundle:User');
+            $user = $repository->findOneBy(array('email' => $password_registration->getEmail()));
+            $encoded = $this->get('security.password_encoder')->encodePassword($password_registration, $password_registration->getPassword());
+            $user->setPassword($encoded);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
 
-        }*/
+            return $this->redirectToRoute('passwordchanged_page');
+        }
+
 
         return $this->render(':Security:password_registration.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/passwordchanged",name="passwordchanged_page")
+     */
+    public function password_registration_confirmationAction()
+    {
+        return $this->render(':Security:password_registration_confirmation.html.twig');
     }
 }
