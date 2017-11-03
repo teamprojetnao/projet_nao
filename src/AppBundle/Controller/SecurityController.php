@@ -106,13 +106,28 @@ class SecurityController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //vérifier si l'email existe en bdd
+            $repository = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('AppBundle:User');
+            $user=$repository->findOneBy(array('email' => $new_password->getEmail()));
+
+
+            $user->setToken (base64_encode(random_bytes(10)));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
             $message = (new Swift_Message('Votre demande de nouveau mot de passe'))
                 ->setFrom($this->getParameter('mailer_user'))
                 ->setTo($new_password->getEmail())
                 ->setBody(
                     $this->renderView(
 
-                        'Emails/new_password.html.twig'
+                        'Emails/new_password.html.twig',
+                        array('user' => $user)
 
                     ),
                     'text/html'
