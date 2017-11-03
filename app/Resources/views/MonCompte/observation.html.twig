@@ -1,1 +1,280 @@
-ici le visiteur pourra saisir ses observations
+{% block title %} Acceuil {% endblock %}
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <style type="text/css">
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+    {{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+
+    <section id="notreprojet">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 ml-auto">
+                    <div class="col-md-6 ml-md-6">
+                        <h2>MON OBSERVATION</h2>
+                        <form>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Nom de l'espèce</label>
+                                <input type="text" class="form-control" name="especes">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Nombre d'individus</label>
+                                <input type="text" class="form-control" name="especes">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Date</label>
+                                <input type="date" class="form-control" name="date" placeholder="Date d'obervation">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Coordonnés GPS</label>
+
+                                <small id="emailHelp" class="form-text text-muted">Lattitude</small>
+                                <input type="text" class="form-control" name="latitude" id="lat"
+                                       placeholder="Lattitude">
+                            </div>
+                            <div class="form-group">
+                                <small class="form-text text-muted">Longitude</small>
+                                <input type="text" class="form-control" id="long" name="longitude"
+                                       placeholder="Longitude">
+                            </div>
+                            <div id="map"></div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" name="type_coordonee" id="position_auto"
+                                           class="form-check-input">
+                                    Coordonnées GPS automatiques
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Image</label>
+                                <input type="file" style="visibility:hidden; display:none;" id="file" name="file">
+                                <button type="button" id="btnAddPhoto" onclick="$('#file').click();"
+                                        class="btn btn-primary btn-lg btn-block">Ajouter une photo
+                                </button>
+
+                                <center>
+                                    <a onclick="$('#file').click();" class="choixphotos">
+                                        <span class="file_name"></span>
+                                    </a>
+                                </center>
+                            </div>
+                            <div id="ma-photos"></div>
+                            <div id="camera"></div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-secondary btn-lg btn-block"
+                                        onClick="setup(); $(this).hide().next().show();" id="take-photo">Prendre une
+                                    photo
+                                </button>
+
+                                <button type="button" class="btn btn-info btn-lg btn-block" onClick="take_snapshot()"
+                                        style="display:none" id="valide-photo">Valider ma photo
+                                </button>
+
+
+                                <button type="button" class="btn btn-danger btn-lg btn-block" id="annuler"
+                                        style="display:none">Annuler
+                                </button>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary">VALIDER</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('slick-master/slick/slick.min.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('js/webcam.min.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script async defer
+            src="http://maps.googleapis.com/maps/api/js?key={{ container.parameter('api_map_key') }}&callback=initMap"></script>
+    <script>
+        var longText, latText;
+
+        //Si l'utilisateur se renseigne sur le champ longitude
+        $('#long').on('keyup', function () {
+            longText = $(this).val();
+            //initMap(48.866667, 2.333333);
+            if (latText != "" && longText != "" && latText != undefined && longText != undefined) {
+                initMap(parseFloat(latText), parseFloat(longText));
+            }
+        });
+
+        //Si l'utilisateur se renseigne sur le champ lattitude
+        $('#lat').on('keyup', function () {
+            latText = $(this).val();
+            if (latText != "" && longText != "" && latText != undefined && longText != undefined) {
+                initMap(parseFloat(latText), parseFloat(longText));
+            }
+        });
+
+        //Si l'utilisateur a selectionné coordonnées automatique on ecoute par l'env on click
+        $('#position_auto').on('click', function () {
+            //Si coordonnes automatique est coché
+            if ($('#position_auto').prop('checked')) {
+                initMap(undefined, undefined);
+            }
+        });
+
+        function initMap(latitude, long) {
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 8
+            });
+            infoWindow = new google.maps.InfoWindow({pixelOffset: new google.maps.Size(0, -35)});
+
+            //Si l'utilisateur ne se renseing pas encore sur sa position
+            if (latitude == undefined && long == undefined) {
+                // on essaye d'abord HTML5 geolocation.
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(success, error, options)
+
+                    //Option de la geolocalisation
+                    var options = {
+                        enableHighAccuracy: true,
+                        timeout: 5000,
+                        maximumAge: 0
+                    };
+
+                    //Si Geolocalisation de la navigateur avec succès
+                    function success(position) {
+                        var pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        afficherLaCarte(pos, 'Paris');
+                    };
+
+                    //Si Erreur de navigateur on  fait appel ipinfo
+                    function error(err) {
+                        $.get("https://ipinfo.io", function (response) {
+                            var position_res = response.loc.split(',');
+                            var coordonnes = {
+                                lat: parseFloat(position_res[0]),
+                                lng: parseFloat(position_res[1])
+                            };
+                            afficherLaCarte(coordonnes, response.region);
+                        }, "jsonp");
+                    };
+                }
+            }
+            // Sinon l'utilisateur se renseigne donc on pointe sa position sur la carte
+            else {
+                var coordonnes = {lat: latitude, lng: long};
+                afficherLaCarte(coordonnes, 'Paris');
+            }
+
+            // Une fonction qui permet d'afficher  les coordonnées  sur la carte avec nom de la ville
+            function afficherLaCarte(coordonnes) {
+                getVilleByCoordonnes(coordonnes);
+                var contentString = '<div id="content" >' +
+                    '<div id="siteNotice">' +
+                    '</div>' +
+                    '<span id="firstHeading" class="titre" ></span>' +
+                    '<small class="form-text text-muted">Lattitude: ' + coordonnes.lat + '</small>' +
+                    '<small class="form-text text-muted">Longitude: ' + coordonnes.lng + '</small>' +
+                        '<button type="button" class="btn btn-primary btn-sm">'+ "Obtenir l'Altitude" +'</button>'+
+                    '</div>';
+
+                infoWindow.setPosition(coordonnes);
+                infoWindow.setContent(contentString);
+                infoWindow.open(map);
+                map.setCenter(coordonnes);
+                var marker = new google.maps.Marker({
+                    position: coordonnes,
+                    map: map
+                });
+            }
+
+            // Une fonction qui permet de trouver la ville à partir de coordonnees
+            function getVilleByCoordonnes(coordonnes) {
+                var geocoder = new google.maps.Geocoder();
+                var latlng = new google.maps.LatLng(coordonnes.lat, coordonnes.lng);
+                geocoder.geocode({'latLng': latlng}, function (results, status) {
+                    var elt = results[0].address_components;
+                    for (i in elt) {
+                        if (elt[i].types[0] == 'locality') {
+                            document.getElementById('firstHeading').innerHTML += '<p>' + elt[i].long_name + '</p>';
+                        }
+                    }
+                });
+            }
+
+        }
+
+        //Pour afficher le nom de fichier choisi
+        $('input[type=file]').change(function (e) {
+            var filename = e.target.files[0].name;
+            if (null != filename) {
+                $('#btnAddPhoto').css('display', 'none');
+                $('.file_name').css('display', 'block').html('<p >' + filename + '<p>');
+            }
+        });
+
+    </script>
+
+    {# Configuration webcam #}
+    <script language="JavaScript">
+        Webcam.set({
+            width: 320,
+            height: 240,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+    </script>
+    <script language="JavaScript">
+        function setup() {
+            Webcam.reset();
+            Webcam.attach('#camera');
+            $("#annuler").css("display", "block");
+        }
+
+        // Action button annuler si le webcam s'affiche
+        $("#annuler").click(function () {
+            $("#ma-photos").hide();
+            $("#camera").hide();
+            $("#annuler").hide();
+            $("#valide-photo").hide();
+            $("#take-photo").show();
+        });
+        $("#take-photo").click(function () {
+            $("#camera").show();
+            $("#annuler").show();
+            $("#valide-photo").show();
+            $("#take-photo").hide();
+        });
+
+        function take_snapshot() {
+
+            Webcam.snap(function (data_uri) {
+                $('#ma-photos').show();
+                $('#camera').hide();
+                document.getElementById('ma-photos').innerHTML =
+                    '<h2>Ma photos:</h2>' +
+                    '<img src="' + data_uri + '"/>';
+            });
+            Webcam.set({
+                force_flash: true
+            });
+
+        }
+    </script>
+
+{% endblock %}
