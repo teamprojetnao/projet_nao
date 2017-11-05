@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 
 class New_password
@@ -58,5 +59,6 @@ class New_password
     {
         return $this->email;
     }
+
 }
 

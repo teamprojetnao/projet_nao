@@ -15,9 +15,11 @@ use AppBundle\Entity\User;
 use AppBundle\Form\New_passwordType;
 use AppBundle\Form\Password_registrationType;
 use AppBundle\Form\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Swift_Message;
@@ -67,35 +69,6 @@ class SecurityController extends Controller
 
 
     /**
-     * @Route("/inscription",name="inscription")
-     * @Method("POST")
-     */
-    public function connexionAction(Request $request)
-    {
-
-        $doctrinemanager = $this->getDoctrine()->getManager();
-        $data = $request->request->all();
-
-        $user = new User();
-        $user->setNom($data['name']);
-        $user->setEmail($data['email']);
-        $plainPassword = $data['password'];
-        $passwordEncoder = $this->get('security.password_encoder');
-
-        $encoded = $passwordEncoder->encodePassword($user, $plainPassword);
-        $user->setPassword($encoded);
-        $doctrinemanager->persist($user);
-        $doctrinemanager->flush();
-
-        $request->getSession()
-            ->getFlashBag()
-            ->add('success', 'Votre compte a été bien crée');
-        return $this->redirectToRoute('homepage');
-
-
-    }
-
-    /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/password",name="password_page")
      */
@@ -106,37 +79,39 @@ class SecurityController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //vérifier si l'email existe en bdd
+
             $repository = $this
                 ->getDoctrine()
                 ->getManager()
                 ->getRepository('AppBundle:User');
-            $user=$repository->findOneBy(array('email' => $new_password->getEmail()));
+            if ($user = $repository->findOneBy(array('email' => $new_password->getEmail()))) {
 
 
-            $user->setToken (base64_encode(random_bytes(10)));
+                $user->setToken(base64_encode(random_bytes(10)));
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
 
-            $message = (new Swift_Message('Votre demande de nouveau mot de passe'))
-                ->setFrom($this->getParameter('mailer_user'))
-                ->setTo($new_password->getEmail())
-                ->setBody(
-                    $this->renderView(
+                $message = (new Swift_Message('Votre demande de nouveau mot de passe'))
+                    ->setFrom($this->getParameter('mailer_user'))
+                    ->setTo($new_password->getEmail())
+                    ->setBody(
+                        $this->renderView(
 
-                        'Emails/new_password.html.twig',
-                        array('user' => $user)
+                            'Emails/new_password.html.twig',
+                            array('user' => $user)
 
-                    ),
-                    'text/html'
-                );
+                        ),
+                        'text/html'
+                    );
 
-            $this->get('mailer')->send($message);
+                $this->get('mailer')->send($message);
 
 
-            return $this->redirectToRoute('new_password_confirmation_page');
+                return $this->redirectToRoute('new_password_confirmation_page');
+            }
+            $this->get('session')->getFlashBag()->add('info', "Email incorrect");
         }
         return $this->render(':Security:new_password.html.twig', array(
             'form' => $form->createView(),
@@ -155,21 +130,26 @@ class SecurityController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/register",name="passwordregistration_page")
+     *
      */
     public function password_registrationAction(Request $request)
     {
+        $key = $request->query->get('key');
+
+
         $password_registration = new Password_registration();
         $form = $this->createForm(Password_registrationType::class, $password_registration);
         $form->handleRequest($request);
-
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:User');
+        $user = $repository->findOneBy(array('email' => $password_registration->getEmail()));
         if ($form->isSubmitted() && $form->isValid()) {
-            $repository = $this
-                ->getDoctrine()
-                ->getManager()
-                ->getRepository('AppBundle:User');
-            $user = $repository->findOneBy(array('email' => $password_registration->getEmail()));
+
             $encoded = $this->get('security.password_encoder')->encodePassword($password_registration, $password_registration->getPassword());
             $user->setPassword($encoded);
+            $user->setToken("");
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
