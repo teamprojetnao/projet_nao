@@ -138,15 +138,19 @@ class SecurityController extends Controller
 
 
         $password_registration = new Password_registration();
+
         $form = $this->createForm(Password_registrationType::class, $password_registration);
         $form->handleRequest($request);
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('AppBundle:User');
-        $user = $repository->findOneBy(array('email' => $password_registration->getEmail()));
+
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $repository = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('AppBundle:User');
+            if($user = $repository->findOneBy(array('email' => $password_registration->getEmail()))){
+            if($user->getToken()==$key)
+            {
             $encoded = $this->get('security.password_encoder')->encodePassword($password_registration, $password_registration->getPassword());
             $user->setPassword($encoded);
             $user->setToken("");
@@ -155,6 +159,9 @@ class SecurityController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('passwordchanged_page');
+            }
+            }
+            $this->get('session')->getFlashBag()->add('info', "Email incorrect");
         }
 
 
