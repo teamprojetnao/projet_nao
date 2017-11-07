@@ -1,41 +1,55 @@
-{% block title %} Acceuil {% endblock %}
+{% block title %} Mon Observation {% endblock %}
 {% extends 'base.html.twig' %}
+
 {% block stylesheets %}
+    {{ parent() }}
+
     <style type="text/css">
         #map {
             height: 400px;
             width: 100%;
         }
+        #ma-photos {
+            margin:20px;
+            padding:20px;
+            border:1px solid;
+            background:#ccc;
+        }
     </style>
-    {{ parent() }}
-
 {% endblock %}
 
 {% block body %}
-
     <section id="notreprojet">
         <div class="container">
             <div class="row">
+                {% if app.session.flashBag.has('success') %}
+                    <div id="delai" class="col-md-12 alert alert-success"
+                         style="margin: -372px 14px; position: absolute; display: table; width: 27%; z-index: 100; opacity: 0.9;color:#000;">
+                        {% for flash in app.session.flashBag.get('success') %}
+                            <div class="alert alert-success">
+                                <p>{{ flash }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 <div class="col-md-9 ml-auto">
                     <div class="col-md-6 ml-md-6">
                         <h2>MON OBSERVATION</h2>
-                        <form>
+                        <form action="{{ path('save-observation') }}" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Nom de l'espèce</label>
-                                <input type="text" class="form-control" name="especes">
+                                <input type="text" class="form-control" name="nom_especes">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Nombre d'individus</label>
-                                <input type="text" class="form-control" name="especes">
+                                <input type="text" class="form-control" name="nb_especes">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Date</label>
-                                <input type="date" class="form-control" name="date" placeholder="Date d'obervation">
+                                <input type="date" class="form-control" name="date_obs" placeholder="Date d'obervation">
                             </div>
-
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Coordonnés GPS</label>
-
                                 <small id="emailHelp" class="form-text text-muted">Lattitude</small>
                                 <input type="text" class="form-control" name="latitude" id="lat"
                                        placeholder="Lattitude">
@@ -46,7 +60,6 @@
                                        placeholder="Longitude">
                             </div>
                             <div id="map"></div>
-
                             <div class="form-check">
                                 <label class="form-check-label">
                                     <input type="checkbox" name="type_coordonee" id="position_auto"
@@ -56,9 +69,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Image</label>
-                                <input type="file" style="visibility:hidden; display:none;" id="file" name="file">
+                                <input type="file" style="visibility:hidden; display:none;" id="file" name="fichier">
+                                <input type="hidden" id="fichier" name="file_mobile">
                                 <button type="button" id="btnAddPhoto" onclick="$('#file').click();"
-                                        class="btn btn-primary btn-lg btn-block">Ajouter une photo
+                                        class="btn btn-primary btn-lg btn-block btn-ajouter-photo">Ajouter une photo
                                 </button>
 
                                 <center>
@@ -67,10 +81,12 @@
                                     </a>
                                 </center>
                             </div>
-                            <div id="ma-photos"></div>
-                            <div id="camera"></div>
+                            <div id="ma-photos" class="">
+
+                            </div>
+                            <div id="camera" class="img-thumbnail"></div>
                             <div class="form-group">
-                                <button type="button" class="btn btn-secondary btn-lg btn-block"
+                                <button type="button" class="btn btn-secondary btn-lg btn-block btn-prendre-photo"
                                         onClick="setup(); $(this).hide().next().show();" id="take-photo">Prendre une
                                     photo
                                 </button>
@@ -79,58 +95,78 @@
                                         style="display:none" id="valide-photo">Valider ma photo
                                 </button>
 
-
-                                <button type="button" class="btn btn-danger btn-lg btn-block" id="annuler"
-                                        style="display:none">Annuler
+                                <button type="button" class="btn btn-danger btn-lg btn-block" id="annuler" style="display:none">Annuler
                                 </button>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">VALIDER</button>
                             </div>
-
-
-                            <button type="submit" class="btn btn-primary">VALIDER</button>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
     </section>
-
-
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('slick-master/slick/slick.min.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ asset('js/webcam.min.js') }}" type="text/javascript" charset="utf-8"></script>
-    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{{ asset('js/jquery-ui.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('js/Jquery-2.1.4.min.js') }}"></script>
     <script async defer
-            src="http://maps.googleapis.com/maps/api/js?key={{ container.parameter('api_map_key') }}&callback=initMap"></script>
+            src="https://maps.googleapis.com/maps/api/js?key={{ container.parameter('api_map_key') }}&callback=initMap"></script>
     <script>
+        $( document ).ready(function() {
+            $('#ma-photos').hide();
+        });
         var longText, latText;
-
-        //Si l'utilisateur se renseigne sur le champ longitude
         $('#long').on('keyup', function () {
-            longText = $(this).val();
-            //initMap(48.866667, 2.333333);
-            if (latText != "" && longText != "" && latText != undefined && longText != undefined) {
-                initMap(parseFloat(latText), parseFloat(longText));
+            longText = $('#long').val();
+            console.log($('#long').val());
+            if ($('#long').val() != " " && $('#lat').val() != " ") {
+                initMap(parseFloat($('#lat').val()), parseFloat($('#long').val()));
             }
         });
 
-        //Si l'utilisateur se renseigne sur le champ lattitude
         $('#lat').on('keyup', function () {
-            latText = $(this).val();
-            if (latText != "" && longText != "" && latText != undefined && longText != undefined) {
-                initMap(parseFloat(latText), parseFloat(longText));
+            latText = $('#lat').val();
+            console.log($('#lat').val());
+
+            if ($('#long').val() != " " && $('#lat').val() != " ") {
+                initMap(parseFloat($('#lat').val()), parseFloat($('#long').val()));
             }
+
         });
+
+        //enlever le flash message après 4s
+        setTimeout(function() {
+            $("#delai").remove();
+        }, 4000);
 
         //Si l'utilisateur a selectionné coordonnées automatique on ecoute par l'env on click
         $('#position_auto').on('click', function () {
             //Si coordonnes automatique est coché
             if ($('#position_auto').prop('checked')) {
-                initMap(undefined, undefined);
+                getCoordGPSAutomatique();
+            } else {
+
             }
         });
+
+        function getCoordGPSAutomatique() {
+            var coordonnes = [];
+            var long = "";
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (p) {
+                    coordonnes.push(p.coords.latitude);
+                    coordonnes.push(p.coords.longitude);
+                    long = p.coords.longitude;
+                    initMap(p.coords.latitude, p.coords.longitude);
+                });
+            } else {
+                alert('Geo Location feature is not supported in this browser.');
+            }
+
+        }
 
         function initMap(latitude, long) {
 
@@ -159,7 +195,13 @@
                             lat: position.coords.latitude,
                             lng: position.coords.longitude
                         };
-                        afficherLaCarte(pos, 'Paris');
+                        $('#lat').val('');
+                        $('#lat').val(position.coords.latitude);
+
+                        $('#long').val('');
+                        $('#long').val(position.coords.longitude);
+
+                        afficherLaCarte(pos);
                     };
 
                     //Si Erreur de navigateur on  fait appel ipinfo
@@ -178,7 +220,7 @@
             // Sinon l'utilisateur se renseigne donc on pointe sa position sur la carte
             else {
                 var coordonnes = {lat: latitude, lng: long};
-                afficherLaCarte(coordonnes, 'Paris');
+                afficherLaCarte(coordonnes);
             }
 
             // Une fonction qui permet d'afficher  les coordonnées  sur la carte avec nom de la ville
@@ -190,7 +232,7 @@
                     '<span id="firstHeading" class="titre" ></span>' +
                     '<small class="form-text text-muted">Lattitude: ' + coordonnes.lat + '</small>' +
                     '<small class="form-text text-muted">Longitude: ' + coordonnes.lng + '</small>' +
-                        '<button type="button" class="btn btn-primary btn-sm">'+ "Obtenir l'Altitude" +'</button>'+
+                    '<button type="button" class="btn btn-primary btn-sm">' + "Obtenir l'altitude" + '</button>' +
                     '</div>';
 
                 infoWindow.setPosition(coordonnes);
@@ -219,15 +261,14 @@
 
         }
 
-        //Pour afficher le nom de fichier choisi
         $('input[type=file]').change(function (e) {
             var filename = e.target.files[0].name;
+            console.log(filename);
             if (null != filename) {
                 $('#btnAddPhoto').css('display', 'none');
                 $('.file_name').css('display', 'block').html('<p >' + filename + '<p>');
             }
         });
-
     </script>
 
     {# Configuration webcam #}
@@ -242,39 +283,34 @@
     <script language="JavaScript">
         function setup() {
             Webcam.reset();
-            Webcam.attach('#camera');
-            $("#annuler").css("display", "block");
+            Webcam.attach( '#camera' );
+            $("#annuler").css("display","block");
         }
-
         // Action button annuler si le webcam s'affiche
-        $("#annuler").click(function () {
+        $("#annuler").click(function(){
             $("#ma-photos").hide();
             $("#camera").hide();
             $("#annuler").hide();
             $("#valide-photo").hide();
             $("#take-photo").show();
         });
-        $("#take-photo").click(function () {
+        $("#take-photo").click(function(){
             $("#camera").show();
             $("#annuler").show();
             $("#valide-photo").show();
-            $("#take-photo").hide();
-        });
+            $("#take-photo").css('display','none');
+            // $("#take-photo").attr("style", "display: none !important");
 
+        });
         function take_snapshot() {
 
-            Webcam.snap(function (data_uri) {
+            Webcam.snap( function(data_uri) {
+                $('#fichier').val(data_uri);
                 $('#ma-photos').show();
-                $('#camera').hide();
                 document.getElementById('ma-photos').innerHTML =
                     '<h2>Ma photos:</h2>' +
-                    '<img src="' + data_uri + '"/>';
-            });
-            Webcam.set({
-                force_flash: true
-            });
-
+                    '<img src="' + data_uri + '" class="img-responsive img-thumbnail"/>';
+            } );
         }
     </script>
-
 {% endblock %}

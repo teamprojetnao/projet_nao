@@ -1,0 +1,134 @@
+/*****************************************************
+## RESPONSIVE MEDIA QUERY
+******************************************************/
+/*-------------------[1440px]------------------*/
+@media only screen and ( max-width: 1440px ) {
+
+}
+
+/*-------------------[1280px]------------------*/
+@media only screen and ( max-width: 1280px ) {
+
+}
+
+/*-------------------[1260px]------------------*/
+@media only screen and ( max-width: 1260px ) {
+
+}
+
+/*-------------------[1200px]------------------*/
+@media only screen and ( max-width: 1200px ) {
+
+}
+
+/*-------------------[1240px]------------------*/
+@media only screen and ( max-width: 1240px ) {
+
+}
+
+/*-------------------[1080px]------------------*/
+@media only screen and ( max-width: 1080px ) {
+
+}
+
+/*-------------------[1024px]------------------*/
+@media only screen and ( max-width: 1024px ) {
+
+}
+
+/*-------------------[990px]------------------*/
+@media only screen and (max-width: 990px) {
+
+}
+
+/*-------------------[890px]------------------*/
+@media only screen and (max-width: 890px) {
+
+}
+
+/*-------------------[768px]------------------*/
+@media only screen and ( max-width: 768px ) {
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar.navbar-expand-lg{
+        margin: 0 !important;
+        top: -316px;
+        right: 20px;
+        /*background: green;*/
+    }
+    ul.navbar-nav{
+        display: block;
+    }
+    .navbar-default .navbar-toggle {
+        border-color: #ddd;
+    }
+    .navbar-toggle {
+        position: relative;
+        float: right;
+        padding: 9px 10px;
+        background-image: none;
+        border: 1px solid #BDBDAE;
+        border-radius: 4px;
+    }
+    .navbar-default .navbar-toggle .icon-bar {
+        background-color: #888 !important;
+    }
+    .navbar-toggle .icon-bar {
+        display: block;
+        width: 22px;
+        height: 2px;
+        border-radius: 1px;
+        background-color: #888;
+        margin: 3px;
+    }
+    #take-photo {
+        display:block;
+    }
+    #btnAddPhoto {
+        display:none !important;
+    }
+}
+
+/*-------------------[757px]------------------*/
+@media only screen and (max-width: 757px) {
+
+}
+
+/*-------------------[555px]------------------*/
+@media only screen and ( max-width: 555px ) {
+
+}
+
+/*-------------------[479px]------------------*/
+@media only screen and ( max-width: 479px ) {
+
+}
+
+/*-------------------[425px]------------------*/
+@media only screen and ( max-width: 425px ) {
+    .navbar.navbar-expand-lg {
+        top: -239px;
+    }
+}
+
+/*-------------------[375px]------------------*/
+@media only screen and ( max-width: 375px ) {
+    .navbar.navbar-expand-lg {
+        top: -222px;
+    }
+}
+
+/*-------------------[360px]------------------*/
+@media only screen and ( max-width: 360px ) {
+    .navbar.navbar-expand-lg {
+        top: -220px;
+    }
+}
+
+/*-------------------[320px]------------------*/
+@media only screen and ( max-width: 320px ) {
+    .navbar.navbar-expand-lg {
+        top: -206px;
+    }
+}

@@ -1,19 +1,102 @@
 {% block title %} Mon compte {% endblock %}
-{% extends 'base_backoffice.html.twig' %}
+{% extends 'base.html.twig' %}
 {% block body %}
     <div class="container">
+        <div class="row">
+            <div class="titre-h2"><h2>Mon espace</h2></div>
+        </div>
+        <div class="row">
+            <div class="txt-bienvenue"><h3>Bienvenue "{{ app.user.nom }} {{ app.user.prenom }}"</h3></div>
+        </div>
+        <div class="row">
+            <button class="accordion">Mon profil</button>
+            <div class="panel">
+                <p>Nom : {{ app.user.nom }}</p>
+                <p>Prénom : {{ app.user.prenom }}</p>
+                <p>Email : {{ app.user.email }}</p>
+                <p>Pseudo : {{ app.user.pseudo }}</p>
+                <p>Date de naissance : {{ app.user.birthdate | date('d-m-Y') }}</p>
+            </div>
 
-        <div class="col-sm-3 col-sm-offset-3">
-            <div class="gris-claire-vp linkaccueil">
-                <span class="number">2</span>
-                <a href="{{route('info-publier')}}" >Observations en attente</a>
+            <button class="accordion">Les dernières observations</button>
+            <div class="panel content-box-last-observation">
+                {% for observation in lastObservations %}
+
+                    <div class="card box-card">
+                        <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
+                             alt="Card image cap">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">{{ observation.nomEspece }}</li>
+                            <li class="list-group-item">{{ observation.nbIndividus }}</li>
+                            <li class="list-group-item">{{ observation.dateObservation | date('d-m-Y') }}</li>
+                            <li class="list-group-item">Coordonnées GPS : {{ observation.latitude }} ,
+                                {{ observation.longitude }} </li>
+                            <li class="list-group-item">{{ observation.user.nom }} {{ observation.user.prenom }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+
             </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="gris-claire-vp linkaccueil">
-                <a href="" >Mes observations</a>
+
+            <button class="accordion">Mes observations {{ nombre }}</button>
+            <div class="panel content-box-my-observation">
+
+
+                {% for observation in observations %}
+
+                    <div class="card box-card">
+                        <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
+                             alt="Card image cap">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">{{ observation.nomEspece }}</li>
+                            <li class="list-group-item">{{ observation.nbIndividus }}</li>
+                            <li class="list-group-item">{{ observation.dateObservation | date('d-m-Y') }}</li>
+                            <li class="list-group-item">Coordonnées GPS : {{ observation.latitude }} ,
+                                {{ observation.longitude }} </li>
+                            <li class="list-group-item">{{ observation.user.nom }} {{ observation.user.prenom }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+
             </div>
-        </div>
+
+
+            {% if(app.user.roles[0]=='ROLE_ADMIN') %}
+                <button class="accordion">Observations en attentes (2)</button>
+                <div class="panel content-box-attente-observation">
+                    <div class="card box-card">
+                        <img class="card-img-top" src="http://placehold.it/120x70" alt="Card image cap">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Nom espèce</li>
+                            <li class="list-group-item">Nombre d'individus</li>
+                            <li class="list-group-item">Date</li>
+                            <li class="list-group-item">Coordonnées GPS</li>
+                            <li class="list-group-item">Nom utilisateur</li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].onclick = function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            }
+        }
+    </script>
 {% endblock %}

@@ -1,59 +1,67 @@
 
 
 <div class="container">
-<!-- Heading Row -->
-<div class="row my-4">
-    <div class="col-lg-4" style="background: #CCCCCC">
+    <!-- Heading Row -->
+    <div class="row my-4">
+        <div class="col-lg-4" style="background: #CCCCCC">
 
-        <a href="{{ path('homepage') }}">
-            <img src="http://placehold.it/60x60" class="img-responsive img-thumbnail" style="margin:10px 2px">
-        </a>
-        <br>
-        <center><a class="btn btn-primary" href="{{ path('observationpage') }}" style="margin-top: 30%">ENTRER UNE OBSERVATIONS</a></center>
+            <a href="{{ path('homepage') }}">
+                <img src="http://placehold.it/60x60" class="img-responsive img-thumbnail" style="margin:10px 2px">
+            </a>
+            <br>
+            <center><a class="btn btn-primary" href="{{ path('observationpage') }}" style="margin-top: 30%">ENTRER UNE OBSERVATIONS</a></center>
 
-    </div>
-    <!-- /.col-md-4 -->
-    <div class="col-lg-8" style="background: #CCCCCC">
-        <nav class="navbar navbar-expand-lg" style="position: absolute ; margin: 16px 125px">
-            <div class="container">
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{{ path('observationpage') }}">Entrer une observation
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('searchpage') }}">Cartes des espèces</a>
-                        </li>
-                        {% if app.user==null %}
-                        <li class="nav-item">
-                            <a class="btn btn-outline-dark" href="{{ path('login') }}"> Se connecter</a>
-                        </li>
-                        {% else %}
-                        <li class="nav-item">
-                            <div class="btn-group">
-                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-user fa-2x"></i></button>
-                                <ul class="dropdown-menu">
-                                    <li>Hello {{ app.user.pseudo }}</li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Mon compte</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href={{ path('logout') }}>se déconnecter</a></li>
+        </div>
+        <!-- /.col-md-4 -->
+        <div class="col-lg-8" style="background: #CCCCCC">
+            <nav class="navbar navbar-expand-lg" style="position: absolute ; margin: 16px 125px">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse.collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{ path('observationpage') }}">Entrer une observation
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('searchpage') }}">Cartes des espèces</a>
+                            </li>
+                            {% if app.user==null %}
+                                <li class="nav-item">
+                                    <a class="btn btn-outline-dark" href="{{ path('login') }}"> Se connecter</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <div class="btn-group">
+                                        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-user fa-2x"></i></button>
+                                        <ul class="dropdown-menu">
+                                            <li>Hello {{ app.user.pseudo }}</li>
+                                            <li class="divider"></li>
+                                            <li><a href="{{ path('mon-compte') }}">Mon compte</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href={{ path('logout') }}>se déconnecter</a></li>
 
 
-                                </ul>
-                            </div>
+                                        </ul>
+                                    </div>
 
-                        </li>
-                        {% endif %}
-                    </ul>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-        <img class="img-fluid rounded img-thumbnail" src="http://placehold.it/900x400" style="margin: 10px 2px" >
+            </nav>
+            <img class="img-fluid rounded img-thumbnail" src="http://placehold.it/900x400" style="margin: 10px 2px" >
+        </div>
+        <!-- /.col-lg-8 -->
     </div>
-    <!-- /.col-lg-8 -->
-</div>
-<!-- /.row -->
+    <!-- /.row -->
 </div>

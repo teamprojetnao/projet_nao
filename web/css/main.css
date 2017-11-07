@@ -90,3 +90,100 @@
 section{
   margin-top: 33px;
 }
+
+#take-photo {
+  display:none;
+}
+
+/* style pour menu accordeon */
+button.accordion {
+  background-color: #fff;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: center;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+  border:1px solid #000;
+}
+
+button.accordion.active, button.accordion:hover {
+  background-color: #ccc;
+}
+
+div.panel {
+  padding: 0 18px;
+  background-color: white;
+  display: block;
+  border-left:1px solid #000;
+  border-right:1px solid #000;
+  width: 100%;
+}
+div.panel:nth-last-child(-n+2) {
+  border-bottom:1px solid #000;
+}
+
+button.accordion:after {
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 13px;
+  color: #777;
+  float: right;
+  margin-left: 5px;
+}
+
+button.accordion.active:after {
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+div.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+.titre-h2 {
+  border:1px solid #000;
+  padding: 15px 0;
+  width: 100%;
+  text-align: center;
+}
+.txt-bienvenue {
+  border:1px solid #000;
+  padding: 5px 0 0;
+  width: 100%;
+  text-align: center;
+}
+.titre-h2 h2{
+  font-weight: 700;
+  color: #676767;
+  font-size: 20px;
+}
+.txt-bienvenue h3{
+  font-weight: 300;
+  color: #676767;
+  font-size: 14px;
+}
+.box-card {
+  border-radius: 0;
+  display: inline-block;
+  margin: 10px;
+  width: 12rem;
+}
+.card-img-top {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.list-group-item {
+  padding: 0;
+  border: 0;
+  font-size: 13px;
+}
+.navbar-toggle {
+  display: none;
+}
+ul.navbar-nav{
+  display: -webkit-box;
+}

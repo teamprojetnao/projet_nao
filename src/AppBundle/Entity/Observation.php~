@@ -1,0 +1,80 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Observation
+ *
+ * @ORM\Table(name="observation")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ObservationRepository")
+ */
+class Observation
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="observation", cascade={"persist"})
+     */
+    private $user;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom_espece", type="string", length=255, nullable=true)
+     */
+    private $nomEspece;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="nb_individus", type="integer", nullable=true)
+     */
+    private $nbIndividus;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_observation", type="datetime", nullable=true)
+     */
+    private $dateObservation;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="latitude", type="string", length=100, nullable=true)
+     */
+    private $latitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="longitude", type="string", length=100, nullable=true)
+     */
+    private $longitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="photo", type="string", length=150, nullable=true)
+     */
+    private $photo;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_validate", type="boolean", nullable=true)
+     */
+    private $isValidate;
+
+}
