@@ -1,20 +1,21 @@
 
 $( "#autocomplete" ).autocomplete({
-    source:  [
-    "Accenteur alpin",
-    "Accenteur mouchet",
-    "Agami trompette",
-    "Aigle",
-    "Aigle botté",
-    "Aigle de Verreaux",
-    "Aigle noir",
-    "Aigle des steppes",
-    "Aigle ravisseur",
-    "Aigrette",
-    "Albatros",
-    "Alouette",
-    "Amadine",
-    "Amazone",
-    "Amazone dmazone à front bleu"]
+    source:  function(requete, reponse){
+        var key = $('#autocomplete').val();
+
+        $.ajax({
+
+            url : "{{ path('ajax_search') }}",
+            dataType : 'json',
+            data : key,
+
+            success : function(donnee){
+                reponse($.map(donnee, function(objet){
+                    return objet;
+                }));
+            }
+        });
+
+    }
 });
 
