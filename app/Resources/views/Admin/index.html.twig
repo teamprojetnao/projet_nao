@@ -4,9 +4,49 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Utilisateurs :</h3>
+                    </div>
+                    <div class="list-group">
+                        <a href="{{ path('admin_user') }}" class="list-group-item">
+                            Particuliers
+                            <span class="badge">120</span>
+                        </a>
+                        <a href="{{ path('admin_naturalist') }}" class="list-group-item">
+                             Naturalistes
+                            <span class="badge">540</span>
+                        </a>
 
-            Dashboard
+                        <a href="{{ path('admin_validate') }}" class="list-group-item">
+                            Comptes naturalistes en attente de validation
+                            <span class="badge">120</span>
+                        </a>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Observations :</h3>
+                    </div>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">
+                            Validées
+                            <span class="badge">120</span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            A valider
+                            <span class="badge">540</span>
+                        </a>
+
+                    </div>
+                </div>
+
             </div>
 
         </div>

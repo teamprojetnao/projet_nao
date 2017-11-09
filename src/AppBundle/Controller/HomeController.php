@@ -69,7 +69,7 @@ class HomeController extends Controller
 
             ;
 
-            $mailer->send($message);
+            $this->get('mailer')->send($message);
 
 
             return $this->render(':Home:confirmation.html.twig');
