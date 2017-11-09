@@ -2,6 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Contact;
+use AppBundle\Form\ContactType;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,6 +41,41 @@ class HomeController extends Controller
     public function cardAction()
     {
         return $this->render(':Home:card.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/contact", name="contact_page")
+     */
+    public function contactAction(Request $request)
+    {
+        $contact=new Contact;
+        $form =$this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()&& $form->isValid())
+        {
+            $message = (new Swift_Message('Contact from NAO'))
+                ->setFrom($contact->getEmail())
+                ->setTo($this->getParameter('mailer_user'))
+                ->setBody(
+                    $this->renderView(
+                    // app/Resources/views/Emails/registration.html.twig
+                        'Emails/contact.html.twig',
+                        array('contact' => $contact)
+                    ),
+                    'text/html'
+                )
+
+            ;
+
+            $mailer->send($message);
+
+
+            return $this->render(':Home:confirmation.html.twig');
+        }
+        return $this-> render(':Home:contact.html.twig', array(
+            'form' => $form->createView()));
     }
 
 }

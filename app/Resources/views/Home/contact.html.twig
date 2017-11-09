@@ -1,0 +1,31 @@
+{% block title %} Contact {% endblock %}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ <div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+
+                <h2 >Contactez-nous!</h2>
+                {{ form_start(form) }}
+
+                {# Les erreurs générales du formulaire. #}
+                {{ form_errors(form) }}
+
+                {{ form_row(form.email) }}
+
+                <div class="form-group">
+                    {{ form_label(form.subject, 'Objet', {'label_attr': {'class': 'control-label'}}) }}
+                    {{ form_errors(form.subject) }}
+                    {{ form_widget(form.subject, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                {{ form_row(form.message) }}
+
+                {# Fermeture de la balise <form> du formulaire HTML #}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
