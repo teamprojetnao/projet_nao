@@ -68,7 +68,8 @@ doctrine:
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
+    encryption: "%mailer_encryption%"
     host:      "%mailer_host%"
-    username:  anne.derenoncourt@gmail.com
+    username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
