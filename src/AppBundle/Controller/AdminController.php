@@ -29,6 +29,7 @@ class AdminController extends Controller
     }
 
     /**
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/user", name="admin_user")
 
      */
@@ -61,10 +62,11 @@ class AdminController extends Controller
     }
 
     /**
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/validate", name="admin_validate")
 
      */
-    public function validateAction()
+    public function validateAction(Request $request)
     {
         $repository = $this
             ->getDoctrine()
@@ -73,33 +75,30 @@ class AdminController extends Controller
         $listUsers = $repository->FindBy(
             array('isNaturalistRequired' => '1')
         );
-        return $this->render(':Admin:validate.html.twig', array('listUsers' => $listUsers));
+
+
+
+        $form = $this->createFormBuilder()->getForm();
+        $form->handleRequest($request);
+
+
+        if($form->isSubmitted()&& $form->isValid())
+
+        {
+            $em=$this->getDoctrine()->getManager();
+            $id=$request->get('id');
+            $user = $repository->find($id);
+            $user->setIsNaturalistRequired('0');
+            $user->setRoles('ROLE_NATURALIST');
+
+            $em->flush();
+            $request->getSession()->getFlashbag()->add('info, le compte naturaliste a bien été validé');
+            return $this->redirectToRoute('admin_home');
+        }
+
+        return $this->render(':Admin:validate.html.twig', array('listUsers' => $listUsers, 'form'=>$form->createView()));
     }
 
 
-        public function isNaturalistAction(Request $request, $id)
-        {
-            $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository('AppBundle:Advert')->find($id);
 
-            if (null === $user) {
-                throw new NotFoundHttpException("l'user" . $id . "n'existe pas");
-            }
-
-            $form = $this->createForm('form.factory');
-            $form->handleRequest($request);
-            if($form->isSubmitted()&& $form->isValid())
-            {$user->setIsNaturalistRequired='0';
-            $user->setRoles="ROLE_NATURALIST";
-                $em->persist($user);
-                $em->flush();
-                $request->getSession()->getFlashbag()->add('info, le compte naturaliste a bien été validé');
-                return $this->redirectToRoute('admin_home');
-            }
-            return $this->render('AppBundle:validate.html.twig', array(
-                'user' => $user,
-                'form'   => $form->createView(),
-            ));
-
-        }
 }

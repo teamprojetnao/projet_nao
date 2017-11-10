@@ -14,14 +14,14 @@
                       <p>Date de naissance :{{ user.birthdate |date('d/m/Y')}}</p>
                       <p>Email :{{ user.email }}</p>
 
-                      <form action="" method ="post">
+                      <form action="{{ path('admin_validate', {'id': user.id}) }}" method ="POST">
                         <input type="submit" class="btn btn-success" value="valider">
 
                       </form>
 
-                      <form action="">
+
                       <button type="submit" class="btn btn-danger">refuser</button>
-                      </form>
+
                       <button class="btn btn-primary">envoyer un email</button>
                       <hr>
                   {% endfor %}
