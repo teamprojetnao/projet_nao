@@ -15,9 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -26,9 +24,8 @@ class UserType extends AbstractType
             ->add('pseudo',TextType::class)
             ->add('email',EmailType::class)
             ->add('password', PasswordType::class)
-            ->add('status',ChoiceType::class, array(
-                'choices'=> array('particulier'=>1, 'naturaliste'=>2 )
-            ))
+
+            ->add('isNaturalistRequired',CheckboxType::class)
             ->add('birthdate',DateType::class)
             ->add('cgu', CheckboxType::class, array('required' => true))
             ->add('save',SubmitType::class );

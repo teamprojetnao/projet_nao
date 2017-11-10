@@ -70,12 +70,7 @@ class User implements UserInterface
      */
     private $roles=array() ;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="status", type="string", length=255)
-     */
-    private $status;
+
 
     /**
      * @var \DateTime
@@ -89,6 +84,21 @@ class User implements UserInterface
      * @ORM\Column(name="cgu", type="boolean")
      */
     private $cgu;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="naturalist_required", type="boolean")
+     */
+    private $isNaturalistRequired;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="naturalist", type="boolean")
+     */
+    private $isNaturalist;
+
     /**
      * @var string
      *
@@ -99,6 +109,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->roles = 'ROLE_USER';
+        $this->isNaturalist='false';
 
 
     }
@@ -411,5 +422,53 @@ class User implements UserInterface
     public function getToken()
     {
         return $this->token;
+    }
+
+    /**
+     * Set isNaturalistRequired
+     *
+     * @param boolean $isNaturalistRequired
+     *
+     * @return User
+     */
+    public function setIsNaturalistRequired($isNaturalistRequired)
+    {
+        $this->isNaturalistRequired = $isNaturalistRequired;
+
+        return $this;
+    }
+
+    /**
+     * Get isNaturalistRequired
+     *
+     * @return boolean
+     */
+    public function getIsNaturalistRequired()
+    {
+        return $this->isNaturalistRequired;
+    }
+
+    /**
+     * Set isNaturalist
+     *
+     * @param boolean $isNaturalist
+     *
+     * @return User
+     */
+    public function setIsNaturalist($isNaturalist)
+    {
+        $this->isNaturalist = $isNaturalist;
+
+        return $this;
+    }
+
+    /**
+     * Get isNaturalist
+     *
+     * @return boolean
+     */
+    public function getIsNaturalist()
+    {
+        return $this->isNaturalist;
     }
 }

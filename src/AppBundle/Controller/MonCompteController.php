@@ -12,14 +12,7 @@ use AppBundle\Entity\Observation;
 
 class MonCompteController extends Controller
 {
-    /**
-     * @Route("/admin", name="admin_home")
-     * @Security("has_role('ROLE_ADMIN')")
-     */
-    public function adminAction()
-    {
-        return $this->render(':Admin:index.html.twig');
-    }
+
 
     /**
      * @Route("/observation", name="observationpage")
