@@ -7,6 +7,7 @@ use AppBundle\Form\ContactType;
 use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,7 +33,7 @@ class HomeController extends Controller
         $requestString = $request->get('term');
         $aves =  $em->getRepository('AppBundle:Aves')->findAvesByString($requestString);
 
-        return new Response(json_encode($aves));
+        return new JsonResponse($aves);
     }
 
     /**

@@ -3,11 +3,12 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Index;
 
 /**
  * Aves
  *
- * @ORM\Table(name="aves")
+ * @ORM\Table(name="aves", indexes={@Index(columns={"nomscientifique"}), @Index(columns={"nomvernaculaire"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AvesRepository")
  */
 class Aves
@@ -23,14 +24,14 @@ class Aves
     /**
      * @var string
      *
-     * @ORM\Column(name="nomscientifique", type="text")
+     * @ORM\Column(name="nomscientifique", type="string")
      */
     private $nomscientifique;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nomvernaculaire", type="text", nullable=true)
+     * @ORM\Column(name="nomvernaculaire", type="string", nullable=true)
      */
     private $nomvernaculaire;
 
