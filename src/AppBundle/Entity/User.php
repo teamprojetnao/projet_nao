@@ -68,7 +68,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(name="roles", type="array")
      */
-    private $roles=array() ;
+    private $roles=array('ROLE_USER') ;
 
 
 
@@ -92,12 +92,7 @@ class User implements UserInterface
      */
     private $isNaturalistRequired;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="naturalist", type="boolean")
-     */
-    private $isNaturalist;
+
 
     /**
      * @var string
@@ -106,13 +101,7 @@ class User implements UserInterface
      */
     private $token;
 
-    public function __construct()
-    {
-        $this->roles = 'ROLE_USER';
-        $this->isNaturalist='false';
 
-
-    }
 
     /**
      * Get id
@@ -252,29 +241,7 @@ class User implements UserInterface
         // TODO: Implement eraseCredentials() method.
     }
 
-    /**
-     * Set status
-     *
-     * @param string $status
-     *
-     * @return User
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
 
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
 
     /**
      * Set birthdate
@@ -448,27 +415,5 @@ class User implements UserInterface
         return $this->isNaturalistRequired;
     }
 
-    /**
-     * Set isNaturalist
-     *
-     * @param boolean $isNaturalist
-     *
-     * @return User
-     */
-    public function setIsNaturalist($isNaturalist)
-    {
-        $this->isNaturalist = $isNaturalist;
 
-        return $this;
-    }
-
-    /**
-     * Get isNaturalist
-     *
-     * @return boolean
-     */
-    public function getIsNaturalist()
-    {
-        return $this->isNaturalist;
-    }
 }

@@ -24,9 +24,21 @@ class AdminController extends Controller
     /**
      * @Route("/admin", name="admin_home")
      */
-    public function adminAction()
+    public function adminAction(Request $request)
     {
-        return $this->render(':Admin:index.html.twig');
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:User');
+        $nbNaturalists=$repository->countNaturalists();
+        $nbUsers=$repository->countUsers();
+        $nbIsNaturalistRequired=$repository->countIsNaturalistRequired();
+
+        return $this->render(':Admin:index.html.twig', array(
+            'nbNaturalists' => $nbNaturalists,
+            'nbUsers' => $nbUsers,
+            'nbIsNaturalistRequired' => $nbIsNaturalistRequired
+        ));
     }
 
     /**
@@ -39,9 +51,8 @@ class AdminController extends Controller
             ->getDoctrine()
             ->getManager()
             ->getRepository('AppBundle:User');
-        $listUsers = $repository->FindBy(
-            array('roles' => 'ROLE_USER')
-        );
+        $listUsers = $repository->findUsers();
+
 
 
         return $this->render(':Admin:user.html.twig', array('listUsers' => $listUsers));
@@ -56,9 +67,8 @@ class AdminController extends Controller
             ->getDoctrine()
             ->getManager()
             ->getRepository('AppBundle:User');
-        $listUsers = $repository->FindBy(
-            array('roles' => 'ROLE_NATURALIST')
-        );
+        $listUsers = $repository->findNaturalists();
+
         return $this->render(':Admin:naturalist.html.twig', array('listUsers' => $listUsers));
     }
 
@@ -94,7 +104,7 @@ class AdminController extends Controller
 
 
         $user->setIsNaturalistRequired('0');
-        $user->setRoles('ROLE_NATURALIST');
+        $user->setRoles(array('ROLE_NATURALIST'));
 
         $em->persist($user);
         $em->flush();
@@ -118,7 +128,11 @@ class AdminController extends Controller
         );
 
 
-        return $this->render(':Admin:validate.html.twig', array('listUsers' => $listUsers));
+
+
+        return $this->render(':Admin:validate.html.twig', array('listUsers' => $listUsers
+
+        ));
     }
 
 
