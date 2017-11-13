@@ -75,7 +75,7 @@ class Observation
      *
      * @ORM\Column(name="is_validate", type="boolean", nullable=true)
      */
-    private $isValidate;
+    private $isValidate=0;
 
 
     /**

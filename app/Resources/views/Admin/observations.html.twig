@@ -1,0 +1,36 @@
+{% block title %} Gestion particuliers {% endblock %}
+{% extends 'base_backoffice.html.twig' %}
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 ">
+
+                  {% for observation in listObservations %}
+                      <div class="card text-center  ">
+                          <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
+                               alt="Card image cap">
+
+                          <ul class="list-group list-group-flush">
+                              <li class="list-group-item">Espèce : {{ observation.nomEspece }}</li>
+                              <li class="list-group-item">Nombre d'individus : {{ observation.nbIndividus }}</li>
+                              <li class="list-group-item">Date : {{ observation.dateObservation | date('d-m-Y') }}</li>
+                              <li class="list-group-item">Coordonnées GPS : {{ observation.latitude }} ,
+                                  {{ observation.longitude }} </li>
+                              <li class="list-group-item">Auteur : {{ observation.user.nom }} {{ observation.user.prenom }}</li>
+                          </ul>
+                      </div>
+
+                      <hr>
+                  {% endfor %}
+
+
+
+            </div>
+
+                </div>
+
+            </div>
+
+
+{% endblock %}

@@ -34,10 +34,23 @@ class AdminController extends Controller
         $nbUsers=$repository->countUsers();
         $nbIsNaturalistRequired=$repository->countIsNaturalistRequired();
 
+
+        $observations=$this->getDoctrine()->getManager()->getRepository('AppBundle:Observation')->findBy(
+            array('isValidate'=>'1')
+        );
+        $nbObservations =count($observations);
+
+        $requiredObservations=$this->getDoctrine()->getManager()->getRepository('AppBundle:Observation')->findBy(
+        array('isValidate'=>'0')
+    );
+        $nbRequiredObservations =count($requiredObservations);
+
         return $this->render(':Admin:index.html.twig', array(
             'nbNaturalists' => $nbNaturalists,
             'nbUsers' => $nbUsers,
-            'nbIsNaturalistRequired' => $nbIsNaturalistRequired
+            'nbIsNaturalistRequired' => $nbIsNaturalistRequired,
+            'nbObservations' => $nbObservations,
+            'nbRequiredObservations' => $nbRequiredObservations
         ));
     }
 
@@ -133,6 +146,53 @@ class AdminController extends Controller
         return $this->render(':Admin:validate.html.twig', array('listUsers' => $listUsers
 
         ));
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/observation-list", name="observation_list")
+     */
+    public function observationListAction()
+    {
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Observation');
+
+        $listObservations = $repository->FindBy(
+            array('isValidate' => '1')
+        );
+
+
+        return $this->render(':Admin:observations.html.twig', array('listObservations' => $listObservations,
+
+
+        ));
+    }
+
+        /**
+         * @return \Symfony\Component\HttpFoundation\Response
+         * @Route("/observation-required-list", name="observation_required_list")
+         */
+        public function observationRequiredListAction()
+    {
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Observation');
+
+        $listObservations = $repository->FindBy(
+            array('isValidate' => '0')
+        );
+
+
+
+
+        return $this->render(':Admin:observations.html.twig', array('listObservations' => $listObservations,
+
+
+        ));
+
     }
 
 
