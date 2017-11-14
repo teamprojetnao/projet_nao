@@ -8,6 +8,10 @@
             height: 400px;
             width: 100%;
         }
+        #ma-photos {
+
+
+        }
     </style>
     {{ parent() }}
 
@@ -23,8 +27,16 @@
 
                     <div id="map"></div>
                 </div>
-
                 <div class="col-sm-4">
+                    <div class="alert alert-dark">
+                    {% if nbObservation > 0%}
+
+
+                    <p>{{ nbObservation }} observations correspondant à l'espèce sélectionnée ont été trouvées.</p>
+                    {% else %}
+                    <p>Aucune observation ne correspond à l'espèce sélectionnée.</p>
+                    {% endif %}
+                </div>
                     <form action="{{ path('aves_submit') }}" method="post">
                         <div class="form-group">
                             <label for="autocomplete">Tapez le nom d'un oiseau</label> :
@@ -34,6 +46,29 @@
                     </form>
                 </div>
             </div>
+            <div class="row">
+
+                    {% for observation in listObservation %}
+                <div class="col-sm-3">
+                        <div class="card text-center  ">
+                            <img class="card-img-top" id = "ma-photos" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
+                                 alt="Card image cap">
+
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Espèce : {{ observation.nomEspece }}</li>
+                                <li class="list-group-item">Nombre d'individus : {{ observation.nbIndividus }}</li>
+                                <li class="list-group-item">Date : {{ observation.dateObservation | date('d-m-Y') }}</li>
+                                <li class="list-group-item">Coordonnées GPS : {{ observation.latitude }} ,
+                                  {{ observation.longitude }} </li>
+                                <li class="list-group-item">Auteur : {{ observation.user.nom }} {{ observation.user.prenom }}</li>
+                            </ul>
+                        </div>
+                </div>
+                        <br>
+                    {% endfor %}
+
+            </div>
+
 
         </div>
     </section>
