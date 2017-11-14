@@ -1,0 +1,25 @@
+/*
+ custom css
+*/
+
+.mt-4, .my-4 {
+    margin-top: 0 !important;
+    height: 585px;
+}
+.header-left {
+    background-image: linear-gradient( -82deg, rgba(0, 0, 0, 0) 0%, rgba(00, 0, 0, 0) -16%, #2C3A6B 0%, #2C3A6B 100%);
+}
+.bg-oiseau {
+    background-image: url('../image/img-bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center 0;
+}
+.container {
+    max-width: 100%;
+}
+.img-thumbnail.logo{
+     background-color: transparent;
+    border: 0;
+    width: 60%;
+}

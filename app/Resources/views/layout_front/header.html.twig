@@ -3,17 +3,17 @@
 <div class="container">
     <!-- Heading Row -->
     <div class="row my-4">
-        <div class="col-lg-4" style="background: #CCCCCC">
+        <div class="col-lg-4 header-left">
 
             <a href="{{ path('homepage') }}">
-                <img src="http://placehold.it/60x60" class="img-responsive img-thumbnail" style="margin:10px 2px">
+                <img src="{{ asset('image/Logo_RectangleVertVersionDef.png') }}" class="img-responsive img-thumbnail logo" style="margin:10px 2px">
             </a>
             <br>
             <center><a class="btn btn-primary" href="{{ path('observationpage') }}" style="margin-top: 30%">ENTRER UNE OBSERVATIONS</a></center>
 
         </div>
         <!-- /.col-md-4 -->
-        <div class="col-lg-8" style="background: #CCCCCC">
+        <div class="col-lg-8 bg-oiseau">
             <nav class="navbar navbar-expand-lg" style="position: absolute ; margin: 16px 125px">
                 <div class="container">
                     <div class="navbar-header">
@@ -59,7 +59,7 @@
                     </div>
                 </div>
             </nav>
-            <img class="img-fluid rounded img-thumbnail" src="http://placehold.it/900x400" style="margin: 10px 2px" >
+            <!--<img class="img-fluid rounded img-thumbnail" src="{{ asset('image/img-bg.jpg') }}" style="margin: 10px 2px" >-->
         </div>
         <!-- /.col-lg-8 -->
     </div>
