@@ -1,5 +1,6 @@
 {% block title %} Admin {% endblock %}
 {% extends 'base_backoffice.html.twig' %}
+
 {% block body %}
 
     <div class="container-fluid">
@@ -12,16 +13,16 @@
                     <div class="list-group">
                         <a href="{{ path('admin_user') }}" class="list-group-item">
                             Particuliers
-                            <span class="badge">120</span>
+                            <span class="badge">{{ nbUsers }}</span>
                         </a>
                         <a href="{{ path('admin_naturalist') }}" class="list-group-item">
                              Naturalistes
-                            <span class="badge">540</span>
+                            <span class="badge">{{ nbNaturalists }}</span>
                         </a>
 
-                        <a href="{{ path('admin_validate') }}" class="list-group-item">
+                        <a href="{{ path('admin_validate_list') }}" class="list-group-item">
                             Comptes naturalistes en attente de validation
-                            <span class="badge">120</span>
+                            <span class="badge">{{ nbIsNaturalistRequired }}</span>
                         </a>
 
                     </div>
@@ -35,13 +36,13 @@
                         <h3 class="panel-title">Observations :</h3>
                     </div>
                     <div class="list-group">
-                        <a href="#" class="list-group-item">
+                        <a href="{{ path('observation_list') }}" class="list-group-item">
                             Validées
-                            <span class="badge">120</span>
+                            <span class="badge">{{ nbObservations }}</span>
                         </a>
-                        <a href="#" class="list-group-item">
+                        <a href="{{ path('observation_required_list') }}" class="list-group-item">
                             A valider
-                            <span class="badge">540</span>
+                            <span class="badge">{{ nbRequiredObservations }}</span>
                         </a>
 
                     </div>

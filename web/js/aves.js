@@ -1,13 +1,19 @@
 
 $( "#autocomplete" ).autocomplete({
+
+
+    minLength: 3,
+    delay: 500,
     source:  function(requete, reponse){
         var key = $('#autocomplete').val();
 
         $.ajax({
 
-            url : "{{ path('ajax_search') }}",
+            url : $("#autocomplete").data('url'),
             dataType : 'json',
-            data : key,
+            data : {
+                term: key
+            },
 
             success : function(donnee){
                 reponse($.map(donnee, function(objet){

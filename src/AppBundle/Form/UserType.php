@@ -25,7 +25,7 @@ class UserType extends AbstractType
             ->add('email',EmailType::class)
             ->add('password', PasswordType::class)
 
-            ->add('isNaturalistRequired',CheckboxType::class)
+            ->add('isNaturalistRequired',CheckboxType::class, array('required' => false))
             ->add('birthdate',DateType::class)
             ->add('cgu', CheckboxType::class, array('required' => true))
             ->add('save',SubmitType::class );

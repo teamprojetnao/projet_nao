@@ -24,8 +24,8 @@ class LoadUser implements FixtureInterface
         $admin->setPassword('admin');
         $admin->setBirthdate(new \DateTime('1976-12-04'));
         $admin->setRoles(array('ROLE_ADMIN'));
-        $admin->setCgu('true');
-        $admin->setStatus('1');
+        $admin->setCgu('1');
+
         $manager->persist($admin);
 
         $naturalist = new User();

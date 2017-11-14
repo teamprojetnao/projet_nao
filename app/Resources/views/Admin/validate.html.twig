@@ -3,36 +3,46 @@
 {% block body %}
 
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6 ">
-                <H2>Mes demandes d'inscription naturaliste en attente</H2>
-
-                  {% for user in listUsers %}
-                      <p>Nom :{{ user.prenom }}</p>
-                      <p>Prénom :{{ user.nom }}</p>
-                      <p>Pseudo :{{ user.pseudo }}</p>
-                      <p>Date de naissance :{{ user.birthdate |date('d/m/Y')}}</p>
-                      <p>Email :{{ user.email }}</p>
-
-                      <form action="{{ path('admin_validate', {'id': user.id}) }}" method ="POST">
-                        <input type="submit" class="btn btn-success" value="valider">
-
-                      </form>
 
 
-                      <button type="submit" class="btn btn-danger">refuser</button>
+        {% for message in app.session.flashbag.get('info') %}
+            <p class="alert alert-success">{{ message }}</p>
+        {% endfor %}
 
-                      <button class="btn btn-primary">envoyer un email</button>
-                      <hr>
-                  {% endfor %}
+        <H2>Mes demandes d'inscription naturaliste en attente</H2>
 
 
-
-            </div>
-
+        {% for user in listUsers %}
+            <div class="row">
+                <div class="col-sm-6 ">
+                    <p>Nom :{{ user.prenom }}</p>
+                    <p>Prénom :{{ user.nom }}</p>
+                    <p>Pseudo :{{ user.pseudo }}</p>
+                    <p>Date de naissance :{{ user.birthdate |date('d/m/Y') }}</p>
+                    <p>Email :{{ user.email }}</p>
                 </div>
 
+                <div class="col-sm-2 ">
+                    <form action="{{ path('admin_validate_user', {'id': user.id}) }}" method="POST">
+                        <input type="submit" class="btn btn-success btn-block" value="valider">
+                    </form>
+
+                    <form action="{{ path('admin_refuse_user', {'id': user.id}) }}" method="POST">
+                        <input type="submit" class="btn btn-danger btn-block" value="refuser">
+                    </form>
+
+
+                    <button class="btn btn-primary btn-block"><a href="mailto:{{ user.email }}">contacter</a></button>
+
+                </div>
             </div>
+            <hr>
+        {% endfor %}
+
+
+    </div>
+
+
 
 
 {% endblock %}
