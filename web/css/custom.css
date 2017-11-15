@@ -1,25 +1,290 @@
 /*
  custom css
 */
-
+body{
+    font-family: Adorn Slab Sérif;
+}
 .mt-4, .my-4 {
     margin-top: 0 !important;
-    height: 585px;
-}
-.header-left {
-    background-image: linear-gradient( -82deg, rgba(0, 0, 0, 0) 0%, rgba(00, 0, 0, 0) -16%, #2C3A6B 0%, #2C3A6B 100%);
-}
-.bg-oiseau {
-    background-image: url('../image/img-bg.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center 0;
+    height: 570px;
 }
 .container {
     max-width: 100%;
 }
+.header-left {
+    background-image: linear-gradient( -82deg, rgba(0, 0, 0, 0) 16%, rgba(00, 0, 0, 0) 10%, #B8735C 0%, #B8735C 100%);
+    position: absolute;
+    z-index: 9;
+    height: 570px;
+}
 .img-thumbnail.logo{
-     background-color: transparent;
+    background-color: transparent;
     border: 0;
     width: 60%;
+}
+.loupe {
+    width: 100%;
+    text-align: center;
+    margin-top: 25%;
+}
+.loupe img{
+    width: 34%;
+}
+.loupe a {
+    color: #fff;
+    text-decoration: none;
+}
+.bg-oiseau {
+    background-image: url(../image/ImageAccueil.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center 0;
+    min-width: 486px;
+    max-width: 73%;
+    margin: 0 auto;
+    position: absolute;
+    right: 0px;
+    height: 570px;
+}
+.navbar-nav a {
+    color: #fff
+}
+
+.container.qui-som-nous {
+    width: 80%;
+}
+
+.ccm-home {
+    background: transparent;
+    width: 50%;
+    border: 0;
+}
+.box-001, .box-001 p{
+    text-align: center;
+}
+.box-001 h2, .box-001 h4{
+    text-transform: uppercase;
+}
+.box-001 h2, .partenaires .box-001 h2 {
+    font-family: Roboto Slab;
+}
+.bloc-two-home {
+    background-image: -moz-linear-gradient(right, #E1C8AA 0%, #B0D092 100%);
+    background-image: -webkit-gradient(linear, right top, left top, color-stop(0, #E1C8AA), color-stop(100, #B0D092));
+    background-image: -o-linear-gradient(right, #E1C8AA 0%, #B0D092 100%);
+    background-image: -webkit-linear-gradient(right, #E1C8AA 0%, #B0D092 100%);
+    background-image: linear-gradient(to left, #E1C8AA 0%, #B0D092 100%);
+    padding: 20px;
+}
+
+.box-title-observation{
+    margin-bottom: 30px;
+}
+.container.observations{
+    max-width: 80%;
+}
+.observations .card-block {
+    padding: 20px;
+}
+.observations .card-title {
+    margin-bottom: 0;
+    text-transform: uppercase;
+    font-size: 17px;
+    font-weight: 700;
+}
+.observations .card-block p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.observations .btn-primary {
+    color: #fff;
+    background-color: #98C575;
+    border-color:#98C575;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    padding: 8px 45px;
+}
+.observations .img-thumbnail.img-card{
+    padding: 0;
+    border:0;
+    border-radius: 0;
+}
+.observations .card {
+    border: 1px solid #CF8A5D;
+}
+
+section.partenaires {
+    background: #CF8A5D;
+    padding: 20px;
+}
+
+.partenaires .slick-slide img {
+    width: 40%;
+    height: 100px;
+}
+#fjoet .slider {
+    width: 65%;
+}
+.partenaires .box-001 h2{
+    color:#fff;
+
+}
+
+/* Footer  */
+#footerbloc{
+    background: #98C575;
+    margin-top: 40px;
+}
+#footerbloc .logo {
+    width:25%;
+    float:left;
+}
+.box-logo-footer {
+    padding-left: 10%;
+    margin-top: -25px;
+}
+#footerbloc .social-feed img {
+    border: 0;
+    max-width: 6%;
+    background-color: transparent;
+}
+.txt-ns-suivre{
+    text-align: right;
+    max-width: 40.2%;
+}
+.txt-ns-suivre h3{
+    color:#fff;
+    text-transform: uppercase;
+}
+.txt-ns-suivre a{
+    color:#B8735C;
+}
+
+.box-logo-footer ul{
+    margin: 30px 0;
+}
+#footerbloc .informations {
+    padding-left: 10%;
+}
+.box-logo-footer ul li{
+    position: relative;
+    left: 25px;
+    list-style: none;
+}
+.box-logo-footer ul li a{
+    color:#fff;
+}
+.informations p{
+    color: #fff;
+}
+.col-lg-4.logo-rectangle {
+    /*max-width: 100%;*/
+    float: left;
+}
+.logo-rectangle {
+    width: 80% !important;
+}
+#navbar-other-page {
+    width: 90%;
+    margin: 0 auto;
+}
+.navbar.navbar-other-page {
+    width: 100%;
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(150,136,150,1);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(150,136,150,1);
+    box-shadow: 0px 2px 5px 0px rgba(150,136,150,1);
+}
+.navbar-other-page .navbar-collapse{
+    margin-top: 10px;
+}
+.float-right.other-page{
+
+}
+.img-user img{
+    margin-top: -10px;
+}
+.img-user-logger button img{
+    margin-top: -20px;
+}
+.img-user-logger button{
+    background: transparent;
+}
+.observation-block .col-xs-6 {
+    max-width: 100%;
+    margin: 0 10px;
+    position: relative;
+    left: -16px;
+}
+.observation-block .col-xs-6.col-right{
+    margin-left: 25px;
+    width: 50%;
+}
+.container.observation-block{
+    background: #fff;
+    width: 78%;
+    padding: 30px;
+    margin: 0 auto;
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(15,3,15,1);
+    -moz-box-shadow: 0px 1px 2px 0px rgba(15,3,15,1);
+    box-shadow: 0px 1px 2px 0px rgba(15,3,15,1);
+}
+.sect-observation{
+    background: #f0f0f0;
+    margin: 0 0 -40px;
+    padding-top: 50px;
+    padding-bottom: 40px;
+}
+.search-observ {
+    margin-bottom: 14px;
+}
+.observation-block .row{
+    margin: 0 7%;
+}
+.btn-ajouter-photo-obs {
+    background: transparent;
+    border: 0;
+}
+.btn-submit-obs {
+    background: #98C575;
+    border: 0;
+    width: 30%;
+    padding: 10px;
+    font-family: arial;
+    -webkit-box-shadow: 0px 1px 3px 0px rgba(15,3,15,1);
+    -moz-box-shadow: 0px 1px 3px 0px rgba(15,3,15,1);
+    box-shadow: 0px 1px 3px 0px rgba(15,3,15,1);
+    cursor: pointer;
+}
+.btn-submit-obs:hover {
+    background: #B8735C;
+}
+.nb_especes {
+    width: 16%;
+    border:2px solid #B8735C;
+    border-radius: 0;
+}
+.observation-block .form-group {
+    margin: 20px 0;
+}
+.add-img-obs {
+    width: 106%;
+    margin-left: -10px;
+}
+.navbar-other-page .navbar-nav a {
+    color: inherit;
+}
+
+#ui-id-1 {
+    background: #fff;
+    width: 394px;
+    padding: 10px 20px;
+}
+#ui-id-1 li{
+    list-style: none;
+    color: #B8735C;
+}
+#ui-id-1 li:hover{
+    cursor: pointer;
+    color: #98C575;
 }

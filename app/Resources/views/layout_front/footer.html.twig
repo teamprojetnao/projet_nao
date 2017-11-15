@@ -1,44 +1,36 @@
 <!-- Footer -->
 <footer class="py-5" id="footerbloc">
     <div class="container">
-
         <div class="row">
-            <div class="col-md-3 mr-auto">
-                <img src="http://placehold.it/50x50" class="img-responsive">
+            <div class="col-md-6 box-logo-footer">
+                <img src="{{ asset('image/LogoDefSansFondMarron.png') }}" class="img-thumbnail img-responsive logo"/>
+                <ul>
+                    <li>
+                        <a href="">Qui sommes-nous</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('contact_page') }}"><i class="fa fa-envelope"></i> Contact</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('mentions_legales')}}">Mentions légales</a>
+                    </li>
 
+                </ul>
             </div>
-            <div class="col-md-3 ml-md-6">
-
-
-                <button class=" btn btn-default btn-block"><a href="http://eepurl.com/c-BnzT">Newsletter</a></button>
+            <div class="col-md-6 txt-ns-suivre">
+                <h3>Nous suivre :</h3>
+                <div class="social-feed">
+                    <a href="https://www.facebook.com/"><img src="{{ asset('image/FacebookNormalBlanc@2x.png') }}" class="img-thumbnail img-responsive fb"/></a>
+                    <a href="https://twitter.com/"><img src="{{ asset('image/TwitterNormalBlanc@2x.png') }}" class="img-thumbnail img-responsive twitter"/></a>
+                    <a href="https://www.instagram.com/"><img src="{{ asset('image/InstagramNormalBlanc@2x.png') }}" class="img-thumbnail img-responsive instagram"/></a>
+                </div>
+                <p><a href="http://eepurl.com/c-BnzT">S'abonner à la newsletter</a></p>
             </div>
         </div>
 
-
         <div class="row informations">
             <div class="col-sm-3">
-                <p class="m-0 pull-left">2017 &copy; Nos Amis les Oiseaux</p>
-            </div>
-            <div class="col-sm-6">
-                <ul>
-
-                    <li>
-                        <a href="{{ path('mentions_legales') }}">Mentions légales</a>
-                    </li>
-                    <li>
-                        <a href="">Qui sommes-nous?</a>
-                    </li>
-                    <li>
-                        <a href="{{path('contact_page')}}"><i class="fa fa-envelope"></i> Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-3">
-                <div class="social-feed pull-right">
-                    <a href="https://www.facebook.com/"><i class="fa fa-facebook-square"></i></a>
-                    <a href="https://twitter.com/"><i class="fa fa-twitter"></i></a>
-                    <a href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
-                </div>
+                <p class="m-0 pull-left">Copyright 2017 &copy; Nos Amis les Oiseaux</p>
             </div>
         </div>
     </div>

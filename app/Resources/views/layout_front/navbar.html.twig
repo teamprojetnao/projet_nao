@@ -1,0 +1,61 @@
+
+<nav class="navbar navbar-light blue-grey lighten-5 navbar-other-page">
+    <div class="container-fluid" id="navbar-other-page">
+        <div class="navbar-header">
+            <div class="col-lg-4 logo-rectangle">
+                <div class="">
+                    <a class="navbar-brand" href="{{ path('homepage') }}">
+                        <img alt="Brand" src="{{ asset('image/Logo_RectangleVertVersionDef.png') }}" class="logo-rectangle">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-8 float-right other-page">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse.collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="collapse navbar-collapse" id="navbarResponsive">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="{{ path('observationpage') }}">Entrer une observation
+                                        <span class="sr-only">(current)</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('searchpage') }}">Cartes des espèces</a>
+                                </li>
+                                {% if app.user==null %}
+                                    <li class="nav-item img-user">
+                                        <a class="login" href="{{ path('login') }}"> <img src="{{ asset('image/ic_account_circle_black_24px.png') }}"/></a>
+                                    </li>
+                                {% else %}
+                                    <li class="nav-item">
+                                        <div class="btn-group img-user-logger">
+                                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"> <img src="{{ asset('image/ic_account_circle_black_24px.png') }}"/></button>
+                                            <ul class="dropdown-menu">
+                                                <li>Hello {{ app.user.pseudo }}</li>
+                                                <li class="divider"></li>
+                                                <li><a href="{{ path('mon-compte') }}">Mon compte</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href={{ path('logout') }}>Se déconnecter</a></li>
+
+                                            </ul>
+                                        </div>
+
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+</nav>

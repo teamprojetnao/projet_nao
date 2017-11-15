@@ -1,5 +1,5 @@
 {% block title %} Accueil {% endblock %}
-{% extends 'base.html.twig' %}
+{% extends 'base_home.html.twig' %}
 
 
 {% block stylesheets %}
@@ -15,11 +15,11 @@
 
 
     <section id="notreprojet">
-        <div class="container">
+        <div class="container qui-som-nous">
             <div class="row bloc-one-home">
                 <div class="col-sm-12">
                     <div class="box-001" style="margin-top: 0;margin-bottom: 10px;">
-                        <h2 class="titre text-center"><strong>NOTRE PROJET</strong></h2>
+                        <h2 class="titre text-center"><strong>Qui sommes-nous</strong></h2>
                     </div>
                 </div>
                 <div class="col-sm-12">
@@ -40,53 +40,48 @@
         </div>
     </section>
     <section id="commentcamarche">
-        <div class="container">
+        <div class="container commentcamarche">
             <div class="row bloc-two-home">
                 <div class="col-sm-12">
                     <div class="box-001" style="margin-top: 0;margin-bottom: 10px;">
-                        <h2 class="titre text-center"><strong>COMMENT CA MARCHE ?</strong></h2>
+                        <h2 class="titre text-center"><strong>Comment ça marche?</strong></h2>
                     </div>
                 </div>
 
                 <div class="col-sm-4">
-                    <div class="box-001" style="margin-top: 0;margin-bottom: 10px;">
-                        <center>
-                            <figure style="margin-top:20px; margin-bottom:20px;">
-                                <img src="http://placehold.it/240x120" class="img-thumbnail">
-                            </figure>
-                        </center>
-                        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+                    <div class="box-001">
+                        <figure>
+                            <img src="{{ asset('image/Balade_CommentCaMarche.png') }}" class="img-thumbnail ccm-home"/>
+                        </figure>
+                        <h4>Parter en promenade</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
                             tempus rutrum
-                            gravida. Maecenas feugiat maximus commodo.</p>
-
-
+                            gravida. Maecenas feugiat maximus commodo.
+                        </p>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="box-001" style="margin-top: 0;margin-bottom: 10px;">
-                        <center>
-                            <figure style="margin-top:20px; margin-bottom:20px;">
-                                <img src="http://placehold.it/240x120" class="img-thumbnail">
-                            </figure>
-                        </center>
-                        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+                    <div class="box-001">
+                        <figure>
+                            <img src="{{ asset('image/Observer_CommentCaMarche.png') }}" class="img-thumbnail ccm-home"/>
+                        </figure>
+                        <h4>Observer les oiseaux</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
                             tempus rutrum
-                            gravida. Maecenas feugiat maximus commodo.</p>
-
+                            gravida. Maecenas feugiat maximus commodo.
+                        </p>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="box-001" style="margin-top: 0;margin-bottom: 10px;">
-                        <center>
-                            <figure style="margin-top:20px; margin-bottom:20px;">
-                                <img src="http://placehold.it/240x120" class="img-thumbnail">
-                            </figure>
-                        </center>
-                        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+                    <div class="box-001">
+                        <figure>
+                            <img src="{{ asset('image/EntrerObservation_CommentCaMarche.png') }}" class="img-thumbnail ccm-home"/>
+                        </figure>
+                        <h4>Noter et entrer les informations sur nao</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
                             tempus rutrum
-                            gravida. Maecenas feugiat maximus commodo.</p>
-
-
+                            gravida. Maecenas feugiat maximus commodo.
+                        </p>
                     </div>
                 </div>
 
@@ -94,73 +89,81 @@
         </div>
     </section>
     <section id="gallerieobservation">
-        <div class="container">
+        <div class="container observations">
             <div class="row bloc-one-home">
-                <div class="col-sm-12">
+                <div class="col-sm-12 box-title-observation">
                     <div class="box-001" style="margin-top: 0;margin-bottom: 10px;">
-                        <h2 class="titre text-center"><strong>GALERIE D'OBSERVATION</strong></h2>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="box-001" style="margin-top: 0;margin-bottom: 10px;">
-                        <center>
-                            <figure style="margin-top:20px; margin-bottom:20px;">
-                                <img src="http://placehold.it/240x120" class="img-thumbnail">
-                            </figure>
-                        </center>
 
-                        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                            tempus rutrum
-                            gravida. Maecenas feugiat maximus commodo.</p>
+                        <h2 class="titre text-center"><strong>Observations</strong></h2>
 
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="box-001" style="margin-top: 0;margin-bottom: 10px;">
-                        <center>
-                            <figure style="margin-top:20px; margin-bottom:20px;">
-                                <img src="http://placehold.it/240x120" class="img-thumbnail">
-                            </figure>
-                        </center>
-                        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                            tempus rutrum
-                            gravida. Maecenas feugiat maximus commodo.</p>
-
+                    <div class="card">
+                        <img src="{{ asset('image/ImageAccueil.png') }}" class="img-thumbnail img-card"/>
+                        <div class="card-block">
+                            <h4 class="card-title">Gros-Bec Casse-nouyaux</h4>
+                            <p class="card-name">Coccothraustes Coccothraustes</p>
+                            <p class="card-nb-pers">3 individus</p>
+                            <p class="card-date">23 septembre 2017</p>
+                            <p class="card-name-contry">Dijon</p>
+                            <p class="card-pers">Francis Franciscomaniaolo</p>
+{#
+                            <a href="#" class="btn btn-primary">Voir</a>
+#}
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="box-001" style="margin-top: 0;margin-bottom: 10px;">
-                        <center>
-                            <figure style="margin-top:20px; margin-bottom:20px;">
-                                <img src="http://placehold.it/240x120" class="img-thumbnail">
-                            </figure>
-                        </center>
-                        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                            tempus rutrum
-                            gravida. Maecenas feugiat maximus commodo.</p>
-
-
+                    <div class="card">
+                        <img src="{{ asset('image/ImageAccueil.png') }}" class="img-thumbnail img-card"/>
+                        <div class="card-block">
+                            <h4 class="card-title">Gros-Bec Casse-nouyaux</h4>
+                            <p class="card-name">Coccothraustes Coccothraustes</p>
+                            <p class="card-nb-pers">3 individus</p>
+                            <p class="card-date">23 septembre 2017</p>
+                            <p class="card-name-contry">Dijon</p>
+                            <p class="card-pers">Francis Franciscomaniaolo</p>
+{#
+                            <a href="#" class="btn btn-primary">Voir</a>
+#}
+                        </div>
                     </div>
                 </div>
-
+                <div class="col-sm-4">
+                    <div class="card">
+                        <img src="{{ asset('image/ImageAccueil.png') }}" class="img-thumbnail img-card"/>
+                        <div class="card-block">
+                            <h4 class="card-title">Gros-Bec Casse-nouyaux</h4>
+                            <p class="card-name">Coccothraustes Coccothraustes</p>
+                            <p class="card-nb-pers">3 individus</p>
+                            <p class="card-date">23 septembre 2017</p>
+                            <p class="card-name-contry">Dijon</p>
+                            <p class="card-pers">Francis Franciscomaniaolo</p>
+{#
+                            <a href="#" class="btn btn-primary">Voir</a>
+#}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="fjoet" class="sect-bas-homeresponsive">
+    <section id="fjoet" class="sect-bas-homeresponsive partenaires">
         <div class="container">
             <div class="col-sm-12">
                 <div class="box-001" style="margin-top: 0;margin-bottom: 10px;">
-                    <h2 class="titre text-center"><strong>PARTENAIRES</strong></h2>
+                    <h2 class="titre text-center">Partenaires</h2>
                 </div>
             </div>
             <div class="slide_pub slider row">
-                <div class=""><img src="http://placehold.it/240x120"/></div>
-                <div class=""><img src="http://placehold.it/240x120"/></div>
-                <div class=""><img src="http://placehold.it/240x120"/></div>
-                <div class=""><img src="http://placehold.it/240x120"/></div>
-                <div class=""><img src="http://placehold.it/240x120"/></div>
-                <div class=""><img src="http://placehold.it/240x120"/></div>
+                <div class=""><img src="{{ asset('image/logosPartenaires/260px-Logo_mnhn.jpg') }}" class="img-thumbnail img-responsive partenaire"/></div>
+                <div class=""><img src="{{ asset('image/logosPartenaires/logo-WWF.jpg') }}" class="img-thumbnail img-responsive partenaire"/></div>
+                <div class=""><img src="{{ asset('image/logosPartenaires/logo-lpo.jpg') }}" class="img-thumbnail img-responsive partenaire"/></div>
+                <div class=""><img src="{{ asset('image/logosPartenaires/birdlife-international.png') }}" class="img-thumbnail img-responsive partenaire"/></div>
+                <div class=""><img src="{{ asset('image/logosPartenaires/logo_uicn.png') }}" class="img-thumbnail img-responsive partenaire"/></div>
+                <div class=""><img src="{{ asset('image/logosPartenaires/fne-logo-2016-cover-1.jpg') }}" class="img-thumbnail partenaire"/></div>
             </div>
         </div>
 

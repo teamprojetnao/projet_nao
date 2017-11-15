@@ -1,65 +1,71 @@
-
-
 <div class="container">
-    <!-- Heading Row -->
-    <div class="row my-4">
-        <div class="col-lg-4 header-left">
 
+<!-- Heading Row -->
+<div class="row my-4">
+    <div class="col-lg-4 header-left">
+        <div class="logo-box">
             <a href="{{ path('homepage') }}">
                 <img src="{{ asset('image/Logo_RectangleVertVersionDef.png') }}" class="img-responsive img-thumbnail logo" style="margin:10px 2px">
             </a>
-            <br>
-            <center><a class="btn btn-primary" href="{{ path('observationpage') }}" style="margin-top: 30%">ENTRER UNE OBSERVATIONS</a></center>
-
         </div>
-        <!-- /.col-md-4 -->
-        <div class="col-lg-8 bg-oiseau">
-            <nav class="navbar navbar-expand-lg" style="position: absolute ; margin: 16px 125px">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse.collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <div class="collapse navbar-collapse" id="navbarResponsive">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="{{ path('observationpage') }}">Entrer une observation
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
+        <div class="loupe">
+            <a href="{{ path('observationpage') }}" style="margin-top: 30%">
+                <img src="{{ asset('image/LoupeSansTexte.png') }}"/>
+                <p style="font-size: 19px">Entrer une </br> observation</p>
+            </a>
+        </div>
+
+    </div>
+
+    <div class="col-lg-8 bg-oiseau">
+        <nav class="navbar navbar-expand-lg" style="position: absolute ; margin: 16px 125px">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse.collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ path('observationpage') }}">Entrer une observation
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('searchpage') }}">Cartes des espèces</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('searchpage') }}">Comment ça marche?</a>
+                        </li>
+                        {% if app.user==null %}
+                        <li class="nav-item">
+                            <a class="login" href="{{ path('login') }}"> <img src="{{ asset('image/se_connecter.png') }}"/></a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('searchpage') }}">Cartes des espèces</a>
+                                <div class="btn-group img-user-logger">
+                                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"> <img src="{{ asset('image/ic_account_circle_black_24px.png') }}"/></button>
+                                    <ul class="dropdown-menu">
+                                        <li>Hello {{ app.user.pseudo }}</li>
+                                        <li class="divider"></li>
+                                        <li><a href="{{ path('mon-compte') }}" style="color: #000000">Mon compte</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="{{ path('logout') }}" style="color: #000000">Se déconnecter</a></li>
+
+                                    </ul>
+                                </div>
+
                             </li>
-                            {% if app.user==null %}
-                                <li class="nav-item">
-                                    <a class="btn btn-outline-dark" href="{{ path('login') }}"> Se connecter</a>
-                                </li>
-                            {% else %}
-                                <li class="nav-item">
-                                    <div class="btn-group">
-                                        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-user fa-2x"></i></button>
-                                        <ul class="dropdown-menu">
-                                            <li>Hello {{ app.user.pseudo }}</li>
-                                            <li class="divider"></li>
-                                            <li><a href="{{ path('mon-compte') }}">Mon compte</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href={{ path('logout') }}>se déconnecter</a></li>
-
-
-                                        </ul>
-                                    </div>
-
-                                </li>
                             {% endif %}
                         </ul>
                     </div>
                 </div>
             </nav>
-            <!--<img class="img-fluid rounded img-thumbnail" src="{{ asset('image/img-bg.jpg') }}" style="margin: 10px 2px" >-->
         </div>
         <!-- /.col-lg-8 -->
     </div>

@@ -53,7 +53,8 @@
     }
     .navbar.navbar-expand-lg{
         margin: 0 !important;
-        top: -316px;
+        top: 14px;
+        z-index: 9;
         right: 20px;
         /*background: green;*/
     }
@@ -88,6 +89,22 @@
     #btnAddPhoto {
         display:none !important;
     }
+    .header-left {
+        background-image: none !important;
+    }
+    .bg-oiseau {
+        max-width: 100% !important;
+    }
+    .img-thumbnail.logo {
+        width: 30% !important;
+    }
+    .loupe img {
+        width: 18% !important;
+    }
+    .partenaires .slick-slide img {
+        width: 100px !important;
+        height: 100px !important;
+    }
 }
 
 /*-------------------[757px]------------------*/
@@ -108,27 +125,35 @@
 /*-------------------[425px]------------------*/
 @media only screen and ( max-width: 425px ) {
     .navbar.navbar-expand-lg {
-        top: -239px;
+        top: 14px;
+        z-index: 9;
+    }
+    .partenaires .slick-slide img {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    .observations .card {
+        margin-bottom: 22px;
     }
 }
 
 /*-------------------[375px]------------------*/
 @media only screen and ( max-width: 375px ) {
     .navbar.navbar-expand-lg {
-        top: -222px;
+
     }
 }
 
 /*-------------------[360px]------------------*/
 @media only screen and ( max-width: 360px ) {
     .navbar.navbar-expand-lg {
-        top: -220px;
+
     }
 }
 
 /*-------------------[320px]------------------*/
 @media only screen and ( max-width: 320px ) {
     .navbar.navbar-expand-lg {
-        top: -206px;
+
     }
 }
