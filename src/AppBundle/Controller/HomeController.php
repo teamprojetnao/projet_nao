@@ -47,6 +47,23 @@ class HomeController extends Controller
     }
 
     /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/aves_submit", name="aves_submit")
+     */
+    public function avesSubmitAction(Request $request)
+    {
+        $em =$this->getDoctrine()->getManager();
+        $key= $request->get('key');
+        $listObservation=$em->getRepository('AppBundle:Observation')->findBy(array('nomEspece' => $key));
+        $nbObservation=count($listObservation);
+        return $this-> render(':Home:card_aves_submitted.html.twig', array(
+            'listObservation' => $listObservation, 'nbObservation' => $nbObservation));
+
+    }
+
+
+
+    /**
      * @Route("/card",name="searchpage")
      */
     public function cardAction()

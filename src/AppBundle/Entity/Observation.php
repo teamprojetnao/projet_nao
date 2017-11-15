@@ -24,7 +24,7 @@ class Observation
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="observation", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="User", cascade={"persist"})
      */
     private $user;
 
