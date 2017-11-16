@@ -16,55 +16,23 @@
 {% block body %}
 
 
-    <section id="notreprojet" class="sect-card">
-        <div class="container search-espace-page">
-            <div class="search-espace-title">
-                <h3>Rechercher une espèce</h3>
-            </div>
-            <div class="row search-espace-box">
-                 <div class="col-sm-4 responsive-flex">
-                    <!--<form action="{{ path('aves_submit') }}" method="post">
+    <section id="notreprojet">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+
+                    <div id="map"></div>
+                </div>
+
+                <div class="col-sm-4">
+                    <form action="{{ path('aves_submit') }}" method="post">
                         <div class="form-group">
                             <label for="autocomplete">Tapez le nom d'un oiseau</label> :
                             <input name= "key" id="autocomplete" data-url="{{ path('ajax_search') }}" class="form-control">
                         </div>
                         <button type="submit" class="btn btn-primary">valider</button>
-                    </form>-->
-                     <h4>Liste des fiches observation</h4>
-                     <div class="card search-espece-left">
-                         <div class="row">
-                             <div class="col-md-6">
-                                 <div class="card-block">
-                                     <img class="img-responsive card-img-left" src="{{ asset('image/ImageAccueil.png')}}" alt="Card image cap">
-                                     <a href="#" class="btn btn-primary btn-voir-card">Voir</a>
-                                 </div>
-                             </div>
-                             <div class="col-md-6">
-                                 <div class="card-img-bottom left">
-                                     <h4 class="card-title details-search-card">Gros-Bec casse-noyaux</h4>
-                                     <p class="card-text">Coccothraustes Coccothraustes</p>
-                                     <p class="card-text">3 individus</p>
-                                     <p class="card-text">23 septembre 2017</p>
-                                     <p class="card-text">Dijon</p>
-                                     <p class="card-text">Francis Francismaniondaio</p>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
+                    </form>
                 </div>
-                <div class="col-sm-8 box-card-search">
-                    <div class="input-group search-observ">
-                        <form action="{{ path('aves_submit') }}" method="post">
-                            <div class="form-groupii">
-                                <input name= "key" id="autocomplete" placeholder="Rechercher une espèce" class="search-espece-input" data-url="{{ path('ajax_search') }}" class="form-control">
-                                <button type="submit" class="btn btn-primary search-submit"><i class="fa fa-search"></i></button>
-                            </div>
-                        </form>
-                    </div>
-                    <div id="map"></div>
-                </div>
-
-
             </div>
 
         </div>
