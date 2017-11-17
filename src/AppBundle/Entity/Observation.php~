@@ -24,16 +24,18 @@ class Observation
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="observation", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="User", cascade={"persist"})
      */
     private $user;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="nom_espece", type="string", length=255, nullable=true)
+     * @ORM\Column(name="nom_espece", type="string", nullable=false)
      */
     private $nomEspece;
+
+
 
     /**
      * @var int
@@ -50,16 +52,16 @@ class Observation
     private $dateObservation;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="latitude", type="string", length=100, nullable=true)
+     * @ORM\Column(name="latitude", type="float", nullable=false)
      */
     private $latitude;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="longitude", type="string", length=100, nullable=true)
+     * @ORM\Column(name="longitude", type="float", nullable=false)
      */
     private $longitude;
 
@@ -75,6 +77,168 @@ class Observation
      *
      * @ORM\Column(name="is_validate", type="boolean", nullable=true)
      */
-    private $isValidate;
+    private $isValidate=0;
 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+
+    /**
+     * Set nbIndividus
+     *
+     * @param integer $nbIndividus
+     *
+     * @return Observation
+     */
+    public function setNbIndividus($nbIndividus)
+    {
+        $this->nbIndividus = $nbIndividus;
+
+        return $this;
+    }
+
+    /**
+     * Get nbIndividus
+     *
+     * @return integer
+     */
+    public function getNbIndividus()
+    {
+        return $this->nbIndividus;
+    }
+
+    /**
+     * Set dateObservation
+     *
+     * @param \DateTime $dateObservation
+     *
+     * @return Observation
+     */
+    public function setDateObservation($dateObservation)
+    {
+        $this->dateObservation = $dateObservation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateObservation
+     *
+     * @return \DateTime
+     */
+    public function getDateObservation()
+    {
+        return $this->dateObservation;
+    }
+
+
+
+
+
+    /**
+     * Set photo
+     *
+     * @param string $photo
+     *
+     * @return Observation
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return string
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * Set isValidate
+     *
+     * @param boolean $isValidate
+     *
+     * @return Observation
+     */
+    public function setIsValidate($isValidate)
+    {
+        $this->isValidate = $isValidate;
+
+        return $this;
+    }
+
+    /**
+     * Get isValidate
+     *
+     * @return boolean
+     */
+    public function getIsValidate()
+    {
+        return $this->isValidate;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Observation
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+
+
+    /**
+     * Set nomEspece
+     *
+     * @param string $nomEspece
+     *
+     * @return Observation
+     */
+    public function setNomEspece($nomEspece)
+    {
+        $this->nomEspece = $nomEspece;
+
+        return $this;
+    }
+
+    /**
+     * Get nomEspece
+     *
+     * @return string
+     */
+    public function getNomEspece()
+    {
+        return $this->nomEspece;
+    }
 }

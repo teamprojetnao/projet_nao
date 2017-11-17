@@ -84,21 +84,52 @@
     <script src="{{ asset('slick-master/slick/slick.min.js') }}" type="text/javascript" charset="utf-8"></script>
 
     <script>
+        var map;
         function initMap() {
-            var coordonnes = {lat: 4.9, lng: -52.3};
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: new google.maps.LatLng(-33.91722, 151.23064)
+            });
 
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 4,
-                center: coordonnes
-            });
-            var marker = new google.maps.Marker({
-                position: coordonnes,
-                map: map,
-                title: "hello"
-            });
+            setMarkers(map);
+        }
+
+        // Data for the markers consisting of a name, a LatLng and a zIndex for the
+        // order in which these markers should display on top of each other.
+        var gps = {{ gps | raw}}
+
+
+        function setMarkers(map) {
+
+            var image = {
+                url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                // This marker is 20 pixels wide by 32 pixels high.
+                size: new google.maps.Size(20, 32),
+                // The origin for this image is (0, 0).
+                origin: new google.maps.Point(0, 0),
+                // The anchor for this image is the base of the flagpole at (0, 32).
+                anchor: new google.maps.Point(0, 32)
+            };
+
+            var shape = {
+                coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                type: 'poly'
+            };
+            for (var i = 0; i < gps.length; i++) {
+                var gpsElt = gps[i];
+                var marker = new google.maps.Marker({
+                    position: {lat: gpsElt[0], lng: gpsElt[1]},
+                    map: map,
+                    icon: image,
+                    shape: shape
+
+                });
+            }
 
         }
     </script>
+
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key={{ container.parameter('api_map_key') }}&callback=initMap"></script>
+
 {% endblock %}

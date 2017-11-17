@@ -32,6 +32,7 @@ class HomeController extends Controller
         return $this->render(':Home:legales.html.twig');
 
     }
+
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/completion", name="ajax_search")
@@ -41,7 +42,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $requestString = $request->get('term');
-        $aves =  $em->getRepository('AppBundle:Aves')->findAvesByString($requestString);
+        $aves = $em->getRepository('AppBundle:Aves')->findAvesByString($requestString);
 
         return new JsonResponse($aves);
     }
@@ -52,15 +53,29 @@ class HomeController extends Controller
      */
     public function avesSubmitAction(Request $request)
     {
-        $em =$this->getDoctrine()->getManager();
-        $key= $request->get('key');
-        $listObservation=$em->getRepository('AppBundle:Observation')->findBy(array('nomEspece' => $key));
-        $nbObservation=count($listObservation);
-        return $this-> render(':Home:card_aves_submitted.html.twig', array(
-            'listObservation' => $listObservation, 'nbObservation' => $nbObservation));
+        $em = $this->getDoctrine()->getManager();
+        $key = $request->get('key');
+        $listObservation = $em->getRepository('AppBundle:Observation')->findBy(array('nomEspece' => $key));
+        $nbObservation = count($listObservation);
+
+
+        $gps = array();
+
+        foreach ($listObservation as $observation) {
+            $gps[] = array($observation->getLatitude(),
+           $observation->getLongitude());
+
+        }
+
+
+
+        $gps=json_encode($gps);
+        dump($gps);
+
+        return $this->render(':Home:card_aves_submitted.html.twig', array(
+            'listObservation' => $listObservation, 'nbObservation' => $nbObservation, 'gps'=>$gps));
 
     }
-
 
 
     /**
@@ -77,12 +92,11 @@ class HomeController extends Controller
      */
     public function contactAction(Request $request)
     {
-        $contact=new Contact;
-        $form =$this->createForm(ContactType::class, $contact);
+        $contact = new Contact;
+        $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()&& $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $message = (new Swift_Message('Contact from NAO'))
                 ->setFrom($contact->getEmail())
                 ->setTo($this->getParameter('mailer_user'))
@@ -93,16 +107,14 @@ class HomeController extends Controller
                         array('contact' => $contact)
                     ),
                     'text/html'
-                )
-
-            ;
+                );
 
             $this->get('mailer')->send($message);
 
 
             return $this->render(':Home:confirmation.html.twig');
         }
-        return $this-> render(':Home:contact.html.twig', array(
+        return $this->render(':Home:contact.html.twig', array(
             'form' => $form->createView()));
     }
 

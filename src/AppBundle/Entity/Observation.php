@@ -29,11 +29,13 @@ class Observation
     private $user;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="nom_espece", type="string", length=255, nullable=true)
+     * @ORM\Column(name="nom_espece", type="string", nullable=false)
      */
     private $nomEspece;
+
+
 
     /**
      * @var int
@@ -50,16 +52,16 @@ class Observation
     private $dateObservation;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="latitude", type="string", length=100, nullable=true)
+     * @ORM\Column(name="latitude", type="float", nullable=false)
      */
     private $latitude;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="longitude", type="string", length=100, nullable=true)
+     * @ORM\Column(name="longitude", type="float", nullable=false)
      */
     private $longitude;
 
@@ -88,29 +90,7 @@ class Observation
         return $this->id;
     }
 
-    /**
-     * Set nomEspece
-     *
-     * @param string $nomEspece
-     *
-     * @return Observation
-     */
-    public function setNomEspece($nomEspece)
-    {
-        $this->nomEspece = $nomEspece;
 
-        return $this;
-    }
-
-    /**
-     * Get nomEspece
-     *
-     * @return string
-     */
-    public function getNomEspece()
-    {
-        return $this->nomEspece;
-    }
 
     /**
      * Set nbIndividus
@@ -160,53 +140,9 @@ class Observation
         return $this->dateObservation;
     }
 
-    /**
-     * Set latitude
-     *
-     * @param string $latitude
-     *
-     * @return Observation
-     */
-    public function setLatitude($latitude)
-    {
-        $this->latitude = $latitude;
 
-        return $this;
-    }
 
-    /**
-     * Get latitude
-     *
-     * @return string
-     */
-    public function getLatitude()
-    {
-        return $this->latitude;
-    }
 
-    /**
-     * Set longitude
-     *
-     * @param string $longitude
-     *
-     * @return Observation
-     */
-    public function setLongitude($longitude)
-    {
-        $this->longitude = $longitude;
-
-        return $this;
-    }
-
-    /**
-     * Get longitude
-     *
-     * @return string
-     */
-    public function getLongitude()
-    {
-        return $this->longitude;
-    }
 
     /**
      * Set photo
@@ -278,5 +214,79 @@ class Observation
     public function getUser()
     {
         return $this->user;
+    }
+
+
+
+    /**
+     * Set nomEspece
+     *
+     * @param string $nomEspece
+     *
+     * @return Observation
+     */
+    public function setNomEspece($nomEspece)
+    {
+        $this->nomEspece = $nomEspece;
+
+        return $this;
+    }
+
+    /**
+     * Get nomEspece
+     *
+     * @return string
+     */
+    public function getNomEspece()
+    {
+        return $this->nomEspece;
+    }
+
+    /**
+     * Set latitude
+     *
+     * @param float $latitude
+     *
+     * @return Observation
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return float
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param float $longitude
+     *
+     * @return Observation
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return float
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
     }
 }
