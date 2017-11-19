@@ -63,7 +63,9 @@ class HomeController extends Controller
 
         foreach ($listObservation as $observation) {
             $gps[] = array($observation->getLatitude(),
-           $observation->getLongitude());
+           $observation->getLongitude(),
+                $observation->getNbIndividus(),
+                $observation->getDateObservation());
 
         }
 
@@ -73,7 +75,7 @@ class HomeController extends Controller
         dump($gps);
 
         return $this->render(':Home:card_aves_submitted.html.twig', array(
-            'listObservation' => $listObservation, 'nbObservation' => $nbObservation, 'gps'=>$gps));
+            'listObservation' => $listObservation, 'nbObservation' => $nbObservation, 'gps'=>$gps, 'key'=>$key));
 
     }
 
