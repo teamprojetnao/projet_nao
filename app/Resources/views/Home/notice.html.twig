@@ -1,0 +1,125 @@
+{% block title %} Notice {% endblock %}
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    <script type="text/css">
+
+
+    </script>
+
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h1 style="text-align: center; margin-top:20px; margin-bottom:20px">Comment ça marche?</h1>
+
+        <div class=row">
+            <div class="col-md-10 ml-auto">
+                <div class="col-md-9 ml-md-3">
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <h2><i class="fa fa-user" aria-hidden="true"></i> Créer un compte</h2>
+
+                        </div>
+                        <div class="card-body">
+                            <p>Pour pouvoir participer à notre recueil de données, il faut disposer d'un compte
+                                utilisateur.</p>
+                            <p>Pas encore inscrit?
+                                <a href="{{ path('login') }}" style="color:#98C575">Je m'inscris!</a></p>
+
+                            <p>Si vous êtes naturaliste, merci de cocher lors de la procédure d'inscription la checkbox
+                                "je
+                                suis
+                                naturaliste".
+                                Après validation par l'administration, un compte naturaliste, donnant accès à des
+                                fonctionnalités
+                                spécifiques, vous sera attribué.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=row">
+            <div class="col-md-10 ml-auto">
+                <div class="col-md-9 ml-md-3">
+                    <div class="card" style="margin-top:20px">
+
+                        <div class="card-header">
+                            <h2><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Saisir des observations</h2>
+                        </div>
+                        <div class="card-body"><p>Soyez précis ! Cherchez le nom de l'espèce à l'aide de
+                                l'autocomplétion de notre champ de recherche, et
+                                saisissez le nombre d'individus observés. Vous pouvez également joindre une
+                                photographie.</p>
+
+                            <h4>Vous avez un smartphone et vous bénéficiez d'une couverture réseau ?</h4>
+                            <p>Les coordonnées gps de votre site d'observation s'implémenteront automatiquement.</p>
+
+
+                            <h4> Vous avez un smartphone mais vous ne bénéficiez pas de couverture réseau, ou vous
+                                n'avez pas de
+                                smartphone?</h4>
+                            <p>Notez vos coordonnées gps! A votre retour, vous pourrez les saisir manuellement.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class=row">
+            <div class="col-md-10 ml-auto">
+                <div class="col-md-9 ml-md-3">
+                    <div class="card" style="margin-top:20px">
+
+                        <div class="card-header">
+                            <h2><i class="fa fa-tachometer" aria-hidden="true"></i> Accéder à son dashboard</h2>
+                        </div>
+                        <div class="card-body">
+
+
+                            <h4>Vous êtes un particulier?</h4>
+                            <p>Vous avez accès aux informations de gestion de votre compte, à vos observations, aux
+                                observations saisies
+                                par
+                                les autres participants.</p>
+
+                            <h4>Vous êtes un naturaliste?</h4>
+                            <p>Vous bénéficiez des mêmes fonctionnalités que les particuliers, avec en plus la possibilité de valider les observations des particuliers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class=row">
+            <div class="col-md-10 ml-auto">
+                <div class="col-md-9 ml-md-3">
+                    <div class="card" style="margin-top:20px">
+
+                        <div class="card-header">
+                            <h2><i class="fa fa-map" aria-hidden="true"></i> Visualiser la carte des espèces</h2>
+                        </div>
+                        <div class="card-body">
+                            <p>La carte des espèces, accessible à tous les visiteurs du site, permet d'afficher par
+                                espèce les
+                                observations
+                                validées.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}

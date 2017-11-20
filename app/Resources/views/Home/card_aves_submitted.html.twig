@@ -159,6 +159,7 @@
                     google.maps.event.addListener(marker, "click", function () {
                         var gpsElt=gps[i];
                         var latlng = {lat: gpsElt[0], lng: gpsElt[1]};
+
                         geocoder.geocode({'location': latlng}, function(results, status) {
                             if (status === 'OK') {
                                 if (results[0]) {
@@ -166,7 +167,7 @@
 
                                     infowindow.setContent("<div id='content'><p class='title'><b>"+results[4].formatted_address+"</b></p><div class='general'><p><b>Nombre d'individus</b> :" + " " + gpsElt[2] + "</p>"
                                         + "</p>"
-                                         + "<p><b>Date d'observation</b> :" + " " + gpsElt[3].date + "</p></div></div>"
+                                         + "<p><b>Date d'observation</b> :" + " " + gpsElt[3].date +"</p></div></div>"
                                     );
 
                                 } else {

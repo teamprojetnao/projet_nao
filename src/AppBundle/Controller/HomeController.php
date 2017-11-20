@@ -22,6 +22,13 @@ class HomeController extends Controller
         return $this->render(':Home:index.html.twig');
 
     }
+    /**
+     * @Route("/notice",name="notice")
+     */
+    public function noticeAction()
+    {
+        return $this->render(':Home:notice.html.twig');
+    }
 
     /**
      * @Route("/legales",name="mentions_legales")
@@ -63,19 +70,19 @@ class HomeController extends Controller
 
         foreach ($listObservation as $observation) {
             $gps[] = array($observation->getLatitude(),
-           $observation->getLongitude(),
+                $observation->getLongitude(),
                 $observation->getNbIndividus(),
-                $observation->getDateObservation());
+                $observation->getDateObservation(),
+                $observation->getPhoto());
 
         }
 
 
-
-        $gps=json_encode($gps);
+        $gps = json_encode($gps);
         dump($gps);
 
         return $this->render(':Home:card_aves_submitted.html.twig', array(
-            'listObservation' => $listObservation, 'nbObservation' => $nbObservation, 'gps'=>$gps, 'key'=>$key));
+            'listObservation' => $listObservation, 'nbObservation' => $nbObservation, 'gps' => $gps, 'key' => $key));
 
     }
 
