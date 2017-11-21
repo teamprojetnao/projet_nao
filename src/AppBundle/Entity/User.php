@@ -89,14 +89,14 @@ class User implements UserInterface
     private $birthdate;
 
     /**
-     * @var string
+     * @var bool
      *
      * @ORM\Column(name="cgu", type="boolean")
      */
     private $cgu;
 
     /**
-     * @var string
+     * @var bool
      *
      * @ORM\Column(name="naturalist_required", type="boolean")
      */

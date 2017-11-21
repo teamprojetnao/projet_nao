@@ -169,6 +169,13 @@ class Observation
         return $this->photo;
     }
 
+    public function getUrlPhoto()
+    {
+        $photo= $this->getPhoto();
+    $url=''.$photo;
+    return $url;
+    }
+
     /**
      * Set isValidate
      *
