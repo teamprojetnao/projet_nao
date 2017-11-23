@@ -16,7 +16,7 @@ body{
     position: absolute;
     z-index: 9;
     height: 570px;
-    min-width: 600px
+    min-width: 500px
 }
 .img-thumbnail.logo{
     background-color: transparent;
@@ -384,4 +384,12 @@ section.partenaires {
     position: absolute;
     right: 0;
     top: -2px;
+}
+.btn-prendre-photo-obs {
+    width: 100%;
+    color: #333;
+    border: 1px solid #333;
+    margin-top: 10px;
+    display: none;
+    background: #fff;
 }

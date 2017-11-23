@@ -35,7 +35,18 @@ class Observation
      */
     private $nomEspece;
 
-
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User", cascade={"persist"})
+     */
+    private $validerPar;
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User", cascade={"persist"})
+     */
+    private $refuserPar;
 
     /**
      * @var int
@@ -89,8 +100,31 @@ class Observation
     {
         return $this->id;
     }
+    
 
+    /**
+     * Set nomEspece
+     *
+     * @param string $nomEspece
+     *
+     * @return Observation
+     */
+    public function setNomEspece($nomEspece)
+    {
+        $this->nomEspece = $nomEspece;
 
+        return $this;
+    }
+
+    /**
+     * Get nomEspece
+     *
+     * @return string
+     */
+    public function getNomEspece()
+    {
+        return $this->nomEspece;
+    }
 
     /**
      * Set nbIndividus
@@ -140,10 +174,53 @@ class Observation
         return $this->dateObservation;
     }
 
+    /**
+     * Set latitude
+     *
+     * @param float $latitude
+     *
+     * @return Observation
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
 
+        return $this;
+    }
 
+    /**
+     * Get latitude
+     *
+     * @return float
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
 
+    /**
+     * Set longitude
+     *
+     * @param float $longitude
+     *
+     * @return Observation
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
 
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return float
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
 
     /**
      * Set photo
@@ -167,13 +244,6 @@ class Observation
     public function getPhoto()
     {
         return $this->photo;
-    }
-
-    public function getUrlPhoto()
-    {
-        $photo= $this->getPhoto();
-    $url=''.$photo;
-    return $url;
     }
 
     /**
@@ -224,77 +294,51 @@ class Observation
         return $this->user;
     }
 
-
-
     /**
-     * Set nomEspece
+     * Set validerPar
      *
-     * @param string $nomEspece
+     * @param \AppBundle\Entity\User $validerPar
      *
      * @return Observation
      */
-    public function setNomEspece($nomEspece)
+    public function setValiderPar(\AppBundle\Entity\User $validerPar = null)
     {
-        $this->nomEspece = $nomEspece;
+        $this->validerPar = $validerPar;
 
         return $this;
     }
 
     /**
-     * Get nomEspece
+     * Get validerPar
      *
-     * @return string
+     * @return \AppBundle\Entity\User
      */
-    public function getNomEspece()
+    public function getValiderPar()
     {
-        return $this->nomEspece;
+        return $this->validerPar;
     }
 
     /**
-     * Set latitude
+     * Set refuserPar
      *
-     * @param float $latitude
+     * @param \AppBundle\Entity\User $refuserPar
      *
      * @return Observation
      */
-    public function setLatitude($latitude)
+    public function setRefuserPar(\AppBundle\Entity\User $refuserPar = null)
     {
-        $this->latitude = $latitude;
+        $this->refuserPar = $refuserPar;
 
         return $this;
     }
 
     /**
-     * Get latitude
+     * Get refuserPar
      *
-     * @return float
+     * @return \AppBundle\Entity\User
      */
-    public function getLatitude()
+    public function getRefuserPar()
     {
-        return $this->latitude;
-    }
-
-    /**
-     * Set longitude
-     *
-     * @param float $longitude
-     *
-     * @return Observation
-     */
-    public function setLongitude($longitude)
-    {
-        $this->longitude = $longitude;
-
-        return $this;
-    }
-
-    /**
-     * Get longitude
-     *
-     * @return float
-     */
-    public function getLongitude()
-    {
-        return $this->longitude;
+        return $this->refuserPar;
     }
 }

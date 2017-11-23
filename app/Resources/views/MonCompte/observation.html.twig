@@ -4,6 +4,8 @@
 {% block stylesheets %}
     {{ parent() }}
 
+    <link rel="stylesheet" href="{{ asset('date-picker/css/bootstrap-datepicker.css') }}">
+
     <style type="text/css">
         #map {
             height: 400px;
@@ -16,22 +18,28 @@
             border: 1px solid;
             background: #ccc;
         }
+
+        .datepicker table{
+            width: 457px;
+        }
     </style>
 {% endblock %}
 
 {% block body %}
     <section id="notreprojet" class="sect-observation">
-        {% if app.session.flashBag.has('success') %}
-            <div id="delai" class="col-md-12 alert alert-success"
-                 style="margin: -372px 14px; position: absolute; display: table; width: 27%; z-index: 100; opacity: 0.9;color:#000;">
-                {% for flash in app.session.flashBag.get('success') %}
-                    <div class="alert alert-success">
-                        <p>{{ flash }}</p>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
         <div class="container observation-block">
+            {% if app.session.flashBag.has('success') %}
+                <div class="row">
+                    <div id="delai" class="col-md-12 alert alert-success"
+                         style="margin: 2px 8px; position: absolute; display: table; width: 72%; z-index: 100; opacity: 0.9;color:#000;">
+                        {% for flash in app.session.flashBag.get('success') %}
+                            <div class="alert alert-success">
+                                <p>{{ flash }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
             <form action="{{ path('save-observation') }}" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col">
@@ -46,8 +54,8 @@
                         </select>
                         <div class="form-group">
                             <label>Date</label>
-                            <input type="date" class="form-control" name="date_obs"
-                                   placeholder="Date d'obervation">
+                            <input type="text" class="form-control" name="date_obs"
+                                   value="{{ "now"|date("d-m-Y") }}" readonly placeholder="Date d'obervation">
                         </div>
                         <div class="form-group">
                             <label>Coordeonnées GPS</label>
@@ -68,6 +76,12 @@
                                         class="img-responsive add-img-obs"/>
                             </button>
 
+                            <!-- boutton prendre photo : display: block en mobile -->
+                            <!--<button type="button" id="btnAddPhoto" onclick="$('#fichier').click();"
+                                    class="btn-prendre-photo-obs">
+                                Prendre une photo
+                            </button>-->
+
                             <a onclick="$('#file').click();" class="choixphotos">
                                 <span class="file_name"></span>
                             </a>
@@ -75,16 +89,13 @@
                         <button type="submit" class="btn btn-primary btn-lg btn-submit-obs">VALIDER</button>
                     </div>
                     <div class="col">
-
+                        <div>
+                            <h4>Recherchez ci-dessous une espèce </h4>
+                        </div>
                         <div class="input-group search-observ">
                             <input id="autocomplete" data-url="{{ path('ajax_search') }}"
                                    class="form-control" name="nom_especes"
                                    placeholder="Rechercher une espèce">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
                         </div>
                         <div id="map"></div>
                         <div class="form-check">
@@ -110,6 +121,10 @@
     <script src="{{ asset('js/jquery-ui.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ asset('js/Jquery-2.1.4.min.js') }}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="{{ asset('date-picker/js/bootstrap-datepicker.js')}}"></script>
+    <script src="{{ asset('date-picker/locales/bootstrap-datepicker.fr.min.js') }}"></script>
+
     <script src="{{ asset('js/aves.js') }}"></script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key={{ container.parameter('api_map_key') }}&callback=initMap"></script>
@@ -120,7 +135,6 @@
         var longText, latText;
         $('#long').on('keyup', function () {
             longText = $('#long').val();
-            console.log($('#long').val());
             if ($('#long').val() != " " && $('#lat').val() != " ") {
                 initMap(parseFloat($('#lat').val()), parseFloat($('#long').val()));
             }
@@ -128,7 +142,6 @@
 
         $('#lat').on('keyup', function () {
             latText = $('#lat').val();
-            console.log($('#lat').val());
 
             if ($('#long').val() != " " && $('#lat').val() != " ") {
                 initMap(parseFloat($('#lat').val()), parseFloat($('#long').val()));
@@ -172,6 +185,12 @@
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: -34.397, lng: 150.644},
                 zoom: 8
+            });
+            /* event resize */
+            google.maps.event.addDomListener(window, "resize", function() {
+                var center = map.getCenter();
+                google.maps.event.trigger(map, "resize");
+                map.setCenter(center);
             });
             infoWindow = new google.maps.InfoWindow({pixelOffset: new google.maps.Size(0, -35)});
 
@@ -262,7 +281,6 @@
 
         $('input[type=file]').change(function (e) {
             var filename = e.target.files[0].name;
-            console.log(filename);
             if (null != filename) {
                 $('#btnAddPhoto').css('display', 'none');
                 $('.file_name').css('display', 'block').html('<p >' + filename + '<p>');
@@ -276,7 +294,13 @@
             width: 320,
             height: 240,
             image_format: 'jpeg',
-            jpeg_quality: 90
+            jpeg_quality: 90,
+            video: {
+                facingMode:
+                    {
+                        exact: "environment"
+                    }
+            }
         });
     </script>
     <script language="JavaScript">
@@ -313,5 +337,16 @@
                     '<img src="' + data_uri + '" class="img-responsive img-thumbnail"/>';
             });
         }
+    </script>
+
+    <script>
+        $('input[name="date_obs"]').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            endDate: "now",
+            format: "dd-mm-yyyy",
+            language: 'fr',
+            orientation: "bottom"
+        });
     </script>
 {% endblock %}
