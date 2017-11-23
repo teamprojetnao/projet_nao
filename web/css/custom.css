@@ -16,7 +16,7 @@ body{
     position: absolute;
     z-index: 9;
     height: 570px;
-    min-width: 500px
+    min-width: 600px
 }
 .img-thumbnail.logo{
     background-color: transparent;
