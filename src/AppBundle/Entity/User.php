@@ -213,9 +213,14 @@ class User implements UserInterface
      */
     public function getRoles()
     {
-        return[
+       /* return[
             'ROLE_USER',
-        ];
+        ];*/
+       /**
+        * Modif venant de teamp5nao
+        */
+        return $this->roles;
+
     }
 
     /**

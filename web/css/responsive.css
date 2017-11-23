@@ -86,8 +86,11 @@
     #take-photo {
         display:block;
     }
-    #btnAddPhoto {
-        display:none !important;
+    .btn-ajouter-photo-obs {
+        display:block !important;
+    }
+    #btnAddPhoto, .btn-prendre-photo-obs {
+        display:block !important;
     }
     .header-left {
         background-image: none !important;
@@ -95,16 +98,56 @@
     .bg-oiseau {
         max-width: 100% !important;
     }
-    .img-thumbnail.logo {
-        width: 30% !important;
-    }
-    .loupe img {
-        width: 18% !important;
-    }
     .partenaires .slick-slide img {
         width: 100px !important;
         height: 100px !important;
     }
+    .header-left {
+        min-width: auto !important;
+    }
+    .img-thumbnail.logo {
+        width: 30% !important;
+        margin-left: 0 !important;
+    }
+    .loupe img {
+        width: 45% !important;
+        margin: -67px 30%;
+    }
+    .loupe p {
+        margin-left: 114px;
+        margin-top: 23px !important;
+    }
+    .btn-submit-obs {
+        width: 100% !important;
+    }
+    .other-page .navbar{
+        float: right;
+        position: absolute;
+        top: -70px;
+    }
+    .txt-ns-suivre {
+        max-width: 47% !important;
+    }
+    #footerbloc .social-feed img {
+        max-width: 13% !important;
+    }
+    .search-espece-left .col-md-6 {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .col-sm-4.responsive-flex {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        padding: 7px;
+    }
+    /*.display-none-mobile {
+        display: none !important;
+    }*/
+    .box-card {
+        width: 45%;
+    }
+
 }
 
 /*-------------------[757px]------------------*/
@@ -128,12 +171,40 @@
         top: 14px;
         z-index: 9;
     }
+    .other-page .navbar {
+        top: -49px;
+    }
     .partenaires .slick-slide img {
         width: 50px !important;
         height: 50px !important;
     }
     .observations .card {
         margin-bottom: 22px;
+    }
+    .img-thumbnail.logo {
+        width: 55% !important;
+        margin-left: 0 !important;
+    }
+    .loupe img {
+        width: 75% !important;
+        margin: 0 10%;
+    }
+    .loupe p {
+        margin-left: 33px;
+        margin-top: -14px !important;
+    }
+    .btn-submit-obs {
+        margin-bottom: 50px;
+    }
+    .txt-ns-suivre {
+        max-width: 100% !important;
+    }
+    .box-card {
+        width: 100%;
+    }
+    .acc-profil {
+        width: 100%;
+        padding: 0;
     }
 }
 
