@@ -1,10 +1,13 @@
 {% block title %} Mon compte {% endblock %}
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="container accordeon-box">
+
+
+
         <div class="row">
             <div class="titre-h2"><h2>Mon espace</h2></div>
         </div>
+    <div class="titre-h2" id ="map">a</div>
         <div class="row">
             <div class="txt-bienvenue">
                 <h3>Bonjour, <strong>{{ app.user.nom }} {{ app.user.prenom }}</strong> </br> Bienvenue dans votre espace
@@ -20,7 +23,11 @@
             {% endif %}
 
         </div>
+
+
+    <div class="container accordeon-box">
         <div class="row">
+
             <button class="accordion">Mon profil</button>
             <div class="panel">
                 <form class="acc-profil-form" method="post"
@@ -84,10 +91,18 @@
             </div>
 
             <button class="accordion">Les dernières observations</button>
-            <div class="panel content-box-last-observation">
-                {% for observation in lastObservations %}
 
-                    <div class="card box-card">
+<div class="panel">
+
+<div id="map">a</div>
+</div>
+
+            <div class="panel content-box-last-observation">
+
+
+
+                {% for observation in lastObservations %}
+              <div class="card box-card">
                         <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
                              alt="Card image cap">
                         <ul class="list-group list-group-flush">
@@ -107,7 +122,7 @@
 
 
             {% if(app.user.roles[0]=='ROLE_USER') %}
-                <button class="accordion">Mes observations validés {{ observations |length }}</button>
+                <button class="accordion">Mes observations validées <span class="badge badge-success">{{ observations |length }}</span></button>
                 <div class="panel content-box-my-observation">
                     {% for observation in observations %}
                         <div class="card box-card">
@@ -125,7 +140,7 @@
                     {% endfor %}
                 </div>
 
-                <button class="accordion">Mes observations en attentes {{ observationsEnAttentes |length }}</button>
+                <button class="accordion">Mes observations en attente <span class="badge badge-info">{{ observationsEnAttentes |length }}</span></button>
                 <div class="panel content-box-my-observation">
                     {% for observation in observationsEnAttentes %}
                         <div class="card box-card">
@@ -142,7 +157,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                <button class="accordion display-none-mobile">Mes observations refusés {{ mesObervationRefuser |length }}</button>
+                <button class="accordion display-none-mobile">Mes observations refusées <span class="badge badge-danger"> {{ mesObervationRefuser |length }}</span></button>
                 <div class="panel content-box-my-observation">
                     {% for observation in mesObervationRefuser %}
                         <div class="card box-card">
@@ -165,7 +180,7 @@
 
             {% if(app.user.roles[0]=='ROLE_NATURALIST') %}
                 {# Observations validé#}
-                <button class="accordion">Mes Observations validés  {{valideObservations|length }}</button>
+                <button class="accordion">Mes observations validées  <span class="badge badge-success">{{valideObservations|length }}</span></button>
                 <div class="panel content-box-attente-observation">
                     {% for observation in valideObservations %}
 
@@ -192,7 +207,7 @@
                     {% endfor %}
                 </div>
                 {#Observation refuse#}
-                <button class="accordion display-none-mobile">Mes Observations refusés {{ refuseObservations | length }}</button>
+                <button class="accordion display-none-mobile">Mes observations refusées <span class="badge badge-danger">{{ refuseObservations | length }}</span></button>
                 <div class="panel content-box-attente-observation">
                     {% for observation in refuseObservations %}
 
@@ -216,7 +231,7 @@
                     {% endfor %}
                 </div>
                 {# Observation à valider #}
-                <button class="accordion">Mes observations à valider {{ observations_a_valider | length }}</button>
+                <button class="accordion">Mes observations à valider <span class="badge badge-info">{{ observations_a_valider | length }}</span></button>
                 <div class="panel content-box-attente-observation">
                     {% for observation in observations_a_valider %}
 
@@ -237,16 +252,30 @@
                                class="btn btn-danger refuse-btn">Refuser</a>
 
                         </div>
+
                     {% endfor %}
                 </div>
             {% endif %}
         </div>
     </div>
-    </div>
+
+
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    <script>
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 5,
+                center: new google.maps.LatLng(46.52863469527167,2.43896484375)
+            });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key={{ container.parameter('api_map_key') }}&callback=initMap"></script>
+
     <script type="text/javascript">
         var acc = document.getElementsByClassName("accordion");
         var i;
@@ -271,4 +300,6 @@
         }, 4000);
 
     </script>
+
+
 {% endblock %}
