@@ -45,26 +45,31 @@
                     <div class="col">
                         <h2>Entrer votre observation</h2>
 
-                        <label>Nombre d'individus</label>
+                        {#<label>Nombre d'individus</label>
                         <select name="nb_especes" class="form-control nb_especes" id="sel1">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
                             <option>4</option>
-                        </select>
+                        </select>#}
+                        <div class="form-group">
+                        <label>Nombre d'individus</label>
+                        <input type="number" class="form-control" name="nb_especes"
+                                placeholder="Nombre d'individus" required>
+                    </div>
                         <div class="form-group">
                             <label>Date</label>
                             <input type="text" class="form-control" name="date_obs"
-                                   value="{{ "now"|date("d-m-Y") }}" readonly placeholder="Date d'obervation">
+                                   value="{{ "now"|date("d-m-Y") }}" readonly placeholder="Date d'obervation" required>
                         </div>
                         <div class="form-group">
                             <label>Coordeonnées GPS</label>
                             <input type="text" class="form-control" name="latitude" id="lat"
-                                   placeholder="Lattitude">
+                                   placeholder="Lattitude" required>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" id="long" name="longitude"
-                                   placeholder="Longitude">
+                                   placeholder="Longitude" required>
                         </div>
                         <div class="form-group">
                             <input type="file" style="visibility:hidden; display:none;" id="file"
@@ -95,7 +100,7 @@
                         <div class="input-group search-observ">
                             <input id="autocomplete" data-url="{{ path('ajax_search') }}"
                                    class="form-control" name="nom_especes"
-                                   placeholder="Rechercher une espèce">
+                                   placeholder="Rechercher une espèce" required>
                         </div>
                         <div id="map"></div>
                         <div class="form-check">

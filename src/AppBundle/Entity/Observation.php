@@ -252,8 +252,6 @@ class Observation
         return $this->photo;
     }
 
-
-
     /**
      * Set isValidate
      *

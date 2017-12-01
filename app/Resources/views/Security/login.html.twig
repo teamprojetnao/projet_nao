@@ -42,18 +42,18 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-    <h1 style="text-align:center; margin-top:60px; margin-bottom:30px;">CONNEXION / INSCRIPTION</h1>
+    <div class="container" id="id-container-login-page">
+    <h1 style="text-align:center; margin-top:60px; margin-bottom:30px;font-weight: bold !important;">CONNEXION / INSCRIPTION</h1>
 
 
-    <div style="background:#CF8A5D;color:white;text-align:center"><p style="padding-top:10px; margin-bottom :0.1px">
+    <div style="background:#CF8A5D;color:white;text-align:center;width: 74%;margin: 0 auto;"><p style="padding-top:10px; margin-bottom :0.1px">
             Bonjour</p>
         <p style="margin-top:0.1px;margin-bottom :0.1px">Veuillez vous connecter ou vous inscrire</p>
         <p style="margin-top:0.1px;padding-bottom :10px">pour accéder à vos observations</p>
 
     </div>
 
-    <div class="row">
+    <div class="row" style="width: 76%;margin: 0 auto;">
 
         <div class="col-sm-4">
 
@@ -113,22 +113,22 @@
 
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" id="id-check-naturalist">
                             {{ form_label(form.isNaturalistRequired) }}
                             {{ form_errors(form.isNaturalistRequired) }}
                             {{ form_widget(form.isNaturalistRequired) }}
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" id="id-check-cgu">
                             {{ form_label(form.cgu) }}
                             {{ form_errors(form.cgu) }}
                             {{ form_widget(form.cgu) }}
 
                         </div>
-                        <input class='btn' type="submit" value="S'INSCRIRE"/>
+                        <input class='btn' type="submit" value="S'INSCRIRE" id="id-btn-inscription"/>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-6" id="id-input-box">
 
                         <div class="form-group">
                             <strong>{{ form_label(form.email, "Adresse e-mail", {'label_attr': {'class': 'control-label'}}) }}</strong>

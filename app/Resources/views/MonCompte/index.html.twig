@@ -1,13 +1,12 @@
 {% block title %} Mon compte {% endblock %}
 {% extends 'base.html.twig' %}
 {% block body %}
-
-
-
+<div style="background: #F8FAF6;margin-bottom: -40px;padding: 1px 0 45px;">
+    <div class="container accordeon-box">
         <div class="row">
             <div class="titre-h2"><h2>Mon espace</h2></div>
         </div>
-    <div class="titre-h2" id ="map"></div>
+
         <div class="row">
             <div class="txt-bienvenue">
                 <h3>Bonjour, <strong>{{ app.user.nom }} {{ app.user.prenom }}</strong> </br> Bienvenue dans votre espace
@@ -23,11 +22,7 @@
             {% endif %}
 
         </div>
-
-
-    <div class="container accordeon-box">
         <div class="row">
-
             <button class="accordion">Mon profil</button>
             <div class="panel">
                 <form class="acc-profil-form" method="post"
@@ -80,51 +75,103 @@
                                 <input type="text" class="form-control" name="date_de_naissance" id="dob"
                                        value="{{ app.user.birthdate | date('d-m-Y') }}">
                             </div>
-                            <div class="form-group">
+                            {#<div class="form-group">
                                 <label for="profession">Profession </label>
                                 <input type="text" name="profesion" class="form-control" id="profession"
                                        value="Professeur de SVT">
-                            </div>
+                            </div>#}
                         </div>
                     </div>
                 </form>
             </div>
 
             <button class="accordion">Les dernières observations</button>
-
-<div class="panel">
-
-<div id="map">a</div>
-</div>
-
             <div class="panel content-box-last-observation">
-
-
-
-                {% for observation in lastObservations %}
-              <div class="card box-card">
+                <div class="default-content">
+                    {% for observation in lastObservations |slice(0,5) %}
+                        <div class="card box-card">
+                            <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
+                                 alt="Card image cap">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong
+                                            style="text-transform: uppercase">{{ observation.nomEspece }}</strong></li>
+                                <li class="list-group-item">{{ observation.nbIndividus }} individus</li>
+                                <li class="list-group-item">{{ observation.dateObservation | date('d-m-Y') }}</li>
+                                <li class="list-group-item">Coordonnées GPS : {{ observation.latitude }} ,
+                                    {{ observation.longitude }} </li>
+                                <li class="list-group-item">{{ observation.user.nom }} {{ observation.user.prenom }}</li>
+                            </ul>
+                            <form action="{{ path('aves_submit') }}" method="post">
+                                <input type="text" value="{{observation.nomEspece}}" name="key">
+                                <button type="submit" class="btn btn-primary btn-right-view">Voir</button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                    {% if observations|length > 5 %}
+                    <p class="more-content">Afficher tout</p>
+                    {% endif %}
+                </div>
+                <div class="default-content">
+                    {% for observation in lastObservations |slice(0,5) %}
+                    <div class="card box-card">
                         <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
                              alt="Card image cap">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><strong
-                                        style="text-transform: uppercase">{{ observation.nomEspece }}</strong></li>
+                                    style="text-transform: uppercase">{{ observation.nomEspece }}</strong></li>
                             <li class="list-group-item">{{ observation.nbIndividus }} individus</li>
                             <li class="list-group-item">{{ observation.dateObservation | date('d-m-Y') }}</li>
                             <li class="list-group-item">Coordonnées GPS : {{ observation.latitude }} ,
                                 {{ observation.longitude }} </li>
                             <li class="list-group-item">{{ observation.user.nom }} {{ observation.user.prenom }}</li>
                         </ul>
-                        <a href="#" class="btn btn-primary btn-right-view">Voir</a>
+                        <form action="{{ path('aves_submit') }}" method="post">
+                            <input type="text" value="{{observation.nomEspece}}" name="key">
+                            <button type="submit" class="btn btn-primary btn-right-view">Voir</button>
+                        </form>
                     </div>
-                {% endfor %}
+                    {% endfor %}
+                    {% if observations|length > 5 %}
+                    <p class="more-content">Afficher tout</p>
+                    {% endif %}
+                </div>
+                {% if lastObservations|length != 0 %}
+                <div class="all-content" style="display: none; overflow-y: scroll;height:300px;max-height:300px">
+                    {% for observation in lastObservations %}
+                    <div class="card box-card">
+                        <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
+                             alt="Card image cap">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong
+                                    style="text-transform: uppercase">{{ observation.nomEspece }}</strong></li>
+                            <li class="list-group-item">{{ observation.nbIndividus }} individus</li>
+                            <li class="list-group-item">{{ observation.dateObservation | date('d-m-Y') }}</li>
+                            <li class="list-group-item">Coordonnées GPS : {{ observation.latitude }} ,
+                                {{ observation.longitude }} </li>
+                            <li class="list-group-item">{{ observation.user.nom }} {{ observation.user.prenom }}</li>
+                        </ul>
+                        <form action="{{ path('aves_submit') }}" method="post">
+                            <input type="text" value="{{observation.nomEspece}}" name="key">
+                            <button type="submit" class="btn btn-primary btn-right-view">Voir</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                    {% if lastObservations|length > 5 %}
+                    <p class="more-content">Afficher tout</p>
+                    {% endif %}
+                </div>
+                {% endif %}
+
 
             </div>
 
 
             {% if(app.user.roles[0]=='ROLE_USER') %}
-                <button class="accordion">Mes observations validées <span class="badge badge-success">{{ observations |length }}</span></button>
+            {#Observation validé#}
+                <button class="accordion">Mes observations validés {{ observations |length }}</button>
                 <div class="panel content-box-my-observation">
-                    {% for observation in observations %}
+                    <div class="default-content">
+                    {% for observation in observations|slice(0,5) %}
                         <div class="card box-card">
                             <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
                                  alt="Card image cap">
@@ -138,11 +185,60 @@
                             </ul>
                         </div>
                     {% endfor %}
+                    {% if observations|length > 5 %}
+                    <p class="more-content">Afficher tout</p>
+                    {% endif %}
+                    </div>
+                    {% if observations|length != 0 %}
+                    <div class="all-content" style="display: none; overflow-y: scroll;height:300px;max-height:300px">
+                        {% for observation in observations %}
+                        <div class="card box-card">
+                            <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
+                                 alt="Card image cap">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">{{ observation.nomEspece }}</li>
+                                <li class="list-group-item">{{ observation.nbIndividus }}</li>
+                                <li class="list-group-item">{{ observation.dateObservation | date('d-m-Y') }}</li>
+                                <li class="list-group-item">Coordonnées GPS : {{ observation.latitude }} ,
+                                    {{ observation.longitude }} </li>
+                                <li class="list-group-item">{{ observation.user.nom }} {{ observation.user.prenom }}</li>
+                            </ul>
+                        </div>
+                        {% endfor %}
+
+                        <p class="sample-content">Moins</p>
+
+                    </div>
+                    {% endif %}
                 </div>
 
-                <button class="accordion">Mes observations en attente <span class="badge badge-info">{{ observationsEnAttentes |length }}</span></button>
+
+            {#Observation en attente#}
+            <button class="accordion">Mes observations en attentes {{ observationsEnAttentes |length }}</button>
                 <div class="panel content-box-my-observation">
-                    {% for observation in observationsEnAttentes %}
+                    <div class="default-content">
+                        {% for observation in observationsEnAttentes|slice(0,5) %}
+                            <div class="card box-card">
+                                <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
+                                     alt="Card image cap">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">{{ observation.nomEspece }}</li>
+                                    <li class="list-group-item">{{ observation.nbIndividus }}</li>
+                                    <li class="list-group-item">{{ observation.dateObservation | date('d-m-Y') }}</li>
+                                    <li class="list-group-item">Coordonnées GPS : {{ observation.latitude }} ,
+                                        {{ observation.longitude }} </li>
+                                    <li class="list-group-item">{{ observation.user.nom }} {{ observation.user.prenom }}</li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                        {% if observationsEnAttentes|length > 5 %}
+                            <p class="more-content">Afficher tout</p>
+                        {% endif %}
+
+                    </div>
+                    {% if observationsEnAttentes|length != 0 %}
+                    <div class="all-content" style="display: none; overflow-y: scroll;height:300px;max-height:300px">
+                        {% for observation in observationsEnAttentes %}
                         <div class="card box-card">
                             <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
                                  alt="Card image cap">
@@ -155,11 +251,39 @@
                                 <li class="list-group-item">{{ observation.user.nom }} {{ observation.user.prenom }}</li>
                             </ul>
                         </div>
-                    {% endfor %}
+                        {% endfor %}
+
+                        <p class="sample-content">Moins</p>
+
+                    </div>
+                    {% endif %}
                 </div>
-                <button class="accordion display-none-mobile">Mes observations refusées <span class="badge badge-danger"> {{ mesObervationRefuser |length }}</span></button>
+
+            {#Observation refusés#}
+                <button class="accordion display-none-mobile">Mes observations refusés {{ mesObervationRefuser |length }}</button>
                 <div class="panel content-box-my-observation">
-                    {% for observation in mesObervationRefuser %}
+                    <div class="default-content">
+                        {% for observation in mesObervationRefuser |slice(0,5) %}
+                            <div class="card box-card">
+                                <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
+                                     alt="Card image cap">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">{{ observation.nomEspece }}</li>
+                                    <li class="list-group-item">{{ observation.nbIndividus }}</li>
+                                    <li class="list-group-item">{{ observation.dateObservation | date('d-m-Y') }}</li>
+                                    <li class="list-group-item">Coordonnées GPS : {{ observation.latitude }} ,
+                                        {{ observation.longitude }} </li>
+                                    <li class="list-group-item">{{ observation.user.nom }} {{ observation.user.prenom }}</li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                        {% if mesObervationRefuser|length > 5 %}
+                        <p class="more-content">Afficher tout</p>
+                        {% endif %}
+                     </div>
+                    {% if mesObervationRefuser|length != 0 %}
+                    <div class="all-content" style="display: none; overflow-y: scroll;height:300px;max-height:300px">
+                        {% for observation in mesObervationRefuser  %}
                         <div class="card box-card">
                             <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
                                  alt="Card image cap">
@@ -172,7 +296,12 @@
                                 <li class="list-group-item">{{ observation.user.nom }} {{ observation.user.prenom }}</li>
                             </ul>
                         </div>
-                    {% endfor %}
+                        {% endfor %}
+
+                        <p class="sample-content">Moins</p>
+
+                    </div>
+                    {% endif %}
                 </div>
 
 
@@ -180,7 +309,7 @@
 
             {% if(app.user.roles[0]=='ROLE_NATURALIST') %}
                 {# Observations validé#}
-                <button class="accordion">Mes observations validées  <span class="badge badge-success">{{valideObservations|length }}</span></button>
+                {#<button class="accordion">Mes Observations validés  {{valideObservations|length }}</button>
                 <div class="panel content-box-attente-observation">
                     {% for observation in valideObservations %}
 
@@ -201,13 +330,16 @@
                                     {{ observation.longitude }} </li>
                                 <li class="list-group-item">{{ observation.user.nom }} {{ observation.user.prenom }}</li>
                             </ul>
-                            <a href="#" class="btn btn-primary btn-right-view">Voir</a>
+                            <form action="{{ path('aves_submit') }}" method="post">
+                                <input type="text" value="{{observation.nomEspece}}" name="key">
+                                <button type="submit" class="btn btn-primary btn-right-view">Voir</button>
+                            </form>
 
                         </div>
                     {% endfor %}
-                </div>
+                </div>#}
                 {#Observation refuse#}
-                <button class="accordion display-none-mobile">Mes observations refusées <span class="badge badge-danger">{{ refuseObservations | length }}</span></button>
+                {#<button class="accordion display-none-mobile">Mes Observations refusés {{ refuseObservations | length }}</button>
                 <div class="panel content-box-attente-observation">
                     {% for observation in refuseObservations %}
 
@@ -229,12 +361,37 @@
                         </div>
 
                     {% endfor %}
-                </div>
+                </div>#}
                 {# Observation à valider #}
-                <button class="accordion">Mes observations à valider <span class="badge badge-info">{{ observations_a_valider | length }}</span></button>
+                <button class="accordion">Mes observations à valider {{ observations_a_valider | length }}</button>
                 <div class="panel content-box-attente-observation">
-                    {% for observation in observations_a_valider %}
+                    <div class="default-content">
+                        {% for observation in observations_a_valider |slice(0,5) %}
+                            <div class="card box-card">
+                                <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
+                                     alt="Card image cap">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">{{ observation.nomEspece }}</li>
+                                    <li class="list-group-item">{{ observation.nbIndividus }} individus</li>
+                                    <li class="list-group-item">{{ observation.dateObservation | date('d-m-Y') }}</li>
+                                    <li class="list-group-item">Coordonnées GPS : {{ observation.latitude }} ,
+                                        {{ observation.longitude }} </li>
+                                    <li class="list-group-item">{{ observation.user.nom }} {{ observation.user.prenom }}</li>
+                                </ul>
+                                <a href="{{ path('valider-observation',{observation: observation.id}) }}"
+                                   class="btn btn-success valid-btn">Valider</a>
+                                <a href="{{ path('refuser-observation',{observation: observation.id}) }}"
+                                   class="btn btn-danger refuse-btn">Refuser</a>
 
+                            </div>
+                        {% endfor %}
+                        {% if observations_a_valider |length > 5 %}
+                        <p class="more-content">Afficher tout</p>
+                        {% endif %}
+                   </div>
+                    {% if observations_a_valider |length != 0 %}
+                    <div class="all-content" style="display: none; overflow-y: scroll;height:300px;max-height:300px">
+                        {% for observation in observations_a_valider %}
                         <div class="card box-card">
                             <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
                                  alt="Card image cap">
@@ -252,30 +409,29 @@
                                class="btn btn-danger refuse-btn">Refuser</a>
 
                         </div>
-
-                    {% endfor %}
+                        {% endfor %}
+                        <p class="sample-content">Moins</p>
+                    </div>
+                    {% endif %}
                 </div>
             {% endif %}
         </div>
     </div>
-
-
+</div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        var map;
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 5,
-                center: new google.maps.LatLng(46.52863469527167,2.43896484375)
-            });
-        }
+    <script type="text/javascript">
+        $(".more-content").click(function(){
+            $(".default-content").css("display","none");
+            $(".all-content").css("display","block");
+        });
+        $(".sample-content").click(function(){
+            $(".default-content").css("display","block");
+            $(".all-content").css("display","none");
+        });
     </script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key={{ container.parameter('api_map_key') }}&callback=initMap"></script>
-
     <script type="text/javascript">
         var acc = document.getElementsByClassName("accordion");
         var i;
@@ -300,6 +456,4 @@
         }, 4000);
 
     </script>
-
-
 {% endblock %}

@@ -37,14 +37,18 @@ class ObservationController extends Controller
                 $observation->setLongitude($data['longitude']);
                 $observation->setUser($this->getUser());
 
-                $file = $request->files->get('fichier');
-                $upload_service = $this->get('file_uploader_service');
-                if (null != $data['file_mobile']) {
-                    $fileName = $upload_service->base64Converter($data['file_mobile'], $upload_service->getTargetPath());
-                } else {
-                    $fileName = $upload_service->upload($file);
-                }
+
+            $file = $request->files->get('fichier');
+            $upload_service = $this->get('file_uploader_service');
+            if(null != $data['file_mobile']){
+                $fileName = $upload_service->base64Converter($data['file_mobile'] ,$upload_service->getTargetPath());
                 $observation->setPhoto($fileName);
+            }
+            if(null != $file){
+                $fileName = $upload_service->upload($file);
+                $observation->setPhoto($fileName);
+            }
+
 
                 $em->persist($observation);
                 $em->flush();

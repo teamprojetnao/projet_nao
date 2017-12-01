@@ -79,7 +79,7 @@ class HomeController extends Controller
 
 
         $gps = json_encode($gps);
-        dump($gps);
+
 
         return $this->render(':Home:card_aves_submitted.html.twig', array(
             'listObservation' => $listObservation, 'nbObservation' => $nbObservation, 'gps' => $gps, 'key' => $key));

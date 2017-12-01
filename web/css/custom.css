@@ -11,24 +11,33 @@ body{
 .container {
     max-width: 100%;
 }
+.logo-box {
+    text-align: center;
+    /* margin: 0 40px;
+    position: absolute;
+    left: 5em;*/
+}
 .header-left {
     background-image: linear-gradient( -82deg, rgba(0, 0, 0, 0) 16%, rgba(00, 0, 0, 0) 10%, #B8735C 0%, #B8735C 100%);
     position: absolute;
     z-index: 9;
     height: 570px;
-    min-width: 600px
+    min-width: 555px
 }
 .img-thumbnail.logo{
     background-color: transparent;
     border: 0;
-    width: 35%;
-    margin: 16px 25%;
+    width: 40%;
+    margin: 10px 0 0 26px;
 }
 .loupe {
-    margin: 25%;
+    margin: 8em 0;
+    text-align: center;
+    position: absolute;
+    left: -3.5em;
 }
 .loupe img{
-    width: 50%;
+    width: 20%;
 }
 .loupe a {
     color: #fff;
@@ -36,7 +45,8 @@ body{
 }
 .loupe p {
     font-size: 20px;
-    margin-top: -30px;
+    margin-top: -15px;
+    margin-left: -34px;
 }
 .bg-oiseau {
     background-image: url(../image/ImageAccueil.png);
@@ -44,7 +54,7 @@ body{
     background-repeat: no-repeat;
     background-position: center 0;
     min-width: 486px;
-    max-width: 67%;
+    max-width: 72.3%;
     margin: 0 auto;
     position: absolute;
     right: 0px;
@@ -55,12 +65,26 @@ body{
 }
 
 .container.qui-som-nous {
-    width: 80%;
+    width: 74.5%;
+    margin: 0 auto;
 }
-
+.commentcamarche .col-sm-4 {
+    max-width: 25%;
+    margin: 0 auto;
+}
+.ccm-first-bloc {
+    left: 6.7em;
+}
+.ccm-last-bloc {
+    left: -5.7em;
+}
+#gallerieobservation .col-sm-4 {
+    max-width: 33.333333%;
+    margin: 0 auto;
+}
 .ccm-home {
     background: transparent;
-    width: 50%;
+    width: 70%;
     border: 0;
 }
 .box-001, .box-001 p{
@@ -78,14 +102,14 @@ body{
     background-image: -o-linear-gradient(right, #E1C8AA 0%, #B0D092 100%);
     background-image: -webkit-linear-gradient(right, #E1C8AA 0%, #B0D092 100%);
     background-image: linear-gradient(to left, #E1C8AA 0%, #B0D092 100%);
-    padding: 20px;
+    padding: 20px 29px 20px 0;
 }
 
 .box-title-observation{
     margin-bottom: 30px;
 }
 .container.observations{
-    max-width: 80%;
+    max-width: 72%;
 }
 .observations .card-block {
     padding: 20px;
@@ -139,11 +163,13 @@ section.partenaires {
 #footerbloc{
     background: #98C575;
     margin-top: 40px;
+    margin-left: -15px;
+    margin-right: -15px;
 }
 #footerbloc .logo {
     width:25%;
     float:left;
-    margin: 0px 0 0 44px;
+    margin: 0px 0 0 10em;
 }
 .box-logo-footer {
     margin-top: -25px;
@@ -155,11 +181,14 @@ section.partenaires {
 }
 .txt-ns-suivre{
     text-align: right;
-    max-width: 46.2%;
+    max-width: 39.6%;
+    position: relative;
+    right: 35px;
 }
 .txt-ns-suivre h3{
     color:#fff;
     text-transform: uppercase;
+    font-size: 16px;
 }
 .txt-ns-suivre a{
     color:#B8735C;
@@ -169,7 +198,7 @@ section.partenaires {
     margin: 30px 0;
 }
 #footerbloc .informations {
-    padding-left: 4%;
+    margin-left: 9.9em;
 }
 .box-logo-footer ul li{
     position: relative;
@@ -196,9 +225,10 @@ section.partenaires {
     padding: .5rem 0;
 }
 #navbar-other-page {
-    width: 100%;
+    width: 81%;
     margin: 0 auto;
 }
+
 .navbar.navbar-other-page {
     width: 100%;
     -webkit-box-shadow: 0px 2px 5px 0px rgba(150,136,150,1);
@@ -232,7 +262,9 @@ section.partenaires {
 }
 .container.observation-block{
     background: #fff;
-    width: 90%;
+    width: 71%;
+    position: relative;
+    left: -5px;
     padding: 30px;
     margin: 0 auto;
     -webkit-box-shadow: 0px 1px 2px 0px rgba(15,3,15,1);
@@ -284,7 +316,12 @@ section.partenaires {
 .navbar-other-page .navbar-nav a, .dropdown-menu a {
     color: inherit;
 }
-
+.dropdown-menu.show li:first-child{
+    color: green !important;
+}
+.dropdown-menu.show {
+    padding: 8px;
+}
 #ui-id-1 {
     background: #fff;
     width: 394px;
