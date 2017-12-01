@@ -20,6 +20,14 @@ class AvesRepository extends \Doctrine\ORM\EntityRepository
         return $qb ->getQuery()->getArrayResult();
     }
 
+    public function findAves($dataObservation){
+        $qb= $this->createQueryBuilder('e');
+        $qb
+            ->where('CONCAT(e.nomscientifique, \' - \',e.nomvernaculaire)= :dataObservation')
+            ->setParameter('dataObservation', $dataObservation);
+        return $qb ->getQuery()->getResult();
+    }
+
 
 
 

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Observation
@@ -29,9 +30,10 @@ class Observation
     private $user;
 
     /**
-     * @var int
+     * @var string
      *
      * @ORM\Column(name="nom_espece", type="string", nullable=false)
+     * @Assert\NotBlank()
      */
     private $nomEspece;
 
@@ -52,6 +54,7 @@ class Observation
      * @var int
      *
      * @ORM\Column(name="nb_individus", type="integer", nullable=true)
+     * @Assert\NotBlank()
      */
     private $nbIndividus;
 
@@ -59,6 +62,7 @@ class Observation
      * @var \DateTime
      *
      * @ORM\Column(name="date_observation", type="datetime", nullable=true)
+     * @Assert\NotBlank()
      */
     private $dateObservation;
 
@@ -66,6 +70,7 @@ class Observation
      * @var float
      *
      * @ORM\Column(name="latitude", type="float", nullable=false)
+     * @Assert\NotBlank()
      */
     private $latitude;
 
@@ -73,6 +78,7 @@ class Observation
      * @var float
      *
      * @ORM\Column(name="longitude", type="float", nullable=false)
+     * @Assert\NotBlank()
      */
     private $longitude;
 
