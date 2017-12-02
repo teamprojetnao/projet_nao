@@ -41,7 +41,7 @@
                     {% if nbObservation > 0%}
 
 
-                    <p>{{ nbObservation }} observation{{ nbObservation>1? "s":"" }} correspondant à l'espèce {{ key }} {{ nbObservation>1? "ont":"n'a" }} été {{ nbObservation>1? "trouvées":"trouvée" }}.</p>
+                    <p>{{ nbObservation }} observation{{ nbObservation>1? "s":"" }} correspondant à l'espèce {{ key }} {{ nbObservation>1? "ont":"a" }} été {{ nbObservation>1? "trouvées":"trouvée" }}.</p>
                     {% else %}
                     <p>Aucune observation ne correspond à l'espèce {{ key }}.</p>
                     {% endif %}
@@ -133,7 +133,11 @@
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 5,
-                center: new google.maps.LatLng(46.52863469527167,2.43896484375)
+                center: new google.maps.LatLng(46.52863469527167,2.43896484375),
+
+                minZoom: 5,
+                maxZoom: 7
+
             });
 
 
