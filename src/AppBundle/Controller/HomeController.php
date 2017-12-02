@@ -72,7 +72,7 @@ class HomeController extends Controller
             $gps[] = array($observation->getLatitude(),
                 $observation->getLongitude(),
                 $observation->getNbIndividus(),
-                $observation->getDateObservation(),
+                $observation->getDateObservation()->format('d-m-Y'),
                 $observation->getPhoto());
 
         }
