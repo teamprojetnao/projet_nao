@@ -11,7 +11,13 @@
                     <li>
                         <a href="{{ path('mentions_legales')}}">Mentions légales</a>
                     </li>
-
+                    {% if app.user().roles[0] is defined  %}
+                        {% if app.user().roles[0]=='ROLE_ADMIN' %}
+                            <li>
+                                <a href="{{ path('admin_home') }}">Admin</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
                 </ul>
             </div>
             <div class="col-md-6 txt-ns-suivre">

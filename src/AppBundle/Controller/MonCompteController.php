@@ -22,9 +22,14 @@ class MonCompteController extends Controller
      * @Route("/observation", name="observationpage")
      * @Security("has_role('ROLE_USER')")
      */
-    public function  observationAction(){
 
-        return $this->render(':MonCompte:observation.html.twig');
+    public function  observationAction(){
+        $espece_not_exist = false;
+        return $this->render(':MonCompte:observation.html.twig',[
+            'espece_not_exist' => $espece_not_exist,
+            'old_value' => []
+        ]);
+
     }
 
     /**
@@ -84,12 +89,14 @@ class MonCompteController extends Controller
                 'refuseObservations' => $refuseObservations,
             ]);
     }
+
     /**
      * @Route("/valider-obs/{observation}", name="valider-observation")
      * @ParamConverter("observation", class="AppBundle:Observation")
      * @Security("has_role('ROLE_USER')")
      */
-    public function validerObservationAction(Observation $observation){
+    public function validerObservationAction(Observation $observation)
+    {
         $em = $this->getDoctrine()->getManager();
         $observation->setIsValidate(1);
         $observation->setValiderPar($this->getUser());
@@ -103,7 +110,8 @@ class MonCompteController extends Controller
      * @ParamConverter("observation", class="AppBundle:Observation")
      * @Security("has_role('ROLE_USER')")
      */
-    public function refuserObservationAction(Observation $observation){
+    public function refuserObservationAction(Observation $observation)
+    {
         $em = $this->getDoctrine()->getManager();
         $observation->setRefuserPar($this->getUser());
         $observation->setIsValidate(2);
@@ -117,19 +125,47 @@ class MonCompteController extends Controller
      * @ParamConverter("user", class="AppBundle:User")
      * @Method("POST")
      */
-    public function modifierCompteAction(User $user, Request $request){
+    public function modifierCompteAction(User $user, Request $request)
+    {
         $data = $request->request->all();
         $em = $this->getDoctrine()->getManager();
-        $user->setEmail($data['email']);
-        $user->setNom($data['nom']);
-        $user->setPrenom($data['prenom']);
-        $em->persist($user);
-        $em->flush();
 
-        $request->getSession()->getFlashBag()
-            ->add('success', 'Votre compte a été bien modifié');
-        return $this->redirect($this->generateUrl('mon-compte'));
+        //Si l'action de l'utilisateur est modifié
+        if (isset($data['modifier'])) {
+            $user->setEmail($data['email']);
+            $user->setNom($data['nom']);
+            $user->setPrenom($data['prenom']);
+            $em->persist($user);
+            $em->flush();
+            $request->getSession()->getFlashBag()
+                ->add('success', 'Votre compte a bien été modifié');
+            return $this->redirect($this->generateUrl('mon-compte'));
+        }
+        //Si non,  l'action de l'utilisateur est supprimer son compte
+        else {
 
+            $allObservationUsers = $em->getRepository('AppBundle:Observation')
+                ->getAllObervationByUserId($user->getId());
+
+            $user_to_remove = $em->getRepository('AppBundle:User')->find($user->getId());
+
+            if ($allObservationUsers != null) {
+                foreach ($allObservationUsers as $allObservationUser) {
+                    $em->remove($allObservationUser);
+                    $em->flush();
+                }
+            }
+
+            $user = $this->get('security.token_storage');
+            $user->setToken(null);
+
+            $em->remove($user_to_remove);
+            $em->flush();
+
+           /* $request->getSession()->getFlashBag()
+                ->add('success', 'Votre compte a bien été supprimé');*/
+            return $this->redirect($this->generateUrl('homepage'));
+        }
     }
 
 

@@ -11,33 +11,52 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ObservationController extends Controller
 {
+    protected function getErrorForm($errors){
+        foreach ($errors as $error){
+            $error_validation[$error->getPropertyPath()] = $error->getMessage();
+        }
+        return $error_validation;
+    }
+
     /**
      * @Route("/saveObservation", name="save-observation")
      */
     public function saveObservationAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('AppBundle:Aves')
-        ;
+
+        $validator = $this->get('validator');
         $data = $request->request->all();
-        $date = new \DateTime($data['date_obs']);
-        if($request->getMethod() === 'POST') {
-            $dataObservation = $repository->findAves($data['nom_especes']);
-            if (null === $dataObservation) {
-                throw new NotFoundHttpException("cette espèce n'existe pas");
-            } else {
-                $observation = new Observation();
-                $observation->setNomEspece($data['nom_especes']);
-                $observation->setNbIndividus($data['nb_especes']);
-                $observation->setDateObservation($date);
-                $observation->setLatitude($data['latitude']);
-                $observation->setLongitude($data['longitude']);
-                $observation->setUser($this->getUser());
+        $is_exist_espece = $em->getRepository('AppBundle:Aves')->findAves($data['nom_especes']);
+        $date_observation = new \DateTime($data['date_obs']);
+        $observation = new Observation();
+        $observation->setNomEspece($data['nom_especes']);
+        $observation->setNbIndividus($data['nb_especes']);
+        $observation->setDateObservation($date_observation);
+        $observation->setLatitude($data['latitude']);
+        $observation->setLongitude($data['longitude']);
+        $observation->setUser($this->getUser());
+        
+        $errors = $validator->validate($observation);
 
+        if($request->getMethod() === 'POST' && (count($errors) > 0 || count($is_exist_espece > 0))) {
+            if( count($errors) > 0) {
+                $error_observation = $this->getErrorForm($errors);
+            }else{
+                $error_observation = [];
+            }
+            if( count($is_exist_espece) > 0) {
+                $espece_not_exist = false;
+            }else{
+                $espece_not_exist = true;
+            }
 
+            return $this->render(':MonCompte:observation.html.twig',[
+                'error_observation' => $error_observation,
+                'espece_not_exist' => $espece_not_exist,
+                'old_value' => $data
+            ]);
+        }elseif ($request->getMethod() === 'POST' && (count($errors) == 0 && null !== $is_exist_espece)){
             $file = $request->files->get('fichier');
             $upload_service = $this->get('file_uploader_service');
             if(null != $data['file_mobile']){
@@ -49,14 +68,17 @@ class ObservationController extends Controller
                 $observation->setPhoto($fileName);
             }
 
-
-                $em->persist($observation);
-                $em->flush();
+            //Si l'utilisateur est un naturaliste on valide son observation automatiquement
+            if ($this->getUser()->getRoles()[0] == "ROLE_NATURALIST") {
+                $observation->setIsValidate(1);
             }
-        }
-        $request->getSession()->getFlashBag()
-            ->add('success', 'Votre observation a été bien enregistrée');
-        return $this->redirect($this->generateUrl('observationpage'));
-    }
 
+            $em->persist($observation);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('success', 'Votre observation a été bien enregistrée');
+
+            return $this->redirect($this->generateUrl('observationpage'));
+        }
+    }
 }

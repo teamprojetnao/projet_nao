@@ -60,20 +60,12 @@
         z-index: 9;
         right: 45px;
     }
+    .logo-rectangle {
+        width: 85% !important;
+        margin-left: 0 !important;
+    }
     .navbar-other-page ul.navbar-nav{
         display: block;
-        margin-top: 13px;
-        margin-right: 10px;
-        padding: 8px 15px;
-        border: 1px solid #ccc;
-        background: #fff;
-    }
-    ul.navbar-nav{
-        display: block;
-        margin-top: 27px;
-        margin-right: -5px;
-        padding: 8px 15px;
-        border: 1px solid #ccc;
     }
     .navbar-default .navbar-toggle {
         border-color: #ddd;
@@ -88,7 +80,7 @@
         margin-top: 14px;
     }
     .navbar-other-page .navbar-toggle {
-        margin-top: 14px;
+        margin-top: 28px;
     }
     .navbar-default .navbar-toggle .icon-bar {
         background-color: #888 !important;
@@ -180,6 +172,111 @@
     #footerbloc .informations {
         margin-left: 0.9em !important;
     }
+    .bg-oiseau {
+        height: 620px !important;
+    }
+    section#notreprojet {
+        margin-top: 95px;
+    }
+
+    /* menu dropdown */
+    .loupe {
+        margin: 22em 0px !important;
+        left: 3.5em !important;
+    }
+    ul.navbar-nav {
+        display: block;
+        margin-top: 74px;
+        margin-right: -61px;
+        padding: 0;
+        border: 1px solid #ccc;
+        width: 768px;
+    }
+    ul.navbar-nav li:last-child {
+        border:0;
+        width: 768px;
+    }
+    ul.navbar-nav li{
+        background: #98C575;
+        margin: 0;
+        padding: 10px;
+        text-align: center;
+        border-bottom: 1px solid #fff;
+    }
+    ul.navbar-nav li a{
+        text-transform: uppercase;
+    }
+    .navbar-other-page ul.navbar-nav {
+        margin-top: 62px;
+        margin-right: -76px;
+        padding: 0;
+        border:0;
+        background: transparent;
+    }
+    .navbar-other-page ul.navbar-nav li a {
+        color: #fff !important
+    }
+    .collapsing {
+        width: 425px !important;
+    }
+    #navbarResponsive .btn-group {
+        display: block !important;
+    }
+    #navbarResponsive .navbar-nav .dropdown-menu {
+        position: static;
+        float: none;
+        display: block;
+        background: transparent;
+        border: 0;
+        width: 425px;
+        margin-left: -10px;
+        margin-top: -19px;
+    }
+    .navbar-other-page #navbarResponsive .navbar-nav .dropdown-menu {
+        margin-top: 0;
+    }
+    #navbarResponsive .img-user-logger button,
+    #navbarResponsive .navbar-nav .dropdown-menu li:first-child,
+    #navbarResponsive .navbar-nav .dropdown-menu li.divider {
+        display: none;
+    }
+    #navbarResponsive .navbar-nav .dropdown-menu li:nth-child(3){
+        padding: 0 0 15px;
+        width: 768px;
+    }
+    #navbarResponsive .navbar-nav .dropdown-menu li:nth-child(3) a{
+        position: relative;
+        top: -3px;
+        color: #fff !important;
+    }
+    #navbarResponsive .navbar-nav .dropdown-menu li:last-child a{
+        position: relative;
+        top: 8px;
+        color: #fff !important;
+    }
+    .navbar-other-page #navbarResponsive .navbar-nav .dropdown-menu li:nth-child(3) {
+        position: relative;
+        top: 0;
+        width: 768px;
+    }
+    .navbar-other-page #navbarResponsive .navbar-nav .dropdown-menu li:last-child {
+        margin-top: 0px;
+        width: 768px;
+    }
+    .container.observation-block {
+        width: 90%;
+    }
+    #navbar-other-page {
+        width: 100% !important;
+    }
+    .box-result-search {
+        overflow-y: auto;
+        height: 323px;
+    }
+    #recherche-espece-submit .result-search {
+        margin: 0 !important;
+        width: 100% !important;
+    }
 
 }
 
@@ -207,6 +304,14 @@
     .other-page .navbar {
         top: -49px;
     }
+    .logo-rectangle {
+        width: 100% !important;
+        margin-left: -10px !important;
+        max-width: 70% !important;
+    }
+    .navbar-other-page .navbar-toggle {
+        margin-top: 6px;
+    }
     .partenaires .slick-slide img {
         width: 50px !important;
         height: 50px !important;
@@ -218,6 +323,14 @@
         width: 55% !important;
         margin-left: 0 !important;
     }
+    .loupe {
+        margin-top: 24em !important;
+        left: 0 !important;
+    }
+    .header-left {
+        background: #fff;
+        height: 96px !important;
+    }
     .loupe img {
         width: 25% !important
         margin: 0 10%;
@@ -226,8 +339,21 @@
         margin-left: 33px;
         margin-top: -14px !important;
     }
+    .bg-oiseau {
+        background-position: center 33px !important;
+    }
+    .container.observation-block {
+        width: 85% !important;
+        min-height: 1210px;
+    }
+    #btnAddPhoto {
+        position: absolute;
+        top: 63em;
+    }
     .btn-submit-obs {
-        margin-bottom: 50px;
+        position: absolute;
+        top: 54em;
+        width: 91% !important;
     }
     .txt-ns-suivre {
         max-width: 100% !important;
@@ -265,7 +391,7 @@
     }
     ul.navbar-nav {
         display: block;
-        margin-top: 58px;
+        margin-top: 74px;
         margin-right: -61px;
         padding: 0;
         border: 1px solid #ccc;
@@ -273,6 +399,7 @@
     }
     ul.navbar-nav li:last-child {
         border:0;
+        width: 425px !important;
     }
     ul.navbar-nav li{
         background: #98C575;
@@ -316,6 +443,7 @@
     }
     #navbarResponsive .navbar-nav .dropdown-menu li:nth-child(3){
         padding: 0 0 15px;
+        width: 425px !important;
     }
     #navbarResponsive .navbar-nav .dropdown-menu li:nth-child(3) a{
         position: relative;
@@ -333,10 +461,10 @@
     }
     #navbarResponsive .navbar-nav .dropdown-menu li:nth-child(3) {
         position: relative;
-        top: -21px;
+        top: -1px;
     }
     #navbarResponsive .navbar-nav .dropdown-menu li:last-child {
-        margin-top: -20px;
+        margin-top: 0px;
     }
     .navbar-other-page #navbarResponsive .navbar-nav .dropdown-menu li:last-child {
         margin-top: 0px;
@@ -347,12 +475,19 @@
     #navbar-other-page {
         width: 100% !important;
     }
+    .result-search .col-sm-8 {
+        margin: 20px;
+    }
+
 }
 
 /*-------------------[375px]------------------*/
 @media only screen and ( max-width: 375px ) {
     ul.navbar-nav li a {
         margin-left: 40px;
+    }
+    .navbar-other-page .navbar-toggle {
+        margin-top: 12px;
     }
 }
 
@@ -361,11 +496,20 @@
     .navbar.navbar-expand-lg {
 
     }
+    #btnAddPhoto {
+        top: 65em;
+    }
+    .btn-submit-obs {
+        top: 55em;
+    }
 }
 
 /*-------------------[320px]------------------*/
 @media only screen and ( max-width: 320px ) {
     ul.navbar-nav li a {
         margin-left: 60px;
+    }
+    #btnAddPhoto {
+        top: 66em;
     }
 }

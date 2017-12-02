@@ -33,7 +33,7 @@ class Observation
      * @var string
      *
      * @ORM\Column(name="nom_espece", type="string", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message = "Le nom de l'espece est obligatoire")
      */
     private $nomEspece;
 
@@ -54,7 +54,8 @@ class Observation
      * @var int
      *
      * @ORM\Column(name="nb_individus", type="integer", nullable=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message = "Le nombre d'espece est obligatoire et doit être positive")
+     *  @Assert\GreaterThan(0,message = "Le nombre d'espece est obligatoire et doit être positive")
      */
     private $nbIndividus;
 
@@ -62,7 +63,7 @@ class Observation
      * @var \DateTime
      *
      * @ORM\Column(name="date_observation", type="datetime", nullable=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message = "La date d'observation est obligatoire")
      */
     private $dateObservation;
 
@@ -70,7 +71,7 @@ class Observation
      * @var float
      *
      * @ORM\Column(name="latitude", type="float", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message = "La lattitude est obligatoire")
      */
     private $latitude;
 
@@ -78,7 +79,7 @@ class Observation
      * @var float
      *
      * @ORM\Column(name="longitude", type="float", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message = "La longitude est obligatoire")
      */
     private $longitude;
 

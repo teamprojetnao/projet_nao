@@ -40,40 +40,47 @@
                     </div>
                 </div>
             {% endif %}
-            <form action="{{ path('save-observation') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ path('save-observation') }}" method="post" enctype="multipart/form-data" novalidate>
                 <div class="row">
                     <div class="col">
                         <h2>Entrer votre observation</h2>
 
-                        {#<label>Nombre d'individus</label>
-                        <select name="nb_especes" class="form-control nb_especes" id="sel1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>#}
                         <div class="form-group">
                         <label>Nombre d'individus</label>
                         <input type="number" class="form-control" name="nb_especes"
-                                placeholder="Nombre d'individus" required>
+                               placeholder="Nombre d'individus"
+                               value="{{ (old_value.nb_especes is defined) ? old_value.nb_especes : '' }}" required>
+                        {% if error_observation.nbIndividus is defined %}
+                            <em style="float: right; color: #AA3333; font-size: 13px;">{{ error_observation.nbIndividus }}</em>
+                        {% endif %}
                     </div>
                         <div class="form-group">
                             <label>Date</label>
                             <input type="text" class="form-control" name="date_obs"
-                                   value="{{ "now"|date("d-m-Y") }}" readonly placeholder="Date d'obervation" required>
+                                   value="{{ (old_value.date_obs is defined) ? old_value.date_obs : "now"|date("d-m-Y") }}" readonly placeholder="Date d'obervation" required>
+                            {% if error_observation.dateObservation is defined %}
+                                <em style="float: right; color: #AA3333; font-size: 13px;">{{ error_observation.dateObservation }}</em>
+                            {% endif %}
                         </div>
                         <div class="form-group">
                             <label>Coordeonnées GPS</label>
                             <input type="text" class="form-control" name="latitude" id="lat"
-                                   placeholder="Lattitude" required>
+                                   placeholder="Lattitude"
+                                   value="{{ (old_value.latitude is defined) ? old_value.latitude : '' }}" required>
+                            {% if error_observation.latitude is defined %}
+                                <em style="float: right; color: #AA3333; font-size: 13px;">{{ error_observation.latitude }}</em>
+                            {% endif %}
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" id="long" name="longitude"
-                                   placeholder="Longitude" required>
+                                   placeholder="Longitude"
+                                   value="{{ (old_value.longitude is defined) ? old_value.longitude : '' }}" required>
+                            {% if error_observation.longitude is defined %}
+                                <em style="float: right; color: #AA3333; font-size: 13px;">{{ error_observation.longitude }}</em>
+                            {% endif %}
                         </div>
                         <div class="form-group">
-                            <input type="file" style="visibility:hidden; display:none;" id="file"
-                                   name="fichier">
+                            <input type="file" style="visibility:hidden; display:none;" id="file" name="fichier">
                             <input type="hidden" id="fichier" name="file_mobile">
                             <button type="button" id="btnAddPhoto" onclick="$('#file').click();"
                                     class="btn-ajouter-photo-obs"><img
@@ -97,11 +104,22 @@
                         <div>
                             <h4>Recherchez ci-dessous une espèce </h4>
                         </div>
+                        {% if(espece_not_exist == true and error_observation.nomEspece is not defined) %}
+                            <div class="alert alert-danger">
+                                <span>Cette espèce n'existe pas</span>
+                            </div>
+                        {% endif %}
                         <div class="input-group search-observ">
                             <input id="autocomplete" data-url="{{ path('ajax_search') }}"
                                    class="form-control" name="nom_especes"
-                                   placeholder="Rechercher une espèce" required>
+                                   placeholder="Rechercher une espèce"
+                                   value="{{ (old_value.nom_especes is defined) ? old_value.nom_especes : '' }}" required>
                         </div>
+                        {% if error_observation.nomEspece is defined %}
+                            <div>
+                                <em style="float: right; color: #AA3333; font-size: 13px; margin-top: -13px;">{{ error_observation.nomEspece }}</em>
+                            </div>
+                        {% endif %}
                         <div id="map"></div>
                         <div class="form-check">
                             <label class="form-check-label">
