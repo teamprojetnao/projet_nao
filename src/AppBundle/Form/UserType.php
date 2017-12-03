@@ -26,7 +26,17 @@ class UserType extends AbstractType
             ->add('password', PasswordType::class)
 
             ->add('isNaturalistRequired',CheckboxType::class, array('label' =>'Je suis naturaliste','required' => false))
-            ->add('birthdate',DateType::class)
+            // ->add('birthdate',DateType::class)
+            ->add('birthdate', DateType::class, array(
+                'widget' => 'single_text',
+
+                // do not render as type="date", to avoid HTML5 date pickers
+                'html5' => false,
+
+                // add a class that can be selected in JavaScript
+                'attr' => ['class' => 'js-datepicker'],
+                'format' => 'dd-MM-yyyy',
+            ))
             ->add('cgu', CheckboxType::class, array('label'=> "J'accepte les conditions générales d'utilisation",'required' => true));
 
     }

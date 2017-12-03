@@ -3,7 +3,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {# <link rel="stylesheet" href="{{ asset('css/login.css') }}">#}
+      <link rel="stylesheet" href="{{ asset('date-picker/css/bootstrap-datepicker.css') }}">
     <style type="text/css">
         .form-control {
             border-radius: 0;
@@ -35,6 +35,9 @@
         h4, h1{
             font-size:1.25em;
             font-weight: bold;
+        }
+          .datepicker table {
+            width: 270px;
         }
 
     </style>
@@ -159,3 +162,22 @@
     </div>
 
 {% endblock %}
+        {% block javascripts %}
+            {{ parent() }}
+          <script src="{{ asset('date-picker/js/bootstrap-datepicker.js') }}"></script>
+            <script src="{{ asset('date-picker/locales/bootstrap-datepicker.fr.min.js') }}"></script>
+        <script>
+
+            $(document).ready(function() {
+                // configure the bootstrap datepicker
+                $('.js-datepicker').datepicker({
+                       autoclose: true,
+                        todayHighlight: true,
+                        endDate: "now",
+                        format: "dd-mm-yyyy",
+                        language: 'fr',
+                        orientation: "bottom"
+                });
+            });
+              </script>
+        {% endblock %}
