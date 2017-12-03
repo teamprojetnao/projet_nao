@@ -135,6 +135,8 @@ class MonCompteController extends Controller
             $user->setEmail($data['email']);
             $user->setNom($data['nom']);
             $user->setPrenom($data['prenom']);
+            $date_de_naissance = new \DateTime($data["date_de_naissance"]);
+            $user->setBirthdate($date_de_naissance);
             $em->persist($user);
             $em->flush();
             $request->getSession()->getFlashBag()

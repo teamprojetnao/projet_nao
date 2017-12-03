@@ -94,4 +94,16 @@ class ObservationRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    //Requette pour avoir les observation rattaché  à un user selon id
+    //Mes observation
+    public function  getAllObervationByUserId($user_id)
+    {
+        $qb = $this->createQueryBuilder('o');
+        $qb->select('o')
+            ->where('o.user = :user')
+            ->setParameter('user',$user_id);
+
+        return $qb->getQuery()->getResult();
+    }
 }

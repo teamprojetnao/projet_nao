@@ -38,12 +38,18 @@ class ObservationController extends Controller
         $observation->setUser($this->getUser());
         
         $errors = $validator->validate($observation);
+       /* dump(count($errors));
+        dump(count($is_exist_espece));
+        die();*/
 
-        if($request->getMethod() === 'POST' && (count($errors) > 0 || count($is_exist_espece > 0))) {
+        if($request->getMethod() === 'POST' && count($errors) > 0 && count($is_exist_espece )==0) {
             if( count($errors) > 0) {
+
                 $error_observation = $this->getErrorForm($errors);
+
             }else{
                 $error_observation = [];
+
             }
             if( count($is_exist_espece) > 0) {
                 $espece_not_exist = false;
@@ -56,7 +62,12 @@ class ObservationController extends Controller
                 'espece_not_exist' => $espece_not_exist,
                 'old_value' => $data
             ]);
-        }elseif ($request->getMethod() === 'POST' && (count($errors) == 0 && null !== $is_exist_espece)){
+
+
+        }else if ($request->getMethod() === 'POST' && (count($errors) == 0 &&  count($is_exist_espece)==1)){
+
+
+
             $file = $request->files->get('fichier');
             $upload_service = $this->get('file_uploader_service');
             if(null != $data['file_mobile']){
@@ -76,7 +87,6 @@ class ObservationController extends Controller
             $em->persist($observation);
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('success', 'Votre observation a été bien enregistrée');
 
             return $this->redirect($this->generateUrl('observationpage'));
         }

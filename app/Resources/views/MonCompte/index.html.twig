@@ -1,5 +1,19 @@
 {% block title %} Mon compte {% endblock %}
 {% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('date-picker/css/bootstrap-datepicker.css') }}">
+
+    <style type="text/css">
+        .datepicker table {
+            width: 457px;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
 <div style="background: #F8FAF6;margin-bottom: -40px;padding: 1px 0 45px;">
     <div class="container accordeon-box">
@@ -80,11 +94,6 @@
                                     </option>
                                 </select>
                             </div>
-                            {#<div class="form-group">
-                                <label for="profession">Profession </label>
-                                <input type="text" name="profesion" class="form-control" id="profession"
-                                       value="Professeur de SVT">
-                            </div>#}
                         </div>
                     </div>
                 </form>
@@ -298,7 +307,7 @@
 
             {% if(app.user.roles[0]=='ROLE_NATURALIST') %}
                 {# Observations validé#}
-                <button class="accordion">Mes Observations validés  {{valideObservations|length }}</button>
+                <button class="accordion">Mes Observations {{ valideObservations|length }}</button>
                 <div class="panel content-box-attente-observation">
                     {% for observation in valideObservations %}
 
@@ -411,6 +420,9 @@
 
 {% block javascripts %}
     {{ parent() }}
+
+    <script src="{{ asset('date-picker/js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('date-picker/locales/bootstrap-datepicker.fr.min.js') }}"></script>
     <script type="text/javascript">
         $(".more-content").click(function(){
 
@@ -452,6 +464,15 @@
             });
         }, 4000);
 
+
+        $('input[name="date_de_naissance"]').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            endDate: "now",
+            format: "dd-mm-yyyy",
+            language: 'fr',
+            orientation: "bottom"
+        });
 
     </script>
 {% endblock %}

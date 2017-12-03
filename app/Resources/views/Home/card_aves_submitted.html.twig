@@ -39,27 +39,17 @@
                 <div class="col-sm-4">
                     <div class="alert alert-dark">
                     {% if nbObservation > 0%}
-
-
                     <p>{{ nbObservation }} observation{{ nbObservation>1? "s":"" }} correspondant à l'espèce {{ key }} {{ nbObservation>1? "ont":"a" }} été {{ nbObservation>1? "trouvées":"trouvée" }}.</p>
                     {% else %}
                     <p>Aucune observation ne correspond à l'espèce {{ key }}.</p>
                     {% endif %}
                     </div>
-                    <!--<form action="{{ path('aves_submit') }}" method="post">
-                        <div class="form-group">
-                            <label for="autocomplete">Tapez le nom d'un oiseau</label> :
-                            <input name= "key" id="autocomplete" data-url="{{ path('ajax_search') }}" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-primary">valider</button>
-                    </form>-->
                     <div class="box-result-search">
                     {% for observation in listObservation %}
                             <div class="row result-search">
                                 <div class="col-sm-4">
                                         <img class="card-img-left" id = "ma-photos" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
                                              alt="Card image cap">
-                                        <!--<button type="submit" class="btn btn-primary btn-bottom-view">Voir</button>-->
                                 </div>
                                 <div class="col-sm-8">
                                     <ul class="list-group list-group-flush">
@@ -89,32 +79,7 @@
                     </div>
                     <div id="map"></div>
                 </div>
-
             </div>
-            <!--<div class="row">
-
-                    {% for observation in listObservation %}
-                <div class="col-sm-3">
-                        <div class="card text-center  ">
-                            <img class="card-img-top" id = "ma-photos" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
-                                 alt="Card image cap">
-
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Espèce : {{ observation.nomEspece }}</li>
-                                <li class="list-group-item">Nombre d'individus : {{ observation.nbIndividus }}</li>
-                                <li class="list-group-item">Date : {{ observation.dateObservation | date('d-m-Y') }}</li>
-                                <li class="list-group-item">Coordonnées GPS : {{ observation.latitude }} ,
-                                  {{ observation.longitude }} </li>
-                                <li class="list-group-item">Auteur : {{ observation.user.nom }} {{ observation.user.prenom }}</li>
-                            </ul>
-                        </div>
-                </div>
-                        <br>
-                    {% endfor %}
-
-            </div>-->
-
-
         </div>
     </section>
 
@@ -134,25 +99,17 @@
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 5,
                 center: new google.maps.LatLng(46.52863469527167,2.43896484375),
-
                 minZoom: 5,
                 maxZoom: 7
 
             });
-
-
-
             setMarkers(map);
-
-
         }
-
         // Data for the markers consisting of a name, a LatLng and a zIndex for the
         // order in which these markers should display on top of each other.
         var gps = {{ gps | raw}}
 
-
-        function setMarkers(map) {
+            function setMarkers(map) {
 
             var image = {
                 url: '{{ asset('image/IconeDrapeauMaps.png') }}',
@@ -176,36 +133,32 @@
             for (var i = 0; i < gps.length; i++) {
                 var gpsElt = gps[i];
 
-
-
                 var marker = new google.maps.Marker({
                     position: {lat: gpsElt[0], lng: gpsElt[1]},
                     map: map,
                     icon: image,
                     shape: shape,
-                    animation : google.maps.Animation.DROP
+                    animation: google.maps.Animation.DROP
 
 
                 });
 
-
-
-
-                (function(i) {
+                (function (i) {
                     google.maps.event.addListener(marker, "click", function () {
-                        var gpsElt=gps[i];
+                        var gpsElt = gps[i];
                         var latlng = {lat: gpsElt[0], lng: gpsElt[1]};
 
-
-                        geocoder.geocode({'location': latlng}, function(results, status) {
+                        geocoder.geocode({'location': latlng}, function (results, status) {
                             if (status === 'OK') {
                                 if (results[0]) {
 
+                                    //On recupère le host de navigateur afin de pourvoir concaterner dans src sur l'image
+                                    var host = location.protocol + '//' + location.host;
 
-                                    infowindow.setContent("<div id='content'><p class='title'><b>"+results[4].formatted_address+"</b></p><div class='general'><p><b>Nombre d'individus</b> :" + " " + gpsElt[2] + "</p>"
+                                    infowindow.setContent("<div id='content'><p class='title'><b>" + results[4].formatted_address + "</b></p><div class='general'><p><b>Nombre d'individus</b> :" + " " + gpsElt[2] + "</p>"
                                         + "</p>"
-                                        + "<p><img width='50px' height='50px' src=\"/uploads/observation/"+ gpsElt[4]+"\"></p>"
-                                         + "<p><b>Date d'observation</b> :" + " " + gpsElt[3] +"</p></div></div>"
+                                        + "<p><img width='50px' height='50px' src=" + host + "/uploads/observation/" + gpsElt[4] + "\"></p>"
+                                        + "<p><b>Date d'observation</b> :" + " " + gpsElt[3] + "</p></div></div>"
                                     );
 
                                 } else {
@@ -215,24 +168,11 @@
                                 window.alert('Geocoder failed due to: ' + status);
                             }
 
-
                         });
-                       /* infowindow.setContent("<div id='content'><p class='title'><b>Nombre d'individus : "+gpsElt[2]+"</b></p><div class='general'><p><b>latitude</b> :" + " " + gpsElt[0] + "</p>"
-                            + "</p>" + "<p><b>longitude</b> :" + " " + gpsElt[1] + "</p>"
-                            + "</p>" + "<p><b>date d'observation</b> :" + " " + gpsElt[3].date + "</p></div></div>"
-                        );*/
                         infowindow.open(this.getMap(), this);
                     });
                 })(i);
-        }
-
-
-
-
-
-
-
-
+            }
         }
     </script>
 
