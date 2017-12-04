@@ -101,7 +101,7 @@ class AdminController extends Controller
 
         $em->persist($user);
         $em->flush();
-        $request->getSession()->getFlashbag()->add('info, la demande de compte naturaliste a bien été refusée');
+        $request->getSession()->getFlashbag()->add('info', 'la demande de compte naturaliste a bien été refusée');
         return $this->redirectToRoute('admin_validate_list');
     }
 
@@ -121,7 +121,7 @@ class AdminController extends Controller
 
         $em->persist($user);
         $em->flush();
-        $request->getSession()->getFlashbag()->add('info', 'la demande de compte naturaliste a bien été refusée');
+        $request->getSession()->getFlashbag()->add('info', 'la demande de compte naturaliste a bien été validée');
         return $this->redirectToRoute('admin_validate_list');
     }
 

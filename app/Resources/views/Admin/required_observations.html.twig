@@ -4,12 +4,12 @@
 
     <div class="container-fluid">
         <div class="row">
-            <h2 style="text-align: center">Observations en attente de validation</h2>
+
             <div class="col-sm-6 col-sm-offset-3 ">
 
                   {% for observation in listObservations %}
                       <div class="card text-center  ">
-                          <img class="card-img-top" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
+                          <img class="card-img-top"  src="{{ asset('uploads/observation/' ~ observation.photo) }}"
                                alt="Card image cap">
 
                           <ul class="list-group list-group-flush">
