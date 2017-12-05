@@ -91,9 +91,9 @@ class Observation
     private $photo;
 
     /**
-     * @var bool
+     * @var int
      *
-     * @ORM\Column(name="is_validate", type="boolean", nullable=true)
+     * @ORM\Column(name="is_validate", type="integer", nullable=true)
      */
     private $isValidate=0;
 
