@@ -8,7 +8,6 @@ use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\Observation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -93,31 +92,34 @@ class MonCompteController extends Controller
     /**
      * @Route("/valider-obs/{observation}", name="valider-observation")
      * @ParamConverter("observation", class="AppBundle:Observation")
-     * @Security("has_role('ROLE_USER')")
      */
-    public function validerObservationAction(Observation $observation)
+    public function validerObservationAction(Observation $observation, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $observation->setIsValidate(1);
         $observation->setValiderPar($this->getUser());
         $em->persist($observation);
         $em->flush();
-        return $this->redirectToRoute('mon-compte');
+        $request->getSession()->getFlashBag()
+            ->add('success', 'L\' observation a bien été validée');
+        return $this->redirect($this->generateUrl('mon-compte'));
     }
 
     /**
      * @Route("/refuser-obs/{observation}", name="refuser-observation")
      * @ParamConverter("observation", class="AppBundle:Observation")
-     * @Security("has_role('ROLE_USER')")
      */
-    public function refuserObservationAction(Observation $observation)
+    public function refuserObservationAction(Observation $observation, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $observation->setRefuserPar($this->getUser());
         $observation->setIsValidate(2);
         $em->persist($observation);
         $em->flush();
-        return $this->redirectToRoute('mon-compte');
+
+        $request->getSession()->getFlashBag()
+            ->add('success', 'L\' observation a bien été refusée');
+        return $this->redirect($this->generateUrl('mon-compte'));
     }
 
     /**
