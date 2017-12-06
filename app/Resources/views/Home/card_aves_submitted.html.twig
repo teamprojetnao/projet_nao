@@ -5,7 +5,7 @@
 {% block stylesheets %}
     <style type="text/css">
         #map {
-            height: 400px;
+            height: 600px;
             width: 100%;
         }
         #content  .title {
@@ -36,52 +36,43 @@
     <section id="recherche-espece-submit">
         <div class="container">
             <h1 style="text-align:center; font-size:1.25em; font-weight:bold; margin-bottom :20px;">CARTE DES ESPECES</h1>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="alert alert-dark">
+
+                <div style="width:90%;margin: 0 auto">
+
+                    <div class="alert alert-dark" style="padding-bottom:0">
                     {% if nbObservation > 0%}
                     <p>{{ nbObservation }} observation{{ nbObservation>1? "s":"" }} correspondant à l'espèce {{ key }} {{ nbObservation>1? "ont":"a" }} été {{ nbObservation>1? "trouvées":"trouvée" }}.</p>
                     {% else %}
                     <p>Aucune observation ne correspond à l'espèce {{ key }}.</p>
                     {% endif %}
                     </div>
-                    <div class="box-result-search">
-                    {% for observation in listObservation %}
-                            <div class="row result-search">
-                                <div class="col-sm-4">
-                                        <img class="card-img-left" id = "ma-photos" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
-                                             alt="Card image cap">
-                                </div>
-                                <div class="col-sm-8">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">{{ observation.nomEspece }}</li>
-                                        <li class="list-group-item">{{ observation.nbIndividus }} individu(s)</li>
-                                        <li class="list-group-item">{{ observation.dateObservation | date('d-m-Y') }}</li>
-                                        <li class="list-group-item">{{ observation.latitude }} ,
-                                                {{ observation.longitude }} </li>
-                                        <li class="list-group-item">{{ observation.user.nom }} {{ observation.user.prenom }}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <br>
-                        {% endfor %}
-                    </div>
 
-                </div>
-                <div class="col-sm-8">
-                    <div class="row">
+
+            </div>
+
+
+            <div style="width:90%;margin: 0 auto">
                         <form action="{{ path('aves_submit') }}" method="post">
-                            <div class="form-group recherche-espece">
+                            <div class="form-group ">
                                 <label for="autocomplete">Tapez le nom d'un oiseau</label> :
+                                <div class="input-group">
                                 <input name= "key" id="autocomplete" data-url="{{ path('ajax_search') }}" class="form-control">
+
+                            <span class="input-group-btn"><button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button></span>
+
+
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary recherche-espece-btn">Valider</button>
                         </form>
                     </div>
-                    <div id="map"></div>
+
+
+        <div id ="map" style="width:90%;margin: 0 auto">
+
                 </div>
-            </div>
         </div>
+
+
     </section>
 
 
@@ -98,8 +89,8 @@
         var map;
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 5,
-                center: new google.maps.LatLng(46.52863469527167,2.43896484375),
+                zoom: 6,
+                center: new google.maps.LatLng(47,2.43896484375),
                 minZoom: 5,
                 maxZoom: 7
 
