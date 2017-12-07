@@ -28,7 +28,7 @@
             </div>
 
             {% if app.session.flashBag.has('success') %}
-                <div class="txt-bienvenue" id="delais">
+                <div class="txt-bienvenue" style="width:97%" id="delais">
                     {% for flash in app.session.flashBag.get('success') %}
                         <h3>{{ flash }}</h3>
                     {% endfor %}

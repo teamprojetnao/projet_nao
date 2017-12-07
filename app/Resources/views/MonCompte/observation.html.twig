@@ -33,9 +33,9 @@
                     <div id="delai" class="col-md-12 alert alert-success"
                          style="margin: 2px 8px; position: absolute; display: table; width: 72%; z-index: 100; opacity: 0.9;color:#000;">
                         {% for flash in app.session.flashBag.get('success') %}
-                            <div class="alert alert-success">
-                                <p>{{ flash }}</p>
-                            </div>
+                            <p class="alert alert-success">
+                                {{ flash }}
+                            </p>
                         {% endfor %}
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                         <div class="form-group">
                             <label style="font-weight:bold">Date</label>
                             <input type="text" class="form-control" name="date_obs"
-                                   value="{{ (old_value.date_obs is defined) ? old_value.date_obs : "now"|date("d-m-Y") }}" readonly placeholder="Date d'obervation" required>
+                                   value="{{ (old_value.date_obs is defined) ? old_value.date_obs : "now"|date("d-m-Y") }}" readonly placeholder="Date d'observation" required>
                             {% if error_observation.dateObservation is defined %}
                                 <em style="float: right; color: #AA3333; font-size: 13px;">{{ error_observation.dateObservation }}</em>
                             {% endif %}

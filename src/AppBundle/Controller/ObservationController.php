@@ -85,9 +85,11 @@ class ObservationController extends Controller
             }
 
             $em->persist($observation);
+
             $em->flush();
 
-
+            $request->getSession()->getFlashBag()
+                ->add('success', 'Votre observation a bien été enregistrée');
             return $this->redirect($this->generateUrl('observationpage'));
         }
     }
