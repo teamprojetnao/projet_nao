@@ -23,17 +23,19 @@
                 </div>
 
                 <div class="col-sm-2 ">
+                    <div>
                     <form action="{{ path('admin_validate_user', {'id': user.id}) }}" method="POST">
                         <input type="submit" class="btn btn-success btn-block" value="valider">
                     </form>
-
+                    </div>
+                    <div style="margin-top:17px">
                     <form action="{{ path('admin_refuse_user', {'id': user.id}) }}" method="POST">
                         <input type="submit" class="btn btn-danger btn-block" value="refuser">
                     </form>
-
-
-                    <button class="btn btn-primary btn-block"><a href="mailto:{{ user.email }}">contacter</a></button>
-
+                    </div>
+                    <div style="margin-top:17px">
+                    <button class="btn btn-primary btn-block "><a href="mailto:{{ user.email }}">contacter</a></button>
+                    </div>
                 </div>
             </div>
             <hr>
