@@ -1,37 +1,45 @@
-{% block title %} Gestion particuliers {% endblock %}
+{% block title %} Observations à valider {% endblock %}
 {% extends 'base_backoffice.html.twig' %}
 {% block body %}
 
-    <div class="container-fluid">
-        <div class="row">
-
-            <div class="col-sm-6 col-sm-offset-3 ">
-
-                  {% for observation in listObservations %}
-                      <div class="card text-center  ">
-                          <img class="card-img-top"  src="{{ asset('uploads/observation/' ~ observation.photo) }}"
-                               alt="Card image cap">
-
-                          <ul class="list-group list-group-flush">
-                              <li class="list-group-item">Espèce : {{ observation.nomEspece }}</li>
-                              <li class="list-group-item">Nombre d'individus : {{ observation.nbIndividus }}</li>
-                              <li class="list-group-item">Date : {{ observation.dateObservation | date('d-m-Y') }}</li>
-                              <li class="list-group-item">Coordonnées GPS : {{ observation.latitude }} ,
-                                  {{ observation.longitude }} </li>
-                              <li class="list-group-item">Auteur : {{ observation.user.nom }} {{ observation.user.prenom }}</li>
-                          </ul>
-                      </div>
-
-                      <hr>
-                  {% endfor %}
+<div class="container-fluid">
 
 
+    <div class="col-sm-10 col-sm-offset-1 ">
+        {% for message in app.session.flashbag.get('info') %}
+            <p class="alert alert-success">{{ message }}</p>
+        {% endfor %}
+        {% for observation in listObservations %}
+            <div class="card" style="padding: 10px">
 
-            </div>
+                <div class="row">
 
+                    <div class="col-sm-4">
+
+                        <img style="height:155px" src="{{ asset('uploads/observation/' ~ observation.photo) }}"
+                             alt="Card image cap">
+                    </div>
+                    <div class="col-sm-8">
+
+
+                        <p style="font-weight:bold">Espèce : {{ observation.nomEspece }}</p>
+                        <p>Nombre d'individus : {{ observation.nbIndividus }}</p>
+                        <p>Date : {{ observation.dateObservation | date('d-m-Y') }}</p>
+                        <p>Coordonnées GPS : {{ observation.latitude }} ,
+                            {{ observation.longitude }} </p>
+                        <p>Auteur : {{ observation.user.nom }} {{ observation.user.prenom }}</p>
+                        <form action="{{ path('admin_refuse_submitted_card', {'id': observation.id}) }}" method="POST">
+                            <input type="submit" class="btn btn-block" value="supprimer">
+                        </form>
+                    </div>
                 </div>
-
             </div>
 
+            <br>
+        {% endfor %}
+    </div>
+
+
+</div>
 
 {% endblock %}

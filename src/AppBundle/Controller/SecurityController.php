@@ -52,7 +52,9 @@ class SecurityController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            return $this->redirectToRoute('homepage');
+            $request->getSession()->getFlashBag()
+                ->add('success', 'Votre compte a bien été créé');
+            return $this->redirectToRoute('login');
         }
 
 

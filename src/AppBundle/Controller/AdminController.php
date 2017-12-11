@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\AppBundle;
+use AppBundle\Entity\Observation;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -188,11 +189,44 @@ class AdminController extends Controller
 
 
 
-        return $this->render(':Admin:observations.html.twig', array('listObservations' => $listObservations,
+        return $this->render(':Admin:required_observations.html.twig', array('listObservations' => $listObservations,
 
 
         ));
 
+    }
+
+    /**
+     * @param Request $request
+     * @param Observation $observation
+     * @Route("/refuse-card/{id}", name="admin_refuse_card")
+     */
+        public function refuseCardAction(Request $request, Observation $observation){
+        $em = $this->get('doctrine')->getManager();
+            $observation->setRefuserPar($this->getUser());
+            $observation->setIsValidate(2);
+            $em->persist($observation);
+
+        $em->flush();
+        $request->getSession()->getFlashbag()->add('info', "l'observation a bien été supprimée");
+        return $this->redirectToRoute('observation_list');
+    }
+
+    /**
+     * @param Request $request
+     * @param Observation $observation
+     * @Route("/refuse-submitted-card/{id}", name="admin_refuse_submitted_card")
+     */
+    public function refuseSubmittedCardAction(Request $request, Observation $observation){
+        $em = $this->get('doctrine')->getManager();
+        $observation->setRefuserPar($this->getUser());
+        $observation->setIsValidate(2);
+        $em->persist($observation);
+
+
+        $em->flush();
+        $request->getSession()->getFlashbag()->add('info', "l'observation a bien été supprimée");
+        return $this->redirectToRoute('observation_required_list');
     }
 
 

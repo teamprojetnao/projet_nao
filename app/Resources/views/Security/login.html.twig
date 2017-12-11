@@ -46,7 +46,9 @@
 
 {% block body %}
     <div class="container" id="id-container-login-page">
+
     <h1 style="text-align:center; margin-top:60px; margin-bottom:30px;font-weight: bold !important;">CONNEXION / INSCRIPTION</h1>
+
 
 
     <div style="background:#CF8A5D;color:white;text-align:center;width: 74%;margin: 0 auto;"><p style="padding-top:10px; margin-bottom :0.1px">
@@ -55,6 +57,7 @@
         <p style="margin-top:0.1px;padding-bottom :10px">pour accéder à vos observations</p>
 
     </div>
+
 
     <div class="row" style="width: 76%;margin: 0 auto;">
 
@@ -90,8 +93,19 @@
 
 
             <div class="form">
+             {% if app.session.flashBag.has('success') %}
+
+
+                        {% for flash in app.session.flashBag.get('success') %}
+                            <p class="alert alert-success" style="margin-bottom:20px;" >
+                                {{ flash }}
+                            </p>
+                        {% endfor %}
+
+            {% endif %}
                 {{ form_start(form) }}
                 <h4><strong>INSCRIPTION</strong></h4>
+
                 {{ form_errors(form) }}
 
                 <div class="row">

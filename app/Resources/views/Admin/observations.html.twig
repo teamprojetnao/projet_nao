@@ -1,4 +1,4 @@
-{% block title %} Gestion particuliers {% endblock %}
+{% block title %} Observations validées {% endblock %}
 {% extends 'base_backoffice.html.twig' %}
 {% block body %}
 
@@ -6,7 +6,9 @@
 
 
         <div class="col-sm-10 col-sm-offset-1 ">
-
+            {% for message in app.session.flashbag.get('info') %}
+                <p class="alert alert-success">{{ message }}</p>
+            {% endfor %}
             {% for observation in listObservations %}
                 <div class="card" style="padding: 10px">
 
@@ -26,6 +28,9 @@
                         <p>Coordonnées GPS : {{ observation.latitude }} ,
                             {{ observation.longitude }} </p>
                         <p>Auteur : {{ observation.user.nom }} {{ observation.user.prenom }}</p>
+                        <form action="{{ path('admin_refuse_card', {'id': observation.id}) }}" method="POST">
+                        <input type="submit" class="btn btn-block" value="supprimer">
+                        </form>
                     </div>
                 </div>
                 </div>
