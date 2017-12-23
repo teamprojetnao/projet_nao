@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Password_registrationType extends AbstractType
+class PasswordRegistrationType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -17,15 +17,15 @@ class Password_registrationType extends AbstractType
         $builder
             ->add('email', EmailType::class)
             ->add('password', PasswordType::class)
-            ->add('passwordconfirmed', PasswordType::class)
-            ->add('save', SubmitType::class);
+            ->add('passwordconfirmed', PasswordType::class);
+
     }
     
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Password_registration'
+
         ));
     }
 

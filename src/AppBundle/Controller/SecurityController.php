@@ -9,11 +9,10 @@
 namespace AppBundle\Controller;
 
 
-use AppBundle\Entity\New_password;
-use AppBundle\Entity\Password_registration;
+
 use AppBundle\Entity\User;
-use AppBundle\Form\New_passwordType;
-use AppBundle\Form\Password_registrationType;
+use AppBundle\Form\NewPasswordType;
+use AppBundle\Form\PasswordRegistrationType;
 use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -76,17 +75,17 @@ class SecurityController extends Controller
      */
     public function passwordAction(Request $request)
     {
-        $new_password = new New_password();
-        $form = $this->createForm(New_passwordType::class, $new_password);
+
+        $form = $this->createForm(NewPasswordType::class, null);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $data = $form->getData();
             $repository = $this
                 ->getDoctrine()
                 ->getManager()
                 ->getRepository('AppBundle:User');
-            if ($user = $repository->findOneBy(array('email' => $new_password->getEmail()))) {
+            if ($user = $repository->findOneBy(array('email' => $data['email']))) {
 
 
                 $user->setToken(base64_encode(random_bytes(10)));
@@ -97,7 +96,7 @@ class SecurityController extends Controller
 
                 $message = (new Swift_Message('Votre demande de nouveau mot de passe'))
                     ->setFrom($this->getParameter('mailer_user'))
-                    ->setTo($new_password->getEmail())
+                    ->setTo($data['email'])
                     ->setBody(
                         $this->renderView(
 
@@ -139,31 +138,32 @@ class SecurityController extends Controller
         $key = $request->query->get('key');
 
 
-        $password_registration = new Password_registration();
-
-        $form = $this->createForm(Password_registrationType::class, $password_registration);
+        $form = $this->createForm(PasswordRegistrationType::class, null);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $data = $form->getData();
             $repository = $this
                 ->getDoctrine()
                 ->getManager()
                 ->getRepository('AppBundle:User');
-            if($user = $repository->findOneBy(array('email' => $password_registration->getEmail()))){
-            if($user->getToken()==$key)
-            {
-            $encoded = $this->get('security.password_encoder')->encodePassword($password_registration, $password_registration->getPassword());
-            $user->setPassword($encoded);
-            $user->setToken("");
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            if ($user = $repository->findOneBy(array('email' => $data['email']))) {
+                if ($user->getToken() == $key) {
+                    if ($data['password'] == $data['passwordconfirmed']) {
+                        $encoded = $this->get('security.password_encoder')->encodePassword($user, $data['password']);
+                        $user->setPassword($encoded);
+                        $user->setToken("");
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($user);
+                        $em->flush();
 
-            return $this->redirectToRoute('passwordchanged_page');
+                        return $this->redirectToRoute('passwordchanged_page');
+                    }
+
+                }
+
             }
-            }
-            $this->get('session')->getFlashBag()->add('info', "Email incorrect");
+            $this->get('session')->getFlashBag()->add('info', "Données incorrectes");
         }
 
 
